@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="google7b0a9fcb246835ea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android开发艺术探索,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Activity的生命周期 正常状态 异常状态(系统杀死/Configuration变化如屏幕旋转)  正常状态 onCreate   表示Activity正在创建,可以做一些初始化操作 onRestart  正在重新启动,onstop后回来会调用 onStart    正在被启动,后台,不可交互 onResume   可见可交互前台,非常重要,许许多多的重要的类在这里初始化 onPause">
+<meta name="keywords" content="Android开发艺术探索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1章-Activity的生命周期和启动模式">
+<meta property="og:url" content="http://yifeiyuan.me/blog/45aeb1e2.html">
+<meta property="og:site_name" content="程序亦非猿">
+<meta property="og:description" content="Activity的生命周期 正常状态 异常状态(系统杀死/Configuration变化如屏幕旋转)  正常状态 onCreate   表示Activity正在创建,可以做一些初始化操作 onRestart  正在重新启动,onstop后回来会调用 onStart    正在被启动,后台,不可交互 onResume   可见可交互前台,非常重要,许许多多的重要的类在这里初始化 onPause">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/98900c07gw1f3qo4cy2f7j21bu2u2wu8.jpg">
+<meta property="og:updated_time" content="2019-02-12T08:11:26.322Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1章-Activity的生命周期和启动模式">
+<meta name="twitter:description" content="Activity的生命周期 正常状态 异常状态(系统杀死/Configuration变化如屏幕旋转)  正常状态 onCreate   表示Activity正在创建,可以做一些初始化操作 onRestart  正在重新启动,onstop后回来会调用 onStart    正在被启动,后台,不可交互 onResume   可见可交互前台,非常重要,许许多多的重要的类在这里初始化 onPause">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/mw690/98900c07gw1f3qo4cy2f7j21bu2u2wu8.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yifeiyuan.me/blog/45aeb1e2.html">
+
+
+
+
+
+  <title>第1章-Activity的生命周期和启动模式 | 程序亦非猿</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76763188-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdc587745eeea6144f7851024cf7649f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程序亦非猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求卓越与极致。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friends">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/45aeb1e2.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第1章-Activity的生命周期和启动模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-27T22:48:28+08:00">
+                2016-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/45aeb1e2.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/blog/45aeb1e2.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/45aeb1e2.html" class="leancloud_visitors" data-flag-title="第1章-Activity的生命周期和启动模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a><a href="http://developer.android.com/intl/zh-cn/reference/android/app/Activity.html" target="_blank" rel="noopener">Activity</a>的生命周期</h2><ol>
+<li>正常状态</li>
+<li>异常状态(系统杀死/Configuration变化如屏幕旋转)</li>
+</ol>
+<h3 id="正常状态"><a href="#正常状态" class="headerlink" title="正常状态"></a>正常状态</h3><ol>
+<li>onCreate   表示Activity正在创建,可以做一些初始化操作</li>
+<li>onRestart  正在重新启动,onstop后回来会调用</li>
+<li>onStart    正在被启动,后台,不可交互</li>
+<li>onResume   <strong>可见可交互前台</strong>,非常重要,许许多多的重要的类在这里初始化</li>
+<li>onPause    正在停止 <strong>后台(不一定不可见)</strong> 不可做太耗时的操作,<strong>因为onPause之后新启动Activity的onResume才能被调用</strong></li>
+<li>onStop    即将停止,<strong>不可见</strong> 可以做一些稍微重量级  的回收</li>
+<li>onDestroy 即将销毁,可以做一些回收资源,关闭线程,移除Handler消息等操作</li>
+</ol>
+<p>生命周期配对去记忆效果更佳:<br>create – destroy<br>start – stop<br>resume – pause  </p>
+<a id="more"></a>
+<p>注意点:  </p>
+<p>A 启动 B<br>如果B是透明的Activity,那么A的onStop不会被调用  </p>
+<h3 id="异常状态"><a href="#异常状态" class="headerlink" title="异常状态"></a>异常状态</h3><p>Activity的销毁与重建涉及到这两方法:  </p>
+<ol>
+<li><code>onSaveInstanceState(@Nullable Bundle state)</code>    系统会调用它来保存状态,以便之后恢复  </li>
+<li><code>onRestoreInstanceState(@NonNull Bundle state)</code>  为系统恢复所用</li>
+</ol>
+<p><strong>当Activity将处于可能被销毁或要被销毁的状态,就会调用<code>onSaveInstanceState</code></strong><br>而<strong><code>onRestoreInstanceState</code>则是重建的时候被调用</strong>  </p>
+<h4 id="调用时机"><a href="#调用时机" class="headerlink" title="调用时机"></a>调用时机</h4><p><code>onSaveInstanceState</code> 在<code>onStop</code>之前调用,而不一定在<code>onPause</code>之后<br><code>onRestoreInstanceState</code> 在<code>onStart</code>之后,<code>onResume</code>之前</p>
+<p>所以,大致的完整的生命周期是这样的:<br>onCreate<br>onRestart<br>onStart<br>onRestoreInstanceState<br>onResume<br>onPause<br>onSaveInstanceState<br>onStop<br>onDestroy  </p>
+<p>PS:<code>onSaveInstanceState</code>如下情况会调用:  </p>
+<ol>
+<li>启动了新的Activity  </li>
+<li>按了Home键等等    </li>
+</ol>
+<p>另外:可以在onCreate里判断bundle是否为null来判断是新建还是重新创建  </p>
+<p>关于完整的生命周期,附上一张图,配有fragment的生命周期,可能你在很多地方都看到过,很多人盗用了它,但是并不给出处,这里提一下,它出自<a href="https://github.com/xxv/android-lifecycle" target="_blank" rel="noopener">android-lifecycle</a>:<br><img src="http://ww1.sinaimg.cn/mw690/98900c07gw1f3qo4cy2f7j21bu2u2wu8.jpg" alt="complete_android_fragment_lifecycle">  </p>
+<h4 id="View-的恢复"><a href="#View-的恢复" class="headerlink" title="View 的恢复"></a>View 的恢复</h4><p>A系统默认做了一定的恢复,如视图结构,LV的滑动的位置等等(View也有save,restore方法)  </p>
+<pre><code>&gt; PS 看到有的文章说解决Fragment重叠的问题,就是注释掉Activity的onSaveInstanceState方法,简直是误人子弟!!!有机会以后讲    
+</code></pre><p>扯远了,保存和恢复View的层次结构,系统的工作流程是这样子的:<br>Activity==&gt;Window==&gt;DecorView==&gt;ContentView==&gt;View<br>一层一层<strong>委托</strong>保存恢复状态  </p>
+<h3 id="Activity优先级"><a href="#Activity优先级" class="headerlink" title="Activity优先级"></a>Activity优先级</h3><ol>
+<li>前台Activity  正在交互的,onResume状态的Activity</li>
+<li>可见但非前台,弹了Dialog,依然可见但是不能交互</li>
+<li>后台Activity ,执行onStop之后</li>
+</ol>
+<h3 id="Configuration-改变"><a href="#Configuration-改变" class="headerlink" title="Configuration 改变"></a>Configuration 改变</h3><p>Configuration改变的时候系统默认会重建Activity,如果我不想重建,那么可以选择配置<code>android:configChanges</code>属性,一般常用的就<code>orientation</code>,<code>screenSize</code>,<code>keyboardHidden</code>  </p>
+<p>so,一般给Activity配上这个就行了:<br><code>android:configChanges=&quot;orientation|screenSize|keyboardHidden&quot;</code>  </p>
+<h2 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h2><h3 id="Standard"><a href="#Standard" class="headerlink" title="Standard"></a>Standard</h3><p>标准模式,默认的启动模式,<strong>每次启动都会新建一个Activity实例</strong>    </p>
+<p>需要注意的是当使用ApplicationContext去启动Standard模式的Activity的时候会报错,说需要添加NEW_TASK 的标记  </p>
+<p>为什么呢?  </p>
+<p>因为<strong>Activity启动需要任务栈</strong>,而用<strong>Standard模式去启动Activity,默认会进入启动它的Activity所属的任务栈中,而非Activity类型的Context并没有所谓的任务栈</strong>.  </p>
+<p>AB–启动C-&gt;ABC</p>
+<h3 id="SingleTop"><a href="#SingleTop" class="headerlink" title="SingleTop"></a>SingleTop</h3><p>栈顶复用模式,如果新的Activity已位于栈顶,那么不会重新创建Activity,而是回调<code>onNewIntent</code>方法  </p>
+<p><code>onNewIntent--&gt;onResume</code></p>
+<p>ABC–启动C–&gt; ABC  </p>
+<h3 id="SingleTask"><a href="#SingleTask" class="headerlink" title="SingleTask"></a>SingleTask</h3><p>栈内复用模式,只要占中存在都不会重新创建,并且也是回调<code>onNewIntent</code><br>另外需要注意的是,该模式拥有<strong>clearTop</strong> 的效果,会把位于它顶上的Activity全部出栈(PS:必须同一个栈)  </p>
+<p>如: ABCDE–启动C(SingleTask)–&gt; ABC  </p>
+<h3 id="SingleInstance"><a href="#SingleInstance" class="headerlink" title="SingleInstance"></a>SingleInstance</h3><p>单实例模式,<strong>栈内单例</strong>,一个Activity实例<strong>独占一个任务栈</strong>,可以说整个手机都只有一个实例  </p>
+<p>指定启动模式有两种方式:  </p>
+<ol>
+<li>清单里修改<code>android:launchMode</code>属性  </li>
+<li>Intent.addFlags() 来指定    </li>
+</ol>
+<h4 id="Activity的Flags"><a href="#Activity的Flags" class="headerlink" title="Activity的Flags"></a>Activity的Flags</h4><p>常用的Flags:  </p>
+<ol>
+<li>FLAG_ACTIVITY_NEW_TASK  指定启动模式为<code>singleTask</code></li>
+<li>FLAG_ACTIVITY_SINGLE_TOP    指定<code>singleTop</code>启动模式</li>
+<li>FLAG_ACTIVITY_CLEAR_TOP  将在它之上的所有Activity移出栈,这个模式一般需要和<code>FLAG_ACTIVITY_NEW_TASK</code>一起出现  </li>
+<li>FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS  具有这个标记的Activity不会出现在历史Activity列表中,相当于<code>android:exludeFromRecents=&quot;true&quot;</code>  </li>
+</ol>
+<h2 id="任务栈"><a href="#任务栈" class="headerlink" title="任务栈"></a>任务栈</h2><p>TaskAffinity(任务相关性),<strong>标识了一个Activity的任务栈名称</strong>,<em>默认为应用的包名</em>(万能的包名啊!)      </p>
+<p>我们可以在清单文件里配置,也可以为每个Activity配置不同的值,但是需要注意的是它<strong>不能跟包名相同,并且必须要包含<code>.</code>分隔符!</strong>  </p>
+<p>并且TaskAffinity属性主要和<code>SingleTask</code>或者<code>allowTaskReparenting</code>配对使用,在其他情况下没有意义.  </p>
+<ol>
+<li>TaskAffinity和SingleTask配合: TaskAffinity的值为该模式的任务栈的名字</li>
+<li>TaskAffinity和<code>allowTaskReparenting</code> 配合就比较复杂了:<br>当<code>allowTaskReparenting</code>为<code>true</code>时,A应用启动B应用的一个Activity C,然后按Home回到桌面,然后再单击B的桌面图标,这个时候不是启动B的主Activity,而是重新显示被应用A启动的Activity C(原本来说C是A启动的,那么C应该待在A的任务栈里),或者说C从A的任务栈转移到了B的任务栈中(<em>也许这就是re-parenting的含义吧</em>)  </li>
+</ol>
+<p>补充:<code>allowTaskReparenting</code>需要和<code>FLAG_ACTIVITY_RESET_TASK_IF_NEEDED</code>标记合作才行,而从Home点击图标启动应用的<code>Intent</code>就带有该标记.  </p>
+<h2 id="IntentFilter的匹配规则"><a href="#IntentFilter的匹配规则" class="headerlink" title="IntentFilter的匹配规则"></a>IntentFilter的匹配规则</h2><p>启动Activity有两种方式:<strong>显示调用</strong>和<strong>隐式调用</strong>  </p>
+<p>显示调用非常简单,明确指定被启动对象的组件信息即可.  </p>
+<p>而隐式调用需要配合<code>IntentFilter</code>去匹配,<strong>一个Activity可以有多个IntentFilter</strong>,匹配到了<strong>其中一个</strong>就能启动,否则启动失败,<code>IntentFilter</code>的过滤信息有<em>action,category,data</em>    </p>
+<p>当一个Intent同时匹配<code>IntentFilter</code>的action,category,data,才能启动一个Activity  </p>
+<h3 id="action的匹配规则"><a href="#action的匹配规则" class="headerlink" title="action的匹配规则"></a>action的匹配规则</h3><p>action是个字符串,区分大小写,系统自带一些Action,也可以自定义  </p>
+<p>规则是:<strong>必须要匹配</strong>,即Intent的action需要一模一样!<strong>有多个action的时候,只需要匹配到一个即可</strong>    </p>
+<p>需要注意的是,<strong>Intent必须包含action</strong>,否则匹配失败  </p>
+<h3 id="category的匹配规则"><a href="#category的匹配规则" class="headerlink" title="category的匹配规则"></a>category的匹配规则</h3><p>category跟action一样,也是个字符串,系统也自带了一些,我们也可以自定义.  </p>
+<p>它要求<code>Intent</code>中如果含有<code>category</code>,那么所有的<code>category</code>都必须和过滤规则的其中一个相同,即<strong>被过滤规则所包含,是它的子集</strong>  </p>
+<p><strong>注意:与<code>action</code>不同的是,它可以不指定<code>category</code></strong>,这是因为<code>startActivity</code>和<code>startActivityForResult</code>会默认给Intent加上<code>android.intent.category.DEFAULT</code>这个<code>categrory</code>,所以如果你的Activity要能够接受隐式调用,就必须在清单文件中为这个Activity的<code>IntentFilter</code>中指定<code>android.intent.category.DEFAULT</code>这个<code>category</code>  </p>
+<h3 id="data的匹配规则"><a href="#data的匹配规则" class="headerlink" title="data的匹配规则"></a>data的匹配规则</h3><h4 id="data的组成"><a href="#data的组成" class="headerlink" title="data的组成"></a>data的组成</h4><p>data由两部分组成,<code>mineType</code>和<code>URI</code>  </p>
+<p>mineType指媒体类型,如<code>image/jpeg</code>和<code>video/*</code>  </p>
+<p>URI比较复杂,它的格式:<br><code>&lt;scheme&gt;://&lt;host&gt;:&lt;port&gt;/[&lt;path&gt;||&lt;pathPrefix&gt;|&lt;pathPattern&gt;]</code>  </p>
+<p>看例子就简单了,比如:<code>http://yifeiyuan.me:80/about</code></p>
+<ul>
+<li>Scheme: <strong>必须</strong> URI的模式,比如http,ftp,如果URI中没有指定scheme,那么整个URI的其他参数无效  </li>
+<li>Host: <strong>必须</strong> URI的主机名,如果Host没有指定,那么URI无效</li>
+<li>Port: URI中的端口号,<strong>非必须</strong>,仅当URI中指定了scheme和host参数的时候port参数才有意义的.  </li>
+<li>path 表示完整的路径,pathPrefix表示路径前缀,pathPattern表示完整的路径,但是它可以包含通配符</li>
+</ul>
+<h4 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h4><p>data也是完全匹配,可以在xml里给Activity配置:<code>&lt;data android:mineType=&quot;image/*&quot;&gt;`</code>  </p>
+<p>启动Activity的时候可以通过<code>intent.setDataAndType()</code>设置</p>
+<pre><code>小Tip:隐式启动可能会遇到匹配不到Activity而导致Crash的情况,可以使用`PackageManager`或者`Intent`的`resolveActivity`的方法先判断是否有匹配到的Activity,防止Crash
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/public_wechat.jpg" alt="程序亦非猿 wechat" style="width: 200px; max-width: 100%;">
+    <div>都看到这里了，不关注下我的公众号吗？</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    程序亦非猿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yifeiyuan.me/blog/45aeb1e2.html" title="第1章-Activity的生命周期和启动模式">http://yifeiyuan.me/blog/45aeb1e2.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android开发艺术探索/" rel="tag"># Android开发艺术探索</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/7747819b.html" rel="next" title="第15章-Android性能优化">
+                <i class="fa fa-chevron-left"></i> 第15章-Android性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/bd630ac6.html" rel="prev" title="初试ReactNative">
+                初试ReactNative <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg" alt="程序亦非猿">
+            
+              <p class="site-author-name" itemprop="name">程序亦非猿</p>
+              <p class="site-description motion-element" itemprop="description">阿里巴巴资深无线开发工程师。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlanCheen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的生命周期"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常状态"><span class="nav-number">1.1.</span> <span class="nav-text">正常状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常状态"><span class="nav-number">1.2.</span> <span class="nav-text">异常状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调用时机"><span class="nav-number">1.2.1.</span> <span class="nav-text">调用时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View-的恢复"><span class="nav-number">1.2.2.</span> <span class="nav-text">View 的恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity优先级"><span class="nav-number">1.3.</span> <span class="nav-text">Activity优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-改变"><span class="nav-number">1.4.</span> <span class="nav-text">Configuration 改变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动模式"><span class="nav-number">2.</span> <span class="nav-text">启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard"><span class="nav-number">2.1.</span> <span class="nav-text">Standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTop"><span class="nav-number">2.2.</span> <span class="nav-text">SingleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleTask"><span class="nav-number">2.3.</span> <span class="nav-text">SingleTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SingleInstance"><span class="nav-number">2.4.</span> <span class="nav-text">SingleInstance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity的Flags"><span class="nav-number">2.4.1.</span> <span class="nav-text">Activity的Flags</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务栈"><span class="nav-number">3.</span> <span class="nav-text">任务栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentFilter的匹配规则"><span class="nav-number">4.</span> <span class="nav-text">IntentFilter的匹配规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#action的匹配规则"><span class="nav-number">4.1.</span> <span class="nav-text">action的匹配规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#category的匹配规则"><span class="nav-number">4.2.</span> <span class="nav-text">category的匹配规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data的匹配规则"><span class="nav-number">4.3.</span> <span class="nav-text">data的匹配规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#data的组成"><span class="nav-number">4.3.1.</span> <span class="nav-text">data的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匹配"><span class="nav-number">4.3.2.</span> <span class="nav-text">匹配</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">101k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=55500366";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("j6jEPDXzJpJWKRH6x2BlDiMN-gzGzoHsz", "BvUyhmR2ApFUo1MvHGBfinAH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

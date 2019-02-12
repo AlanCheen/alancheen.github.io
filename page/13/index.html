@@ -326,7 +326,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-27-Lambda在Android中的运用/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/159e976.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -345,7 +345,201 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-27-Lambda在Android中的运用/" itemprop="url">使用Lambda在Android中的替代匿名类</a></h1>
+                <a class="post-title-link" href="/blog/159e976.html" itemprop="url">反编译工具Jadx</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-01T16:34:25+08:00">
+                2015-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/159e976.html" class="leancloud_visitors" data-flag-title="反编译工具Jadx">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  191
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Jadx"><a href="#Jadx" class="headerlink" title="Jadx"></a><a href="https://github.com/skylot/jadx" target="_blank" rel="noopener">Jadx</a></h2><p>Android开发(/学习)有时候需要用到反编译工具,Window上有很多工具,而Mac上则不多,这里稍微介绍一下Mac上可用的反编译工具Jadx.</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>clone 仓库,编译<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir jadx</span><br><span class="line">git clone https://github.com/skylot/jadx.git</span><br><span class="line">cd jadx</span><br><span class="line">./gradlew dist #这个需要等一下</span><br></pre></td></tr></table></figure></p>
+<h3 id="开始反编译"><a href="#开始反编译" class="headerlink" title="开始反编译"></a>开始反编译</h3><p>等完毕后,可以开始了,我就介绍个最简单最常用的用法</p>
+<ol>
+<li>把apk改成zip</li>
+<li>解压zip获取class.dex文件</li>
+<li>将class.dex文件放到jadx目录下</li>
+</ol>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd build/jadx/</span><br><span class="line">bin/jadx -d <span class="keyword">out</span> <span class="class"><span class="keyword">class</span>.<span class="title">dex</span>  <span class="comment"># 反编译后放入out文件夹下(如果out不存在它会自动创建)</span></span></span><br><span class="line"><span class="comment">#or</span></span><br><span class="line">bin/jadx-gui <span class="class"><span class="keyword">class</span>.<span class="title">dex</span>  <span class="comment"># 会反编译,并且使用gui打开</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="http://7xjgcv.com1.z0.glb.clouddn.com/jadx.png" alt="效果图"></p>
+<p>OK,就这样,后续还可以配置环境变量,更加方便.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/f871d1e5.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/f871d1e5.html" itemprop="url">使用Lambda在Android中的替代匿名类</a></h1>
         
 
         <div class="post-meta">
@@ -397,7 +591,7 @@
 
           
           
-             <span id="/2015-08-27-Lambda在Android中的运用/" class="leancloud_visitors" data-flag-title="使用Lambda在Android中的替代匿名类">
+             <span id="/blog/f871d1e5.html" class="leancloud_visitors" data-flag-title="使用Lambda在Android中的替代匿名类">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -473,7 +667,7 @@
 <p>本文主要介绍一下Lambda在Android中替代匿名类的部分使用场景.  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-27-Lambda在Android中的运用/#more" rel="contents">
+            <a class="btn" href="/blog/f871d1e5.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -524,7 +718,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-09-01-Linux之常用文件操作命令/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/23465e17.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -543,7 +737,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-09-01-Linux之常用文件操作命令/" itemprop="url">Linux之常用文件操作命令</a></h1>
+                <a class="post-title-link" href="/blog/23465e17.html" itemprop="url">Linux之常用文件操作命令</a></h1>
         
 
         <div class="post-meta">
@@ -573,7 +767,7 @@
 
           
           
-             <span id="/2015-09-01-Linux之常用文件操作命令/" class="leancloud_visitors" data-flag-title="Linux之常用文件操作命令">
+             <span id="/blog/23465e17.html" class="leancloud_visitors" data-flag-title="Linux之常用文件操作命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -654,7 +848,7 @@ echo string &gt;&gt; filename 追加内容
 </code></pre><p>其实cat还有其他作用,只是常用就这个</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-09-01-Linux之常用文件操作命令/#more" rel="contents">
+            <a class="btn" href="/blog/23465e17.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -705,7 +899,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-30-Linux之文件搜索命令/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/b729b995.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -724,7 +918,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-30-Linux之文件搜索命令/" itemprop="url">Linux之文件搜索命令</a></h1>
+                <a class="post-title-link" href="/blog/b729b995.html" itemprop="url">Linux之文件搜索命令</a></h1>
         
 
         <div class="post-meta">
@@ -754,7 +948,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-30-Linux之文件搜索命令/" class="leancloud_visitors" data-flag-title="Linux之文件搜索命令">
+             <span id="/blog/b729b995.html" class="leancloud_visitors" data-flag-title="Linux之文件搜索命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -835,7 +1029,7 @@ echo string &gt;&gt; filename 追加内容
 <p>那么我非要立马更新数据库呢?</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-30-Linux之文件搜索命令/#more" rel="contents">
+            <a class="btn" href="/blog/b729b995.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -886,7 +1080,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-30-Linux之链接命令/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/fba637b6.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -905,7 +1099,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-30-Linux之链接命令/" itemprop="url">Linux之链接命令</a></h1>
+                <a class="post-title-link" href="/blog/fba637b6.html" itemprop="url">Linux之链接命令</a></h1>
         
 
         <div class="post-meta">
@@ -935,7 +1129,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-30-Linux之链接命令/" class="leancloud_visitors" data-flag-title="Linux之链接命令">
+             <span id="/blog/fba637b6.html" class="leancloud_visitors" data-flag-title="Linux之链接命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1020,7 +1214,7 @@ echo string &gt;&gt; filename 追加内容
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-30-Linux之链接命令/#more" rel="contents">
+            <a class="btn" href="/blog/fba637b6.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1071,7 +1265,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-23-Linux之命令基础/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/a4d42055.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1090,7 +1284,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-23-Linux之命令基础/" itemprop="url">Linux之命令基础</a></h1>
+                <a class="post-title-link" href="/blog/a4d42055.html" itemprop="url">Linux之命令基础</a></h1>
         
 
         <div class="post-meta">
@@ -1120,7 +1314,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-23-Linux之命令基础/" class="leancloud_visitors" data-flag-title="Linux之命令基础">
+             <span id="/blog/a4d42055.html" class="leancloud_visitors" data-flag-title="Linux之命令基础">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1242,7 +1436,7 @@ echo string &gt;&gt; filename 追加内容
 <p>文件或目录:<br><strong>指定查询某个目录</strong><br>如果不填写,则默认当前目录</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-23-Linux之命令基础/#more" rel="contents">
+            <a class="btn" href="/blog/a4d42055.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1293,7 +1487,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-21-AndroidStudio必备插件/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/9a1387af.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1312,7 +1506,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-21-AndroidStudio必备插件/" itemprop="url">AndroidStudio必备插件</a></h1>
+                <a class="post-title-link" href="/blog/9a1387af.html" itemprop="url">AndroidStudio必备插件</a></h1>
         
 
         <div class="post-meta">
@@ -1364,7 +1558,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-21-AndroidStudio必备插件/" class="leancloud_visitors" data-flag-title="AndroidStudio必备插件">
+             <span id="/blog/9a1387af.html" class="leancloud_visitors" data-flag-title="AndroidStudio必备插件">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1448,7 +1642,7 @@ echo string &gt;&gt; filename 追加内容
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-21-AndroidStudio必备插件/#more" rel="contents">
+            <a class="btn" href="/blog/9a1387af.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1499,7 +1693,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-19-Mac必备神器之Go2Shell/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/3f45b869.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1518,7 +1712,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-19-Mac必备神器之Go2Shell/" itemprop="url">Mac必备神器之Go2Shell</a></h1>
+                <a class="post-title-link" href="/blog/3f45b869.html" itemprop="url">Mac必备神器之Go2Shell</a></h1>
         
 
         <div class="post-meta">
@@ -1570,7 +1764,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-19-Mac必备神器之Go2Shell/" class="leancloud_visitors" data-flag-title="Mac必备神器之Go2Shell">
+             <span id="/blog/3f45b869.html" class="leancloud_visitors" data-flag-title="Mac必备神器之Go2Shell">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1642,7 +1836,7 @@ echo string &gt;&gt; filename 追加内容
 <p>选择iTerm2 ,保存并退出即可!~</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015-08-19-Mac必备神器之Go2Shell/#more" rel="contents">
+            <a class="btn" href="/blog/3f45b869.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1693,7 +1887,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-18-动态修改Shape的背景颜色/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/cda52602.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1712,7 +1906,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-18-动态修改Shape的背景颜色/" itemprop="url">动态修改Shape的solid属性的color值</a></h1>
+                <a class="post-title-link" href="/blog/cda52602.html" itemprop="url">动态修改Shape的solid属性的color值</a></h1>
         
 
         <div class="post-meta">
@@ -1764,7 +1958,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-18-动态修改Shape的背景颜色/" class="leancloud_visitors" data-flag-title="动态修改Shape的solid属性的color值">
+             <span id="/blog/cda52602.html" class="leancloud_visitors" data-flag-title="动态修改Shape的solid属性的color值">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1882,7 +2076,7 @@ echo string &gt;&gt; filename 追加内容
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-18-修改WebView的背景颜色为透明/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/dc839eaf.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1901,7 +2095,7 @@ echo string &gt;&gt; filename 追加内容
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015-08-18-修改WebView的背景颜色为透明/" itemprop="url">修改WebView的背景颜色为透明</a></h1>
+                <a class="post-title-link" href="/blog/dc839eaf.html" itemprop="url">修改WebView的背景颜色为透明</a></h1>
         
 
         <div class="post-meta">
@@ -1953,7 +2147,7 @@ echo string &gt;&gt; filename 追加内容
 
           
           
-             <span id="/2015-08-18-修改WebView的背景颜色为透明/" class="leancloud_visitors" data-flag-title="修改WebView的背景颜色为透明">
+             <span id="/blog/dc839eaf.html" class="leancloud_visitors" data-flag-title="修改WebView的背景颜色为透明">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2066,201 +2260,6 @@ echo string &gt;&gt; filename 追加内容
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-18-ItemTouchHelper之SwipeDismiss/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015-08-18-ItemTouchHelper之SwipeDismiss/" itemprop="url">ItemTouchHelper之SwipeDismiss</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-18T15:37:15+08:00">
-                2015-08-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015-08-18-ItemTouchHelper之SwipeDismiss/" class="leancloud_visitors" data-flag-title="ItemTouchHelper之SwipeDismiss">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  667
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="ItemTouchHelper"><a href="#ItemTouchHelper" class="headerlink" title="ItemTouchHelper"></a><a href="https://developer.android.com/intl/zh-cn/reference/android/support/v7/widget/helper/ItemTouchHelper.html" target="_blank" rel="noopener">ItemTouchHelper</a></h2><blockquote>
-<p>This is a utility class to add swipe to dismiss and drag &amp; drop support to RecyclerView.</p>
-</blockquote>
-<p>它是一个非常强大的工具,感觉跟ViewDragHelper一样,不过ItemTouchHelper顾名思义是处理item的touch事件的.<br>它能够让你非常容易实现侧滑删除,拖拽的功能.</p>
-<p>今天,就拿它来实现以下侧滑删除!~</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先我们看下ItemTouchHelper的构造方法<code>ItemTouchHelper(Callback callback)</code> 它需要我们传入一个Callback<br>而刚好Android非常任性,已经帮我们实现了一个:<code>SimpleCallback</code></p>
-<p>甚至,在注释里已经给我们写好了样例!!!有兴趣的同学可以去看看,这里就不给出了.</p>
-<p>接下来上代码!~</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015-08-18-ItemTouchHelper之SwipeDismiss/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2313,7 +2312,7 @@ echo string &gt;&gt; filename 追加内容
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-count">132</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2335,7 +2334,7 @@ echo string &gt;&gt; filename 追加内容
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">90</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2403,7 +2402,7 @@ echo string &gt;&gt; filename 追加内容
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">98.8k</span>
+    <span title="Site words total count">101k</span>
   
 </div>
 
