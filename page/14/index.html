@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/08/18/2015-08-18-ItemTouchHelper之SwipeDismiss/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/修改WebView的背景颜色为透明/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -343,7 +343,204 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/08/18/2015-08-18-ItemTouchHelper之SwipeDismiss/" itemprop="url">ItemTouchHelper之SwipeDismiss</a></h1>
+                <a class="post-title-link" href="/修改WebView的背景颜色为透明/" itemprop="url">修改WebView的背景颜色为透明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-18T15:37:56+08:00">
+                2015-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/修改WebView的背景颜色为透明/" class="leancloud_visitors" data-flag-title="修改WebView的背景颜色为透明">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  111
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先想当然地想到在XML设置背景颜色</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:<span class="built_in">background</span>=<span class="string">"@color/transparent"</span></span><br></pre></td></tr></table></figure>
+<p>但是运行后发现结果并非是透明的,而是白色的!</p>
+<p>后来search之..发现</p>
+<ul>
+<li>有说需要关闭硬件加速的</li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码关闭:</span></span><br><span class="line">mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE,<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//xml里设置:</span></span><br><span class="line"><span class="symbol">android:</span>layerType=<span class="string">"software"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>有说的用mWebView.setBackgroundColor(0);</li>
+</ul>
+<p>在4.4的小米4上尝试后发现</p>
+<p><strong>关闭硬件加速是没有用的</strong>,<br><strong>而mWebView.setBackgroundColor(0);有用~</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/ItemTouchHelper之SwipeDismiss/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/ItemTouchHelper之SwipeDismiss/" itemprop="url">ItemTouchHelper之SwipeDismiss</a></h1>
         
 
         <div class="post-meta">
@@ -395,7 +592,7 @@
 
           
           
-             <span id="/2015/08/18/2015-08-18-ItemTouchHelper之SwipeDismiss/" class="leancloud_visitors" data-flag-title="ItemTouchHelper之SwipeDismiss">
+             <span id="/ItemTouchHelper之SwipeDismiss/" class="leancloud_visitors" data-flag-title="ItemTouchHelper之SwipeDismiss">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,6 +606,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  667
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -437,7 +665,7 @@
 <p>接下来上代码!~</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/08/18/2015-08-18-ItemTouchHelper之SwipeDismiss/#more" rel="contents">
+            <a class="btn" href="/ItemTouchHelper之SwipeDismiss/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -488,7 +716,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/08/08/2015-08-08-Hexo搭建博客之旅/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-08-08-Hexo搭建博客之旅/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -507,7 +735,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/08/08/2015-08-08-Hexo搭建博客之旅/" itemprop="url">Hexo搭建博客之旅</a></h1>
+                <a class="post-title-link" href="/2015-08-08-Hexo搭建博客之旅/" itemprop="url">Hexo搭建博客之旅</a></h1>
         
 
         <div class="post-meta">
@@ -537,7 +765,7 @@
 
           
           
-             <span id="/2015/08/08/2015-08-08-Hexo搭建博客之旅/" class="leancloud_visitors" data-flag-title="Hexo搭建博客之旅">
+             <span id="/2015-08-08-Hexo搭建博客之旅/" class="leancloud_visitors" data-flag-title="Hexo搭建博客之旅">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -551,6 +779,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -569,7 +828,15 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想自己搭建一个博客,断断续续,折折腾腾了一周多时间,终于算是搭建完毕了.</p>
+          <p>==updated==</p>
+<p>todo</p>
+<p>主题选择 Next: <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">http://theme-next.iissnan.com/</a></p>
+<p>配置</p>
+<p>评论：gitment </p>
+<p>添加阅读时长：<a href="https://www.jianshu.com/p/baea8c95e39b" target="_blank" rel="noopener">https://www.jianshu.com/p/baea8c95e39b</a></p>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://github.com/imsun/gitment" target="_blank" rel="noopener">gitment</a><br><a href="http://lindaxiao-hust.github.io/2016/04/06/hexo-next-sitemap/" target="_blank" rel="noopener">next添加sitemap</a><br><a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">busuanzi</a></p>
+<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直想自己搭建一个博客,断断续续,折折腾腾了一周多时间,终于算是搭建完毕了.</p>
 <p>为什么要搭建博客呢?</p>
 <ol>
 <li>想有个属于自己的博客空间</li>
@@ -583,7 +850,7 @@
 <p>接下来讲讲自己的经历,说下自己遇到的坑以及注意事项~</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/08/08/2015-08-08-Hexo搭建博客之旅/#more" rel="contents">
+            <a class="btn" href="/2015-08-08-Hexo搭建博客之旅/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -673,7 +940,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-count">133</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -755,6 +1022,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">98.9k</span>
   
 </div>
 

@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/29/2015-12-29-Javadoc-generation-failed/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/Git常用命令之Tag/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -343,7 +343,208 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/29/2015-12-29-Javadoc-generation-failed/" itemprop="url">Javadoc_generation_failed</a></h1>
+                <a class="post-title-link" href="/Git常用命令之Tag/" itemprop="url">Git常用命令之Tag</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-30T20:17:42+08:00">
+                2015-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/Git常用命令之Tag/" class="leancloud_visitors" data-flag-title="Git常用命令之Tag">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  173
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="标签-tag"><a href="#标签-tag" class="headerlink" title="标签 tag"></a>标签 tag</h2><p>标签的作用不言而喻,一般当我们release一个版本的时候打个tag.</p>
+<h3 id="查看标签"><a href="#查看标签" class="headerlink" title="查看标签"></a>查看标签</h3><ul>
+<li>查看已有标签<br><code>git tag</code></li>
+<li>特定的搜索模式列出符合条件的标签<br><code>git tag -l &#39;v1.4.2.*&#39;</code></li>
+<li>查看指定tag<br><code>git show [tagname]</code></li>
+</ul>
+<h3 id="新建tag"><a href="#新建tag" class="headerlink" title="新建tag"></a>新建tag</h3><p>Git 使用的标签有两种类型：<strong>轻量级的（lightweight）</strong>和<strong>含附注的（annotated）</strong></p>
+<p>一般用包含信息的<code>-a</code>:</p>
+<p><code>$ git tag -a v1.4 -m &#39;这里写些信息&#39;</code></p>
+<h3 id="给指定的commitId-打tag"><a href="#给指定的commitId-打tag" class="headerlink" title="给指定的commitId 打tag"></a>给指定的commitId 打tag</h3><p><code>git tag -a [tagname] -m [msg] commitid</code></p>
+<p>eg.<code>git tag -a v0.1 -m &quot;add tag v0.1&quot; 6c46c1</code></p>
+<h3 id="push-tag"><a href="#push-tag" class="headerlink" title="push tag"></a>push tag</h3><p>tag需要单独push</p>
+<ul>
+<li><code>git push origin [tagname]</code></li>
+<li><code>git push --tags</code></li>
+</ul>
+<p>OK,常用的tag命令就这样!</p>
+<h2 id="资料推荐"><a href="#资料推荐" class="headerlink" title="资料推荐"></a>资料推荐</h2><p><a href="http://git-scm.com/book/zh/v1/%E8%B5%B7%E6%AD%A5-Git-%E7%AE%80%E5%8F%B2" target="_blank" rel="noopener">Pro Git</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/Javadoc-generation-failed/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Javadoc-generation-failed/" itemprop="url">Javadoc_generation_failed</a></h1>
         
 
         <div class="post-meta">
@@ -395,7 +596,7 @@
 
           
           
-             <span id="/2015/12/29/2015-12-29-Javadoc-generation-failed/" class="leancloud_visitors" data-flag-title="Javadoc_generation_failed">
+             <span id="/Javadoc-generation-failed/" class="leancloud_visitors" data-flag-title="Javadoc_generation_failed">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,6 +610,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  134
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -482,7 +714,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/24/2015-12-24-推特分享后续/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/推特分享后续/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -501,7 +733,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/24/2015-12-24-推特分享后续/" itemprop="url">推特分享后续</a></h1>
+                <a class="post-title-link" href="/推特分享后续/" itemprop="url">推特分享后续</a></h1>
         
 
         <div class="post-meta">
@@ -553,7 +785,7 @@
 
           
           
-             <span id="/2015/12/24/2015-12-24-推特分享后续/" class="leancloud_visitors" data-flag-title="推特分享后续">
+             <span id="/推特分享后续/" class="leancloud_visitors" data-flag-title="推特分享后续">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -567,6 +799,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  75
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -588,7 +851,7 @@
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前写过一篇做Twitter登录与分享功能的,那时候分享是通过调用客户端的,然而现在需要改成调用Twitter的API实现分享,诶,相当于之前做的都白做了,心里万头草泥马奔腾啊.<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/24/2015-12-24-推特分享后续/#more" rel="contents">
+            <a class="btn" href="/推特分享后续/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -639,7 +902,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/16/2015-12-16-Glide/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/Glide/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -658,7 +921,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/16/2015-12-16-Glide/" itemprop="url">Glide</a></h1>
+                <a class="post-title-link" href="/Glide/" itemprop="url">Glide</a></h1>
         
 
         <div class="post-meta">
@@ -710,7 +973,7 @@
 
           
           
-             <span id="/2015/12/16/2015-12-16-Glide/" class="leancloud_visitors" data-flag-title="Glide">
+             <span id="/Glide/" class="leancloud_visitors" data-flag-title="Glide">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -724,6 +987,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  405
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -748,7 +1042,7 @@
 <h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>与UIL的使用方式不同,Glide的API与Picasso类似,链式调用,非常舒服.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(myFragment)</span><br><span class="line">        .load(url)</span><br><span class="line">        .centerCrop()</span><br><span class="line">        .placeholder(R.drawable.loading_spinner)</span><br><span class="line">        .crossFade()</span><br><span class="line">        .into(myImageView);</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/16/2015-12-16-Glide/#more" rel="contents">
+            <a class="btn" href="/Glide/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -799,7 +1093,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/10/2015-12-10-ContentProvider/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/ContentProvider/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -818,7 +1112,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/10/2015-12-10-ContentProvider/" itemprop="url">ContentProvider的authorities属性</a></h1>
+                <a class="post-title-link" href="/ContentProvider/" itemprop="url">ContentProvider的authorities属性</a></h1>
         
 
         <div class="post-meta">
@@ -870,7 +1164,7 @@
 
           
           
-             <span id="/2015/12/10/2015-12-10-ContentProvider/" class="leancloud_visitors" data-flag-title="ContentProvider的authorities属性">
+             <span id="/ContentProvider/" class="leancloud_visitors" data-flag-title="ContentProvider的authorities属性">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -884,6 +1178,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  165
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -957,7 +1282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/04/2015-12-04-时间复杂度/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/时间复杂度/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -976,7 +1301,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/04/2015-12-04-时间复杂度/" itemprop="url">时间复杂度</a></h1>
+                <a class="post-title-link" href="/时间复杂度/" itemprop="url">时间复杂度</a></h1>
         
 
         <div class="post-meta">
@@ -1028,7 +1353,7 @@
 
           
           
-             <span id="/2015/12/04/2015-12-04-时间复杂度/" class="leancloud_visitors" data-flag-title="时间复杂度">
+             <span id="/时间复杂度/" class="leancloud_visitors" data-flag-title="时间复杂度">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1042,6 +1367,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  314
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -1067,7 +1423,7 @@
 <h3 id="其他复杂度"><a href="#其他复杂度" class="headerlink" title="其他复杂度"></a>其他复杂度</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/04/2015-12-04-时间复杂度/#more" rel="contents">
+            <a class="btn" href="/时间复杂度/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1118,7 +1474,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/12/03/2015-12-03-Android中的IPC机制/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/Android中的IPC机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1137,7 +1493,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/12/03/2015-12-03-Android中的IPC机制/" itemprop="url">Android中的IPC机制</a></h1>
+                <a class="post-title-link" href="/Android中的IPC机制/" itemprop="url">Android中的IPC机制</a></h1>
         
 
         <div class="post-meta">
@@ -1189,7 +1545,7 @@
 
           
           
-             <span id="/2015/12/03/2015-12-03-Android中的IPC机制/" class="leancloud_visitors" data-flag-title="Android中的IPC机制">
+             <span id="/Android中的IPC机制/" class="leancloud_visitors" data-flag-title="Android中的IPC机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1203,6 +1559,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  105
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -1224,7 +1611,7 @@
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/12/03/2015-12-03-Android中的IPC机制/#more" rel="contents">
+            <a class="btn" href="/Android中的IPC机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1275,7 +1662,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/11/30/2015-11-30-ADP视频学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/ADP视频学习笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1294,7 +1681,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/30/2015-11-30-ADP视频学习笔记/" itemprop="url">ADP视频学习笔记</a></h1>
+                <a class="post-title-link" href="/ADP视频学习笔记/" itemprop="url">ADP视频学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -1346,7 +1733,7 @@
 
           
           
-             <span id="/2015/11/30/2015-11-30-ADP视频学习笔记/" class="leancloud_visitors" data-flag-title="ADP视频学习笔记">
+             <span id="/ADP视频学习笔记/" class="leancloud_visitors" data-flag-title="ADP视频学习笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1360,6 +1747,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  342
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -1381,7 +1799,7 @@
           <h2 id="ADP"><a href="#ADP" class="headerlink" title="ADP"></a>ADP</h2><p>ADP全称 <em>Android Development Patterns</em>,google出的视频,口号是<strong>Build better apps</strong><br>本文记录我该系列的学习笔记.<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/11/30/2015-11-30-ADP视频学习笔记/#more" rel="contents">
+            <a class="btn" href="/ADP视频学习笔记/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1432,7 +1850,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/11/25/2015-11-25-Mou/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/Mou/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1451,7 +1869,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/25/2015-11-25-Mou/" itemprop="url">Mou备忘</a></h1>
+                <a class="post-title-link" href="/Mou/" itemprop="url">Mou备忘</a></h1>
         
 
         <div class="post-meta">
@@ -1503,7 +1921,7 @@
 
           
           
-             <span id="/2015/11/25/2015-11-25-Mou/" class="leancloud_visitors" data-flag-title="Mou备忘">
+             <span id="/Mou/" class="leancloud_visitors" data-flag-title="Mou备忘">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1517,6 +1935,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  831
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -1539,7 +1988,7 @@
 <p>在此记录一下Mou的md语法,作为备忘<br><img src="http://25.io/mou/Mou_128.png" alt="Mou icon"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/11/25/2015-11-25-Mou/#more" rel="contents">
+            <a class="btn" href="/Mou/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1590,7 +2039,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/11/23/2015-11-23-OkHttp和Retrofit2学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/OkHttp和Retrofit2学习笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1609,7 +2058,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2015/11/23/2015-11-23-OkHttp和Retrofit2学习笔记/" itemprop="url">OkHttp和Retrofit2学习笔记</a></h1>
+                <a class="post-title-link" href="/OkHttp和Retrofit2学习笔记/" itemprop="url">OkHttp和Retrofit2学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -1661,7 +2110,7 @@
 
           
           
-             <span id="/2015/11/23/2015-11-23-OkHttp和Retrofit2学习笔记/" class="leancloud_visitors" data-flag-title="OkHttp和Retrofit2学习笔记">
+             <span id="/OkHttp和Retrofit2学习笔记/" class="leancloud_visitors" data-flag-title="OkHttp和Retrofit2学习笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1675,6 +2124,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  101
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
           
 
           
@@ -1696,7 +2176,7 @@
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2015/11/23/2015-11-23-OkHttp和Retrofit2学习笔记/#more" rel="contents">
+            <a class="btn" href="/OkHttp和Retrofit2学习笔记/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1704,163 +2184,6 @@
         
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015/11/20/2015-11-20-Android给apk签名那点事/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/20/2015-11-20-Android给apk签名那点事/" itemprop="url">Android给apk签名那点事</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-20T16:16:13+08:00">
-                2015-11-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015/11/20/2015-11-20-Android给apk签名那点事/" class="leancloud_visitors" data-flag-title="Android给apk签名那点事">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  前几天老大的6p一打开应用就奔溃,于是与让我给应用适配6.0.后来最后发布内测版本后,发现又是打开立即奔溃,在确定我代码push之后,找了一下原因,最终发现是梆梆加固搞的鬼.<br>  然后老大又让我去尝试其他加固方案,又因为加固后又需要重新加固,所以就有了这篇笔记.<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/11/20/2015-11-20-Android给apk签名那点事/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
     
     
     
@@ -1943,7 +2266,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-count">133</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2025,6 +2348,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">98.9k</span>
   
 </div>
 
