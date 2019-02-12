@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="google7b0a9fcb246835ea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Tools,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言开发Android不光用的只是AndroidStudio.在这里记录好用的各种类型的工具/App.   Mac AppGo2Shell一个小巧而强大的工具,快速在当前位置打开Shell Dash一个非常强大的文档工具. Iterm2神器.. Oh,my zshiterm2配ohmyzsh,爽到爆.    终极 Shell">
+<meta name="keywords" content="Tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发工具汇总">
+<meta property="og:url" content="http://yifeiyuan.me/2015-09-28-开发工具汇总/index.html">
+<meta property="og:site_name" content="程序亦非猿">
+<meta property="og:description" content="前言开发Android不光用的只是AndroidStudio.在这里记录好用的各种类型的工具/App.   Mac AppGo2Shell一个小巧而强大的工具,快速在当前位置打开Shell Dash一个非常强大的文档工具. Iterm2神器.. Oh,my zshiterm2配ohmyzsh,爽到爆.    终极 Shell">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-06-28T14:52:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开发工具汇总">
+<meta name="twitter:description" content="前言开发Android不光用的只是AndroidStudio.在这里记录好用的各种类型的工具/App.   Mac AppGo2Shell一个小巧而强大的工具,快速在当前位置打开Shell Dash一个非常强大的文档工具. Iterm2神器.. Oh,my zshiterm2配ohmyzsh,爽到爆.    终极 Shell">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yifeiyuan.me/2015-09-28-开发工具汇总/">
+
+
+
+
+
+  <title>开发工具汇总 | 程序亦非猿</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76763188-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdc587745eeea6144f7851024cf7649f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程序亦非猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求卓越与极致。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friends">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8PxzhGzDyp6PhUfzXxXs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-09-28-开发工具汇总/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">开发工具汇总</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-28T10:04:40+08:00">
+                2015-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015-09-28-开发工具汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2015-09-28-开发工具汇总/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2015-09-28-开发工具汇总/" class="leancloud_visitors" data-flag-title="开发工具汇总">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  385
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>开发Android不光用的只是AndroidStudio.<br>在这里记录好用的各种类型的工具/App.  </p>
+<h2 id="Mac-App"><a href="#Mac-App" class="headerlink" title="Mac App"></a>Mac App</h2><h3 id="Go2Shell"><a href="#Go2Shell" class="headerlink" title="Go2Shell"></a><a href="http://zipzapmac.com/Go2Shell" target="_blank" rel="noopener">Go2Shell</a></h3><p>一个小巧而强大的工具,快速在当前位置打开Shell</p>
+<h3 id="Dash"><a href="#Dash" class="headerlink" title="Dash"></a><a href="https://kapeli.com/dash" target="_blank" rel="noopener">Dash</a></h3><p>一个非常强大的文档工具.</p>
+<h3 id="Iterm2"><a href="#Iterm2" class="headerlink" title="Iterm2"></a><a href="http://iterm2.com/" target="_blank" rel="noopener">Iterm2</a></h3><p>神器..</p>
+<h3 id="Oh-my-zsh"><a href="#Oh-my-zsh" class="headerlink" title="Oh,my zsh"></a><a href="http://ohmyz.sh/" target="_blank" rel="noopener">Oh,my zsh</a></h3><p>iterm2配ohmyzsh,爽到爆.  </p>
+<ol>
+<li><a href="http://macshuo.com/?p=676" target="_blank" rel="noopener">终极 Shell</a></li>
+</ol>
+<a id="more"></a>
+<h3 id="OptionSpace"><a href="#OptionSpace" class="headerlink" title="OptionSpace"></a><a href="https://optionspace.co/download/" target="_blank" rel="noopener">OptionSpace</a></h3><h3 id="SublimeText"><a href="#SublimeText" class="headerlink" title="SublimeText"></a><a href="http://www.sublimetext.com/" target="_blank" rel="noopener">SublimeText</a></h3><ol>
+<li><a href="http://blog.saymagic.cn/2015/01/01/sublime_text_concise_course.html" target="_blank" rel="noopener">Sublime Text简明教程
+</a>  </li>
+<li><a href="http://blog.saymagic.cn/2015/06/20/write-blog-by-sublime.html" target="_blank" rel="noopener">Sublime进阶使用
+</a>  </li>
+</ol>
+<h3 id="Atom"><a href="#Atom" class="headerlink" title="Atom"></a><a href="https://atom.io/docs" target="_blank" rel="noopener">Atom</a></h3><p>Github开发的编辑工具  </p>
+<h3 id="Paste"><a href="#Paste" class="headerlink" title="Paste"></a><a href="http://bbs.feng.com/read-htm-tid-9943996.html" target="_blank" rel="noopener">Paste</a></h3><p>很好用的对剪贴板历史进行管理的软件:Paste</p>
+<h3 id="Bartender"><a href="#Bartender" class="headerlink" title="Bartender"></a><a href="http://www.pc6.com/mac/114699.html" target="_blank" rel="noopener">Bartender</a></h3><p>Bartender 2.0：装机必备的菜单栏工具</p>
+<h3 id="DaisyDisk"><a href="#DaisyDisk" class="headerlink" title="DaisyDisk"></a><a href="http://www.pc6.com/mac/114134.html" target="_blank" rel="noopener">DaisyDisk</a></h3><p>DaisyDisk Mac版是Mac OS平台上的一款Mac系统清理工具，他可以帮助你了解磁盘使用状况，并进行准确的分析</p>
+<h3 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a><a href="">Vim</a></h3><p>文章:</p>
+<ol>
+<li><a href="http://yuez.me/jiang-ni-de-vim-da-zao-cheng-qing-qiao-qiang-da-de-ide/" target="_blank" rel="noopener"></a></li>
+</ol>
+<h3 id="flux"><a href="#flux" class="headerlink" title="flux"></a><a href="https://justgetflux.com/" target="_blank" rel="noopener">flux</a></h3><p>一个可以让屏幕颜色跟随时间变化而变化的神奇的软件,能让眼睛更舒服~  </p>
+<h3 id="retinizer"><a href="#retinizer" class="headerlink" title="retinizer"></a><a href="http://retinizer.mikelpr.com/" target="_blank" rel="noopener">retinizer</a></h3><h2 id="制图工具"><a href="#制图工具" class="headerlink" title="制图工具"></a>制图工具</h2><h3 id="ProcessOn"><a href="#ProcessOn" class="headerlink" title="ProcessOn"></a><a href="https://www.processon.com/tour" target="_blank" rel="noopener">ProcessOn</a></h3><p>免费在线作图工具</p>
+<h3 id="StarUML-2"><a href="#StarUML-2" class="headerlink" title="StarUML 2"></a><a href="http://staruml.io/" target="_blank" rel="noopener">StarUML 2</a></h3><p>一个uml图工具~  </p>
+<h3 id="Xmind"><a href="#Xmind" class="headerlink" title="Xmind"></a><a href="http://www.xmind.net/download/mac/" target="_blank" rel="noopener">Xmind</a></h3><p>思维导图工具.  </p>
+<h3 id="onepassword"><a href="#onepassword" class="headerlink" title="onepassword"></a><a href="https://agilebits.com/onepassword/mac" target="_blank" rel="noopener">onepassword</a></h3><p>一个app保存所有密码~  </p>
+<h3 id="百度脑图"><a href="#百度脑图" class="headerlink" title="百度脑图"></a><a href="http://naotu.baidu.com/edit.html" target="_blank" rel="noopener">百度脑图</a></h3><h2 id="Web-Site"><a href="#Web-Site" class="headerlink" title="Web Site"></a>Web Site</h2><h3 id="dpical"><a href="#dpical" class="headerlink" title="dpical"></a><a href="http://jennift.com/dpical.html" target="_blank" rel="noopener">dpical</a></h3><h3 id="screensize"><a href="#screensize" class="headerlink" title="screensize"></a><a href="http://screensiz.es/phone" target="_blank" rel="noopener">screensize</a></h3><h3 id="RGB颜色查询对照表"><a href="#RGB颜色查询对照表" class="headerlink" title="RGB颜色查询对照表"></a><a href="http://www.114la.com/other/rgb.htm" target="_blank" rel="noopener">RGB颜色查询对照表</a></h3><h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a><a href="https://regex101.com/" target="_blank" rel="noopener">正则表达式</a></h3><h3 id="MD5破解"><a href="#MD5破解" class="headerlink" title="MD5破解"></a><a href="http://md5ss.sinaapp.com/" target="_blank" rel="noopener">MD5破解</a></h3><h3 id="Codota"><a href="#Codota" class="headerlink" title="Codota"></a><a href="https://www.codota.com/" target="_blank" rel="noopener">Codota</a></h3><p>代码搜索工具   </p>
+<h3 id="tinypng"><a href="#tinypng" class="headerlink" title="tinypng"></a><a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a></h3><p>图片压缩,非常给力  </p>
+<h3 id="apkleecher"><a href="#apkleecher" class="headerlink" title="apkleecher"></a><a href="http://apkleecher.com/" target="_blank" rel="noopener">apkleecher</a></h3><p>APK下载工具  </p>
+<h3 id="Json在线解析"><a href="#Json在线解析" class="headerlink" title="Json在线解析"></a><a href="http://json.bloople.net/#_output" target="_blank" rel="noopener">Json在线解析</a></h3><p>在线解析json数据,很快很清楚  </p>
+<h3 id="jsonformatter"><a href="#jsonformatter" class="headerlink" title="jsonformatter"></a><a href="https://jsonformatter.curiousconcept.com/" target="_blank" rel="noopener">jsonformatter</a></h3><p>与上一个不同,这个可以填写url  </p>
+<h3 id="jsonschema2pojo"><a href="#jsonschema2pojo" class="headerlink" title="jsonschema2pojo"></a><a href="http://www.jsonschema2pojo.org/" target="_blank" rel="noopener">jsonschema2pojo</a></h3><p>填写json生成pojo  </p>
+<h2 id="Chrome插件"><a href="#Chrome插件" class="headerlink" title="Chrome插件"></a>Chrome插件</h2><h3 id="PostMan"><a href="#PostMan" class="headerlink" title="PostMan"></a><a href="http://xiequan.info/postman-%E5%B8%AE%E5%8A%A9%E4%BD%A0%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E9%AB%98%E6%95%88%E7%9A%84http%E6%A8%A1%E6%8B%9F%E5%92%8Capi%E8%B0%83%E8%AF%95/?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">PostMan</a></h3><h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><h3 id="ShowJava"><a href="#ShowJava" class="headerlink" title="ShowJava"></a><a href="">ShowJava</a></h3><p>一个可以反编译App的App,很强大.</p>
+<h2 id="发布工具"><a href="#发布工具" class="headerlink" title="发布工具"></a>发布工具</h2><h3 id="Fir"><a href="#Fir" class="headerlink" title="Fir"></a><a href="http://fir.im/plaza" target="_blank" rel="noopener">Fir</a></h3><h2 id="开源库资源"><a href="#开源库资源" class="headerlink" title="开源库资源"></a>开源库资源</h2><h3 id="android-arsenal"><a href="#android-arsenal" class="headerlink" title="android-arsenal"></a><a href="https://android-arsenal.com/" target="_blank" rel="noopener">android-arsenal</a></h3><h2 id="其他汇总资料"><a href="#其他汇总资料" class="headerlink" title="其他汇总资料"></a>其他汇总资料</h2><ol>
+<li><a href="http://www.mobdevgroup.com/tools/frontend/" target="_blank" rel="noopener">开发工具</a>  </li>
+<li><a href="http://wulfric.me/2015/08/zsh/" target="_blank" rel="noopener">一些命令行效率工具</a>  </li>
+<li><a href="http://info.9iphp.com/15-chrome-extensions-for-developers/" target="_blank" rel="noopener">[必备]15个对开发人员有用的Chrome扩展插件</a>  </li>
+<li><a href="http://toutiao.com/a6236185341524164865/?tt_from=sina&amp;utm_campain=client_share&amp;app=news_article&amp;utm_source=sinaweibo&amp;iid=3428152586&amp;utm_medium=toutiao_ios" target="_blank" rel="noopener">你不应错过的 22 款 Mac 效率工具 App</a><br>5.</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/public_wechat.jpg" alt="程序亦非猿 wechat" style="width: 200px; max-width: 100%;">
+    <div>都看到这里了，不关注下我的公众号吗？</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tools/" rel="tag"># Tools</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-09-27-SublimeText/" rel="next" title="SublimeText">
+                <i class="fa fa-chevron-left"></i> SublimeText
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-09-29-Hexo奇淫技巧/" rel="prev" title="Hexo奇淫技巧">
+                Hexo奇淫技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg" alt="程序亦非猿">
+            
+              <p class="site-author-name" itemprop="name">程序亦非猿</p>
+              <p class="site-description motion-element" itemprop="description">阿里巴巴资深无线开发工程师。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlanCheen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac-App"><span class="nav-number">2.</span> <span class="nav-text">Mac App</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Go2Shell"><span class="nav-number">2.1.</span> <span class="nav-text">Go2Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dash"><span class="nav-number">2.2.</span> <span class="nav-text">Dash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterm2"><span class="nav-number">2.3.</span> <span class="nav-text">Iterm2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oh-my-zsh"><span class="nav-number">2.4.</span> <span class="nav-text">Oh,my zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OptionSpace"><span class="nav-number">2.5.</span> <span class="nav-text">OptionSpace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SublimeText"><span class="nav-number">2.6.</span> <span class="nav-text">SublimeText</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Atom"><span class="nav-number">2.7.</span> <span class="nav-text">Atom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paste"><span class="nav-number">2.8.</span> <span class="nav-text">Paste</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bartender"><span class="nav-number">2.9.</span> <span class="nav-text">Bartender</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DaisyDisk"><span class="nav-number">2.10.</span> <span class="nav-text">DaisyDisk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vim"><span class="nav-number">2.11.</span> <span class="nav-text">Vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flux"><span class="nav-number">2.12.</span> <span class="nav-text">flux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#retinizer"><span class="nav-number">2.13.</span> <span class="nav-text">retinizer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制图工具"><span class="nav-number">3.</span> <span class="nav-text">制图工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ProcessOn"><span class="nav-number">3.1.</span> <span class="nav-text">ProcessOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StarUML-2"><span class="nav-number">3.2.</span> <span class="nav-text">StarUML 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xmind"><span class="nav-number">3.3.</span> <span class="nav-text">Xmind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onepassword"><span class="nav-number">3.4.</span> <span class="nav-text">onepassword</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度脑图"><span class="nav-number">3.5.</span> <span class="nav-text">百度脑图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Site"><span class="nav-number">4.</span> <span class="nav-text">Web Site</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dpical"><span class="nav-number">4.1.</span> <span class="nav-text">dpical</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screensize"><span class="nav-number">4.2.</span> <span class="nav-text">screensize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGB颜色查询对照表"><span class="nav-number">4.3.</span> <span class="nav-text">RGB颜色查询对照表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式"><span class="nav-number">4.4.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5破解"><span class="nav-number">4.5.</span> <span class="nav-text">MD5破解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Codota"><span class="nav-number">4.6.</span> <span class="nav-text">Codota</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tinypng"><span class="nav-number">4.7.</span> <span class="nav-text">tinypng</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apkleecher"><span class="nav-number">4.8.</span> <span class="nav-text">apkleecher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Json在线解析"><span class="nav-number">4.9.</span> <span class="nav-text">Json在线解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonformatter"><span class="nav-number">4.10.</span> <span class="nav-text">jsonformatter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonschema2pojo"><span class="nav-number">4.11.</span> <span class="nav-text">jsonschema2pojo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome插件"><span class="nav-number">5.</span> <span class="nav-text">Chrome插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PostMan"><span class="nav-number">5.1.</span> <span class="nav-text">PostMan</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">6.</span> <span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ShowJava"><span class="nav-number">6.1.</span> <span class="nav-text">ShowJava</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布工具"><span class="nav-number">7.</span> <span class="nav-text">发布工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fir"><span class="nav-number">7.1.</span> <span class="nav-text">Fir</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开源库资源"><span class="nav-number">8.</span> <span class="nav-text">开源库资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#android-arsenal"><span class="nav-number">8.1.</span> <span class="nav-text">android-arsenal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他汇总资料"><span class="nav-number">9.</span> <span class="nav-text">其他汇总资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">98.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=55500366";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3ziAreWiNzlov5HG92ezfzWJ-gzGzoHsz", "LjNQNMtKIvrTWjz52K1WpPl4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

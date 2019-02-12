@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/一步一步深入理解CoordinateLayout/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-07-06-learn-css/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -343,505 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/一步一步深入理解CoordinateLayout/" itemprop="url">一步一步深入理解CoordinatorLayout</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-12T20:48:59+08:00">
-                2016-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/一步一步深入理解CoordinateLayout/" class="leancloud_visitors" data-flag-title="一步一步深入理解CoordinatorLayout">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.8k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  15 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一步一步深入理解CoordinatorLayout"><a href="#一步一步深入理解CoordinatorLayout" class="headerlink" title="一步一步深入理解CoordinatorLayout"></a>一步一步深入理解<a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html" target="_blank" rel="noopener">CoordinatorLayout</a></h1><p>Google推出Design库已经一年了，国内也出过一些文章关于CoordinatorLayout，但是都是教你怎么使用用，或者简单的自定义一些Behavior,并没有一篇文章深入去了解它的原理。  </p>
-<p>刚好这两天为了实现一个UI效果，看了<code>CoordinatorLayout</code>（后面<em>简称Col</em>）的官方文档以及源码，搞懂了它的原理，于是想着拿出来分享，特在此记录分享如何一步一步深入理解Col，希望可以填补这个空缺。    </p>
-<p>补充说明：</p>
-<ol>
-<li>Col等源码基于<code>23.2.1</code>版本   </li>
-<li>本文侧重在于Col与Behavior之间的交互，侧重于原理，并选择要点进行讲解，所以可能会有一些点被我忽略，不过看完后我相信你对Col会有更深一层的了解。      </li>
-</ol>
-<h2 id="初步了解"><a href="#初步了解" class="headerlink" title="初步了解"></a>初步了解</h2><p>学习最好的习惯就是看官方文档，来看看Col的定义以及官网的介绍：  </p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoordinatorLayout</span></span></span><br><span class="line"><span class="class"><span class="keyword">extends</span> <span class="title">ViewGroup</span> <span class="keyword">implements</span> <span class="title">NestedScrollingParent</span></span></span><br></pre></td></tr></table></figure>
-<p>官网介绍:    </p>
-<blockquote>
-<p>CoordinatorLayout is a super-powered FrameLayout.<br>CoordinatorLayout is intended for two primary use cases:</p>
-<ol>
-<li>As a top-level application decor or chrome layout</li>
-<li>As a container for a specific interaction with one or more child views</li>
-</ol>
-</blockquote>
-<p>从定义可以看到Col继承自<code>ViewGroup</code>，并且它被设计成一个<code>top-level</code>的根布局，它本身只是一个ViewGroup，实现了<code>NestedScrollingParent</code>接口，看似非常普通，<br>但是说<code>CoordinatorLayout</code>是Design库<strong>最为重要的控件</strong>也不为过。</p>
-<p>这里额外需要注意的是:   </p>
-<ol>
-<li><strong>由于Col只实现了<code>NestedScrollingParent</code>，所以当Col嵌套（作为一个子View）的时候会得不到你想要的效果，需要自己写一个Col去实现<code>NestedScrollingChild</code>接口！</strong>    </li>
-<li>没有实现<code>NestedScrollingChild</code>接口的子View如：<code>ListView</code>，<code>ScrollView</code>在5.0以下版本跟Col是配合不了的需要使用<code>RecyclerView</code>，<code>NestedScrollView</code>才行  </li>
-</ol>
-<p><strong>why？</strong>它<code>super-powered</code>在哪里呢？    </p>
-<p>Col最为重要的作用是：<strong>提供给子View实现各种交互的极大便利</strong><br>直观的表现是我们可以使用Col非常方便地实现很多交互效果,具体效果可以看<a href="https://github.com/chrisbanes/cheesesquare" target="_blank" rel="noopener">cheesesquare</a>这个项目。  </p>
-<p>要知道，在没有Col的日子要实现简单的交互也不是件容易的事，需要通过各种回调/Event，相互回调，相互通知，甚至相互持有引用，复杂而且难以复用，但是现在有了Col，一切都变得方便了~  </p>
-<p> <strong>How？它是怎么做到的呢？</strong><br>说到这里，不得不提到Col的静态内部类—&gt;Behavior<br>接下去来了解一下它,老司机要开车了，快上车~  </p>
-<h2 id="拦截一切的Behavior"><a href="#拦截一切的Behavior" class="headerlink" title="拦截一切的Behavior"></a>拦截一切的<a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html" target="_blank" rel="noopener">Behavior</a></h2><p>Behavior是什么，有什么作用？</p>
-<pre><code>Interaction behavior plugin for child views of CoordinatorLayout.
-
-A Behavior implements one or more interactions that a user can take on a child view. These interactions may include drags, swipes, flings, or any other gestures.
-</code></pre><p>简单说，Behavior可以负责所有的交互甚至测量以及布局。</p>
-<p>其实官网资料说得挺含蓄的，官方在Medium有一篇文章，叫:<a href="https://medium.com/google-developers/intercepting-everything-with-coordinatorlayout-behaviors-8c6adc140c26#.p1v2t3rxo" target="_blank" rel="noopener">Intercepting everything with CoordinatorLayout Behaviors
-</a>，私以为用这个标题来形容Behavior，再合适不过，<strong>intercepting-everything！</strong>（这篇文章讲得很好也很全面，<strong>极力推荐阅读</strong>）  </p>
-<p>拦截一切！！迫不及待进一步了解！！  </p>
-<h3 id="深入了解"><a href="#深入了解" class="headerlink" title="深入了解"></a>深入了解</h3><h4 id="如何实例化指定Behavior"><a href="#如何实例化指定Behavior" class="headerlink" title="如何实例化指定Behavior"></a>如何实例化指定Behavior</h4><ol>
-<li>通过构造方法实例,并在代码中设置到LayoutParams里</li>
-<li>Xml里指定，比如<code>app:app:layout_behavior=&quot;me.yifeiyuan.demo.HeaderBehavior&quot;</code></li>
-<li>通过<code>DefaultBehavior</code>注解指定，比如<a href="mailto:`@CoordinatorLayout.DefaultBehavior" target="_blank" rel="noopener">`@CoordinatorLayout.DefaultBehavior</a>(AppBarLayout.Behavior.class)`</li>
-</ol>
-<p>第一种方式很简单，不多说，这里针对其他两种方式讲解一下，有一些注意点我们需要知道：    </p>
-<h6 id="Xml方式"><a href="#Xml方式" class="headerlink" title="Xml方式"></a>Xml方式</h6><p>先撇一下<code>Behavior</code>的定义以及其构造方法如下：    </p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义 V 为泛型，可指定针对哪种类型的View</span></span><br><span class="line">public static <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Behavior&lt;V</span> <span class="keyword">extends</span> <span class="title">View&gt;</span></span></span><br><span class="line"><span class="class"><span class="title">//默认的构造方法</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">Behavior</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="comment">// xml里使用</span></span><br><span class="line">public <span class="type">Behavior</span>(<span class="type">Context</span> context, <span class="type">AttributeSet</span> attrs) &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>当我们在Xml里指定的时候，在<code>LayoutParams</code>的构造方法里会去调用<code>parseBehavior</code>这个方法，<code>parseBehavior</code>关键代码如下(不贴代码不行了，已尽量精简):  </p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> Behavior parseBehavior(Context context, AttributeSet attrs, <span class="keyword">String</span> name) &#123;</span><br><span class="line">    <span class="comment">//...省略了很多代码，只留下关键的部分</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">    	<span class="comment">//获取构造方法</span></span><br><span class="line">        Map&lt;<span class="keyword">String</span>, Constructor&lt;Behavior&gt;&gt; constructors = sConstructors.<span class="keyword">get</span>();</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="comment">// 注意这一行，这里传递了attrs，所以我们必须要有第二个构造方法！！！</span></span><br><span class="line">        <span class="keyword">return</span> c.<span class="keyword">new</span><span class="type">Instance</span>(context, attrs);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="comment">//否则会报错 crash</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">RuntimeException</span>(<span class="string">"Could not inflate Behavior subclass "</span> + fullName, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里我们需要注意的是: <strong>如果要在xml里使用Behavior 那么第二个构造方法必不可少，所以我们自定义Behavior的时候需要注意;另外你在xml定义的属性会传递到第二个构造方法里去，可以获取你在xml里配置的属性，非常方便，可以说考虑还是非常周到的</strong>  </p>
-<h6 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h6><p>第三种通过注解的方式，又是在什么时候，怎么去实例化的呢？  </p>
-<p>在Col中的<code>onMeasure</code>中会去调用<code>prepareChildren</code>方法，而<code>prepareChildren</code>方法又调用了一个叫<code>getResolvedLayoutParams</code>的方法如下:  </p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LayoutParams <span class="title">getResolvedLayoutParams</span>(<span class="params">View child</span>)</span> &#123;</span><br><span class="line">    final LayoutParams result = (LayoutParams) child.getLayoutParams();</span><br><span class="line">    <span class="comment">//如果没有解析过 则去解析</span></span><br><span class="line">    <span class="keyword">if</span> (!result.mBehaviorResolved) &#123;</span><br><span class="line">        Class&lt;?&gt; childClass = child.getClass();</span><br><span class="line">        DefaultBehavior defaultBehavior = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (childClass != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">                (defaultBehavior = childClass.getAnnotation(DefaultBehavior.class)) == <span class="literal">null</span>) &#123;<span class="comment">//如果 有DefaultBehavior这个注解</span></span><br><span class="line">            childClass = childClass.getSuperclass();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (defaultBehavior != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="comment">//实例化Behavior并把这个Behavior赋值给result</span></span><br><span class="line">                result.setBehavior(defaultBehavior.<span class="keyword">value</span>().newInstance());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                Log.e(TAG, <span class="string">"Default behavior class "</span> + defaultBehavior.<span class="keyword">value</span>().getName() +</span><br><span class="line">                        <span class="string">" could not be instantiated. Did you forget a default constructor?"</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result.mBehaviorResolved = <span class="literal">true</span>;<span class="comment">//标记已经解析过  </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>所以注解方式是在<code>onMeasure</code>中通过<code>getResolvedLayoutParams</code>去实例化的。  </p>
-<p>另外还需要知道的是，<code>Behavior</code>是Col.LayoutParams的成员变量，那么也就是说只有当你的<code>Behavior</code>设置给Col的 <strong>直接子View</strong> 才会有效果，这点要记住，不然徒劳无功。(Col的子View的子View就不要给它设置Behavior啦，没效果的)    </p>
-<p>以上需要牢记，不过仅仅知道这些显然是不够的！至少我不会到这里就停~    </p>
-<p>接下去继续深入阅读Behavior的源码一探究竟（一言不合就看源码）  </p>
-<p>在我阅读了<code>Behavior</code>的源码后，我觉得非常有必要先搞清楚几个非常重要的概念。  </p>
-<h4 id="child与dependency"><a href="#child与dependency" class="headerlink" title="child与dependency"></a>child与dependency</h4><ol>
-<li><strong>child</strong>，<em>the child view associated with this Behavior</em><br>它是一个View，<strong>是该Behavior的关联对象，也即Behavior所要操作的对象</strong>    </li>
-<li><strong>dependency</strong>，也是个View，是 <strong>child的依赖对象，同时也是Behavior对child进行操作的根据</strong>  </li>
-</ol>
-<p>弄清楚这些个概念后看源码会比较简单了，<code>Behavior</code>除了构造方法外，有23个方法，限于篇幅与精力，我挑选几个最重要的方法来讲解，当然我不会死板的一个一个毫无逻辑地解释过去。  </p>
-<h4 id="那些不能不懂的方法"><a href="#那些不能不懂的方法" class="headerlink" title="那些不能不懂的方法"></a>那些不能不懂的方法</h4><h5 id="layoutDependsOn"><a href="#layoutDependsOn" class="headerlink" title="layoutDependsOn"></a>layoutDependsOn</h5><p>之前提到了child与dependency有着依赖关系，那么问题来了： <strong>这个依赖关系是如何建立的？</strong>  </p>
-<p>在Behavior类中有个方法：  </p>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> layoutDependsOn(CoordinatorLayout  <span class="keyword">parent</span>, V child, View dependency)</span><br></pre></td></tr></table></figure>
-<p>它会被<code>Behavior</code>的<code>LayoutParams</code>的<code>dependsOn</code>方法调用：  </p>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">boolean</span> dependsOn(CoordinatorLayout <span class="keyword">parent</span>, View child, View dependency) &#123;</span><br><span class="line">    <span class="keyword">return</span> dependency == mAnchorDirectChild</span><br><span class="line">            || (mBehavior != <span class="built_in">null</span> &amp;&amp; mBehavior.layoutDependsOn(<span class="keyword">parent</span>, child, dependency));  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>而LayoutParams的<code>dependsOn</code>方法会被Col调用，<code>dependsOn</code>方法就是用来确定依赖关系的。  </p>
-<p>所以，最简单的确定依赖关系的方法是重写<code>layoutDependsOn</code>方法，并在一定条件下返回<code>true</code>即可确立依赖关系。  </p>
-<p>那为什么说一定条件呢？  </p>
-<p>比如FAB依赖于<code>SnackBar</code>，是因为它在<code>SnackBar</code>出现以及消失的时候需要改变自身的位置，所以FAB的<code>layoutDependsOn</code>方法中对<code>Snackbar.SnackbarLayout</code>返回了true，而没有依赖其他的控件：    </p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent,FloatingActionButton child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// We're dependent on all SnackbarLayouts (if enabled)</span></span><br><span class="line">    <span class="keyword">return</span> SNACKBAR_BEHAVIOR_ENABLED &amp;&amp; dependency <span class="keyword">instanceof</span> Snackbar.SnackbarLayout;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>另外需要注意的是：<strong>当确定依赖关系后，当dependency被布局（或测量）后child会紧接着被布局（或测量）</strong>，Col会无视子view的顺序(原因是Col内有个Comparator<code>mLayoutDependencyComparator</code>会按照依赖关系对所有的子View进行排序),这会影响它们的测量以及布局顺序   </p>
-<p>可以说<code>layoutDependsOn</code>方法是自定义<code>Behavior</code>最为重要的方法  </p>
-<h5 id="onDependentViewChanged"><a href="#onDependentViewChanged" class="headerlink" title="onDependentViewChanged"></a>onDependentViewChanged</h5><p>建立起依赖关系之后呢？  </p>
-<p>想要做交互，似乎还缺点什么，我想在dependency发生变化的时候改变一下child，我该如何知道这个改变的时机呢？  </p>
-<p>其实不需要我们去主动获取去判断，Col跟Behavior已经帮我们做好了这一切，<code>onDependentViewChanged</code>登场。  </p>
-<p><code>onDependentViewChanged</code>方法的定义：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Respond <span class="keyword">to</span> a change <span class="keyword">in</span> a child's dependent view</span><br><span class="line"> * This method <span class="keyword">is</span> called whenever a dependent view changes <span class="keyword">in</span> size <span class="keyword">or</span> position outside</span><br><span class="line"> * <span class="keyword">of</span> <span class="keyword">the</span> standard layout flow. A Behavior may use this method <span class="keyword">to</span> appropriately update</span><br><span class="line"> * <span class="keyword">the</span> child view <span class="keyword">in</span> response.</span><br><span class="line"> */</span><br><span class="line">public <span class="built_in">boolean</span> onDependentViewChanged(CoordinatorLayout parent, V child, View dependency) &#123;</span><br><span class="line"><span class="built_in">    return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>简单来说就是，当我们的<code>dependency</code>发生改变的时候，这个方法会调用，而我们在<code>onDependentViewChanged</code>方法里做出相应的改变，就能做出我们想要的交互效果了！  </p>
-<p>可能你也注意到了<code>onDependentViewChanged</code>方法是有返回值的  </p>
-<p>当我们改变了child的<code>size</code>或者<code>position</code>的时候我们需要返回true，差不多可以理解为 当我们的<code>dependency</code>发生了改变，同样的，child也需要发生改变，这个时候我们需要返回<code>true</code></p>
-<p>提一下：<code>onDependentViewChanged</code>方法是在Col的<code>dispatchOnDependentViewChanged</code>里调用的</p>
-<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>除了以上两个特别重要的方法外，Nested系列方法也非常重要,如<code>onStartNestedScroll</code>和<code>onStopNestedScroll</code>来监听嵌套滚动的开始和结束，不过限于篇幅，想再另外开篇去写，这里就不写了    </p>
-<p>另外还有<code>onMeasureChild</code>，<code>onLayoutChild</code>这个后面会讲。</p>
-<h2 id="为什么Behavior可以拦截一切？"><a href="#为什么Behavior可以拦截一切？" class="headerlink" title="为什么Behavior可以拦截一切？"></a>为什么Behavior可以拦截一切？</h2><p>我们知道，ViewGroup的测量，布局，事件分发都是需要自己处理的，那么Col究竟给了<code>Behavior</code>什么特权，让它能够让它拦截一切？  </p>
-<p>让我们挨个一点一点看下去  </p>
-<h3 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h3><p>直接备注在源码里了，不多说啦！~  </p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> onMeasure(<span class="built_in">int</span> widthMeasureSpec, <span class="built_in">int</span> heightMeasureSpec) &#123;</span><br><span class="line">    <span class="comment">//之前已经提到过了 解析Behavior，并按依赖顺序重排子View顺序</span></span><br><span class="line">    prepareChildren();</span><br><span class="line">    <span class="comment">//用于addPreDrawListener，OnPreDrawListener里会调用 dispatchOnDependentViewChanged(false)</span></span><br><span class="line">    ensurePreDrawListener();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="comment">// 计算 padding width height 处理 fitSystemWindow等</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">int</span> childCount = mDependencySortedChildren.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">        <span class="keyword">final</span> View child = mDependencySortedChildren.<span class="built_in">get</span>(i);</span><br><span class="line">        <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">        <span class="built_in">int</span> keylineWidthUsed = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//...处理keyline childWidthMeasureSpec等</span></span><br><span class="line">        <span class="keyword">final</span> Behavior b = lp.getBehavior();</span><br><span class="line">        <span class="comment">//当behavior的onMeasureChild方法返回true的时候，我们就可以拦截Col默认的measure</span></span><br><span class="line">        <span class="keyword">if</span> (b == <span class="keyword">null</span> || !b.onMeasureChild(<span class="keyword">this</span>, child, childWidthMeasureSpec, keylineWidthUsed,</span><br><span class="line">                childHeightMeasureSpec, <span class="number">0</span>)) &#123;</span><br><span class="line">            onMeasureChild(child, childWidthMeasureSpec, keylineWidthUsed,</span><br><span class="line">                    childHeightMeasureSpec, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">int</span> <span class="built_in">width</span> = ViewCompat.resolveSizeAndState(widthUsed, widthMeasureSpec,</span><br><span class="line">            childState &amp; ViewCompat.MEASURED_STATE_MASK);</span><br><span class="line">    <span class="keyword">final</span> <span class="built_in">int</span> <span class="built_in">height</span> = ViewCompat.resolveSizeAndState(heightUsed, heightMeasureSpec,</span><br><span class="line">            childState &lt;&lt; ViewCompat.MEASURED_HEIGHT_STATE_SHIFT);</span><br><span class="line">    setMeasuredDimension(<span class="built_in">width</span>, <span class="built_in">height</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h3><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> layoutDirection = ViewCompat.getLayoutDirection(<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//mDependencySortedChildren 在 onMeasure里已经排过序了</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> childCount = mDependencySortedChildren.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">        <span class="keyword">final</span> View child = mDependencySortedChildren.get(i);</span><br><span class="line">        <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">        <span class="keyword">final</span> Behavior behavior = lp.getBehavior();</span><br><span class="line">        <span class="comment">//可以看到，当behavior.onLayoutChild()返回true的时候，就可以拦截掉Col的默认Layout操作！    </span></span><br><span class="line">        <span class="keyword">if</span> (behavior == <span class="keyword">null</span> || !behavior.onLayoutChild(<span class="keyword">this</span>, child, layoutDirection)) &#123;</span><br><span class="line">            onLayoutChild(child, layoutDirection);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>原理其实跟<code>onMeasure</code>方法一样的。  </p>
-<h3 id="onInterceptTouchEvent-amp-onTouchEvent"><a href="#onInterceptTouchEvent-amp-onTouchEvent" class="headerlink" title="onInterceptTouchEvent &amp; onTouchEvent"></a>onInterceptTouchEvent &amp; onTouchEvent</h3><p>在处理touch事件中，Col重写了<code>onInterceptTouchEvent</code>和<code>onTouchEvent</code>，另外，它们都调用了Col里定义的一个处理拦截的方法，<code>performIntercept</code>（关键代码都在这方法之中），就看一下它们的实现吧：  </p>
-<p><code>onInterceptTouchEvent</code>的实现：  </p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span><br><span class="line">    MotionEvent cancelEvent = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</span><br><span class="line">    <span class="comment">// Make sure we reset in case we had missed a previous important event.</span></span><br><span class="line">    <span class="keyword">if</span> (action == MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">        <span class="comment">//down的时候，跟大部分ViewGroup一样，需要重置一些状态以及变量，比如 mBehaviorTouchView</span></span><br><span class="line">        resetTouchBehaviors();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//这里看performIntercept TYPE_ON_INTERCEPT标记是 onInterceptTouchEvent</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> intercepted = performIntercept(ev, TYPE_ON_INTERCEPT);</span><br><span class="line">    <span class="keyword">if</span> (cancelEvent != <span class="keyword">null</span>) &#123;</span><br><span class="line">        cancelEvent.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当事件为UP和Cancel的时候去重置（同down）</span></span><br><span class="line">    <span class="keyword">if</span> (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) &#123;</span><br><span class="line">        resetTouchBehaviors();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> intercepted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>onTouchEvent</code>的实现：  </p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> handled = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> cancelSuper = <span class="keyword">false</span>;</span><br><span class="line">    MotionEvent cancelEvent = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</span><br><span class="line">    <span class="comment">// mBehaviorTouchView不为null（代表之前有behavior处理了down事件） 或者 performIntercept返回true 那么事件就交给mBehaviorTouchView</span></span><br><span class="line">    <span class="keyword">if</span> (mBehaviorTouchView != <span class="keyword">null</span> || (cancelSuper = performIntercept(ev, TYPE_ON_TOUCH))) &#123;</span><br><span class="line">        <span class="comment">// Safe since performIntercept guarantees that</span></span><br><span class="line">        <span class="comment">// mBehaviorTouchView != null if it returns true</span></span><br><span class="line">        <span class="keyword">final</span> LayoutParams lp = (LayoutParams) mBehaviorTouchView.getLayoutParams();</span><br><span class="line">        <span class="keyword">final</span> Behavior b = lp.getBehavior();</span><br><span class="line">        <span class="keyword">if</span> (b != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 交给 behavior去处理事件  </span></span><br><span class="line">            handled = b.onTouchEvent(<span class="keyword">this</span>, mBehaviorTouchView, ev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Keep the super implementation correct</span></span><br><span class="line">    <span class="comment">// 省略调用默认实现 up&amp;cancel的时候重置状态</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">return</span> handled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到，其实这两个方法做的事情并不多，其实都交给<code>performIntercept</code>方法去做处理了！  </p>
-<p><code>performIntercept</code>的实现如下：  </p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// type 标记是intercept还是touch</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> performIntercept(MotionEvent ev, <span class="keyword">final</span> <span class="keyword">int</span> type) &#123;</span><br><span class="line">    <span class="keyword">boolean</span> intercepted = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">boolean</span> newBlock = <span class="literal">false</span>;</span><br><span class="line">    MotionEvent cancelEvent = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> action = MotionEventCompat.getActionMasked(ev);</span><br><span class="line">    <span class="keyword">final</span> List&lt;View&gt; topmostChildList = mTempList1;</span><br><span class="line">    <span class="comment">//按Z轴排序 原因很简单 让最上面的View先处理事件  </span></span><br><span class="line">    getTopSortedChildren(topmostChildList);</span><br><span class="line">    <span class="comment">// Let topmost child views inspect first</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> childCount = topmostChildList.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">        <span class="keyword">final</span> View child = topmostChildList.get(i);</span><br><span class="line">        <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">        <span class="keyword">final</span> Behavior b = lp.getBehavior();</span><br><span class="line">        <span class="comment">//当前事件已经被某个behavior拦截了（or newBlock），并且事件不为down，那么就发送一个 取消事件 给所有在拦截的behavior之后的behavior</span></span><br><span class="line">        <span class="keyword">if</span> ((intercepted || newBlock) &amp;&amp; action != MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">            <span class="comment">// Cancel all behaviors beneath the one that intercepted.</span></span><br><span class="line">            <span class="comment">// If the event is "down" then we don't have anything to cancel yet.</span></span><br><span class="line">            <span class="keyword">if</span> (b != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (cancelEvent == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">final</span> <span class="keyword">long</span> now = SystemClock.uptimeMillis();</span><br><span class="line">                    cancelEvent = MotionEvent.obtain(now, now,</span><br><span class="line">                            MotionEvent.ACTION_CANCEL, <span class="number">0.0</span>f, <span class="number">0.0</span>f, <span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">TYPE_ON_INTERCEPT:</span></span><br><span class="line">                        b.onInterceptTouchEvent(<span class="keyword">this</span>, child, cancelEvent);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">TYPE_ON_TOUCH:</span></span><br><span class="line">                        b.onTouchEvent(<span class="keyword">this</span>, child, cancelEvent);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果还没有被拦截，那么继续询问每个Behavior 是否要处理该事件</span></span><br><span class="line">        <span class="keyword">if</span> (!intercepted &amp;&amp; b != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">TYPE_ON_INTERCEPT:</span></span><br><span class="line">                    intercepted = b.onInterceptTouchEvent(<span class="keyword">this</span>, child, ev);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">TYPE_ON_TOUCH:</span></span><br><span class="line">                    intercepted = b.onTouchEvent(<span class="keyword">this</span>, child, ev);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//如果有behavior处理了当前的事件，那么把它赋值给mBehaviorTouchView,它其实跟ViewGroup源码中的mFirstTouchTarget作用是一样的</span></span><br><span class="line">            <span class="keyword">if</span> (intercepted) &#123;</span><br><span class="line">                mBehaviorTouchView = child;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Don't keep going if we're not allowing interaction below this.</span></span><br><span class="line">        <span class="comment">// Setting newBlock will make sure we cancel the rest of the behaviors.</span></span><br><span class="line">        <span class="comment">// 是否拦截一切在它之后的交互 好暴力-0-</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> wasBlocking = lp.didBlockInteraction();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> isBlocking = lp.isBlockingInteractionBelow(<span class="keyword">this</span>, child);</span><br><span class="line">        newBlock = isBlocking &amp;&amp; !wasBlocking;</span><br><span class="line">        <span class="keyword">if</span> (isBlocking &amp;&amp; !newBlock) &#123;</span><br><span class="line">            <span class="comment">// Stop here since we don't have anything more to cancel - we already did</span></span><br><span class="line">            <span class="comment">// when the behavior first started blocking things below this point.</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    topmostChildList.clear();</span><br><span class="line">    <span class="keyword">return</span> intercepted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过分析源码，可以知道，Col在关键的方法里把处理权优先交给了Behavior，所以才让Behavior拥有了拦截一切的能力，所以，原来是Col放任了Behavior！！~  </p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Col以及Behavior的重要的几个环节分析完毕，相信大家看完后能够对它们有更深层次的了解，而不是仅仅停留在使用上面。  </p>
-<p>这篇文章断断续续写了快一个月，思路断断续续，也有几次推翻重来，原本也打算想讲得更多更细一些，只是限于篇幅与精力，最终的效果跟我最初的预期有所差距，可能也有些错误或者讲解不清晰的地方。  </p>
-<p>如果你发现任何错误，或者写得不好的地方，或者不理解的地方，非常欢迎批评指正，也非常欢迎吐槽！！！！</p>
-<p>其实我还顺带看了AppBarLayout等的源码，如有可能，我还想把Design库下的所有控件都分析一遍。  </p>
-<p>感谢你的阅读。</p>
-<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://medium.com/google-developers/intercepting-everything-with-coordinatorlayout-behaviors-8c6adc140c26#.p1v2t3rxo" target="_blank" rel="noopener">Intercepting everything with CoordinatorLayout Behaviors</a>  </p>
-<p><a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html" target="_blank" rel="noopener">CoordinatorLayout.Behavior</a>  </p>
-<p><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0224/3991.html" target="_blank" rel="noopener">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0224/3991.html</a></p>
-<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><p><a href="http://yifeiyuan.me/2016/12/27/deep-into-viewstub/">ViewStub是如何实现懒加载的</a><br><a href="http://yifeiyuan.me/2016/12/29/analyze-space/">Space源码分析</a><br><a href="http://yifeiyuan.me/2017/01/02/analyze-layoutinflater1-inflate/">LayoutInflater源码分析（一）之inflate深度分析</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/博客收到第一次打赏/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/博客收到第一次打赏/" itemprop="url">博客收到第一次打赏的喜与悲</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-11T21:07:45+08:00">
-                2016-07-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/博客收到第一次打赏/" class="leancloud_visitors" data-flag-title="博客收到第一次打赏的喜与悲">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天微信突然收到一个 面对面收钱的到账通知 , 楞了一下,谁给我转的钱?<br>仔细一看,显示的名字是 <code>Major</code>,在我的记忆中,我并没有这么一个好友.  </p>
-<p>我一搜,确实不是我的好友.  </p>
-<p>刚开始还没反应过来,后来仔细一想,好像我在我的博客开放着我的微信二维码,那他应该是我的读者,这应该是对我博客的一份支持了!  </p>
-<p>非常激动,非常感激,想加他微信亲自表示感谢,但是搜索不到微信号,很是可惜.  </p>
-<p>  后面是废话和牢骚,不看也罢</p>
-<p>也因此,回想起自己写博客的经历,两年前开始写博客,一路以来自己 <strong>坚持原创</strong>,<strong>坚持授人以鱼 不如授人以渔</strong>,写博客这么久以来,写了约100篇左右,在博客上从来没有收到过打赏支持(说心里话,其实内心是比较失望的,那时候博客的图片放在七牛,连服务费都付不起呢,oh,现在依然如此).  </p>
-<p>因为自己深知写博客写文章的不易,写一篇文章通常比自己学习知识花费的时间更多.  </p>
-<p>特别是随着时间的增长,随着自己能力的提升,担当更多更重的任务,同时也发现自己更多的不足,要不断地去学习更多的知识,(比如什么OkHttp,RxJava<br>,Retrofit,Glide,Dagger2,RN等等等等),被更多的知识Push着,以至于停下脚步来写维护博客的时间越来越少.  </p>
-<p>以前写一篇文章我还同步到简书,慕课网等,还在各个平台分享出去,还去发微博at一大堆大V,甚至还开通了微信公众账号希望分享给更多的朋友,而现在,即使写了,都懒得去折腾这些了.  </p>
-<p>以前开的坑 比如 <code>群英传</code>,<code>艺术探索</code>,<code>EJ</code>,<code>设计模式</code>等系列也都因为时间与精力的关系更新缓慢,再比如最近定的一篇&lt;&lt;一步一步深入理解CoordinatorLayout&gt;&gt;(看了3天源码准备总结的),断断续续写了两个礼拜了,才写了1600字,估计才完成一半,但是始终没有将它完结,分享到博客来!  </p>
-<p>再加上写博客其实是一件十分吃力不讨好的事,花费极大的精力,可能换来的是几十或者一两百的PV,甚至被那些恶心的傻逼网站全文爬走,连个出处都不给你,再加上我自己的拖拉,很多文章以及系列都只存在我的脑海蓝图中,有的甚至还没提笔就已胎死腹中.  </p>
-<p>所以,我想,可能没有人比我更懂坚持写原创博客的艰辛了.  </p>
-<p>所以,我特别佩服那些在百忙之中还能写出精彩文章的作者.  </p>
-<p>而对于优秀的文章,我向来是非常支持的,我本人经常会打赏那些好的文章,特别是在简书上,我打赏出去的钱是我收进来的几十倍!  </p>
-<p>并且在国内现在这个环境下,鸡汤文,垃圾文遍地,各种抄袭,爬文章各种猖狂,<strong>我总怕,坚持写优秀博客的人越来越少,我能支持就支持一下</strong>.  </p>
-<p>另外,在别人支持我的时候,我总是非常感激,<strong>非常非常感激那些给予我支持的人,你们每个人的每一份打赏,我都会在<a href="http://yifeiyuan.me/donate/">这里</a>记录</strong> ,虽然写文章并不是为了钱,但是不可否认的是,这是其中一个动力来源.  </p>
-<p>如果可以,我希望我的读者,屏幕前的你,能够与我多一些互动,多给我一些建议,如果我写得烂,请喷我,如果写得好,可以支持我一下  </p>
-<p>我会非常感激,如果你能这么做的话!    </p>
-<p>我依然会坚持写博客    </p>
-<p>希望你依然会光顾  </p>
-<p>希望你会喜欢  </p>
-<p>但行好事  </p>
-<p>莫问前程  </p>
-<p>就这样  </p>
-<p>祝好  </p>
-<p>安  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/learn-css/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/learn-css/" itemprop="url">Android程序猿学Css(上)</a></h1>
+                <a class="post-title-link" href="/2016-07-06-learn-css/" itemprop="url">Android程序猿学Css(上)</a></h1>
         
 
         <div class="post-meta">
@@ -893,7 +395,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/learn-css/" class="leancloud_visitors" data-flag-title="Android程序猿学Css(上)">
+             <span id="/2016-07-06-learn-css/" class="leancloud_visitors" data-flag-title="Android程序猿学Css(上)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -967,7 +469,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>意思是修改<code>&lt;p&gt;</code>标签的相关属性.  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/learn-css/#more" rel="contents">
+            <a class="btn" href="/2016-07-06-learn-css/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1018,7 +520,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/learn-html/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-07-05-learn-html/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1037,7 +539,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/learn-html/" itemprop="url">Html入门学习</a></h1>
+                <a class="post-title-link" href="/2016-07-05-learn-html/" itemprop="url">Html入门学习</a></h1>
         
 
         <div class="post-meta">
@@ -1089,7 +591,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/learn-html/" class="leancloud_visitors" data-flag-title="Html入门学习">
+             <span id="/2016-07-05-learn-html/" class="leancloud_visitors" data-flag-title="Html入门学习">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1155,7 +657,7 @@ A Behavior implements one or more interactions that a user can take on a child v
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前几天玩了React Native,(<a href="http://yifeiyuan.me/2016/06/28/%E5%88%9D%E8%AF%95ReactNative/">文章</a>),发现如果想真的学好的话,还需要学习一下Html,Css,JavaScript,Node,ES6什么的,感觉东西好多好多<br>一样一样来吧,从Html开始涉猎吧!  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/learn-html/#more" rel="contents">
+            <a class="btn" href="/2016-07-05-learn-html/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1206,7 +708,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/第2章-IPC机制/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-30-第2章-IPC机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1225,7 +727,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/第2章-IPC机制/" itemprop="url">第2章-IPC机制</a></h1>
+                <a class="post-title-link" href="/2016-06-30-第2章-IPC机制/" itemprop="url">第2章-IPC机制</a></h1>
         
 
         <div class="post-meta">
@@ -1277,7 +779,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/第2章-IPC机制/" class="leancloud_visitors" data-flag-title="第2章-IPC机制">
+             <span id="/2016-06-30-第2章-IPC机制/" class="leancloud_visitors" data-flag-title="第2章-IPC机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1345,7 +847,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>在Android系统中IPC非常非常重要,需要掌握!!!  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/第2章-IPC机制/#more" rel="contents">
+            <a class="btn" href="/2016-06-30-第2章-IPC机制/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1396,7 +898,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/ADB命令整理/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-01-04-ADB命令整理/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1415,7 +917,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/ADB命令整理/" itemprop="url">那些做Android开发必须知道的ADB命令</a></h1>
+                <a class="post-title-link" href="/2016-01-04-ADB命令整理/" itemprop="url">那些做Android开发必须知道的ADB命令</a></h1>
         
 
         <div class="post-meta">
@@ -1467,7 +969,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/ADB命令整理/" class="leancloud_visitors" data-flag-title="那些做Android开发必须知道的ADB命令">
+             <span id="/2016-01-04-ADB命令整理/" class="leancloud_visitors" data-flag-title="那些做Android开发必须知道的ADB命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1534,7 +1036,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>熟练掌握ADB命令可以提高开发效率<br>以下记录一些比较常用的命令:  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/ADB命令整理/#more" rel="contents">
+            <a class="btn" href="/2016-01-04-ADB命令整理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1585,7 +1087,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/微博这傻逼/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-28-微博这傻逼/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1604,7 +1106,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/微博这傻逼/" itemprop="url">微博这是要完</a></h1>
+                <a class="post-title-link" href="/2016-06-28-微博这傻逼/" itemprop="url">微博这是要完</a></h1>
         
 
         <div class="post-meta">
@@ -1656,7 +1158,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/微博这傻逼/" class="leancloud_visitors" data-flag-title="微博这是要完">
+             <span id="/2016-06-28-微博这傻逼/" class="leancloud_visitors" data-flag-title="微博这是要完">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1779,7 +1281,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/初试ReactNative/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-28-初试ReactNative/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1798,7 +1300,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/初试ReactNative/" itemprop="url">初试ReactNative</a></h1>
+                <a class="post-title-link" href="/2016-06-28-初试ReactNative/" itemprop="url">初试ReactNative</a></h1>
         
 
         <div class="post-meta">
@@ -1850,7 +1352,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/初试ReactNative/" class="leancloud_visitors" data-flag-title="初试ReactNative">
+             <span id="/2016-06-28-初试ReactNative/" class="leancloud_visitors" data-flag-title="初试ReactNative">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1916,7 +1418,7 @@ A Behavior implements one or more interactions that a user can take on a child v
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>博客写累了，玩玩 ReactNative！~    </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/初试ReactNative/#more" rel="contents">
+            <a class="btn" href="/2016-06-28-初试ReactNative/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1967,7 +1469,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/第1章-Activity的生命周期和启动模式/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-27-第1章-Activity的生命周期和启动模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -1986,7 +1488,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/第1章-Activity的生命周期和启动模式/" itemprop="url">第1章-Activity的生命周期和启动模式</a></h1>
+                <a class="post-title-link" href="/2016-06-27-第1章-Activity的生命周期和启动模式/" itemprop="url">第1章-Activity的生命周期和启动模式</a></h1>
         
 
         <div class="post-meta">
@@ -2038,7 +1540,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/第1章-Activity的生命周期和启动模式/" class="leancloud_visitors" data-flag-title="第1章-Activity的生命周期和启动模式">
+             <span id="/2016-06-27-第1章-Activity的生命周期和启动模式/" class="leancloud_visitors" data-flag-title="第1章-Activity的生命周期和启动模式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2117,7 +1619,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>生命周期配对去记忆效果更佳:<br>create – destroy<br>start – stop<br>resume – pause  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/第1章-Activity的生命周期和启动模式/#more" rel="contents">
+            <a class="btn" href="/2016-06-27-第1章-Activity的生命周期和启动模式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2168,7 +1670,7 @@ A Behavior implements one or more interactions that a user can take on a child v
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/第15章-Android性能优化/">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-27-第15章-Android性能优化/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程序亦非猿">
@@ -2187,7 +1689,7 @@ A Behavior implements one or more interactions that a user can take on a child v
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/第15章-Android性能优化/" itemprop="url">第15章-Android性能优化</a></h1>
+                <a class="post-title-link" href="/2016-06-27-第15章-Android性能优化/" itemprop="url">第15章-Android性能优化</a></h1>
         
 
         <div class="post-meta">
@@ -2239,7 +1741,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 
           
           
-             <span id="/第15章-Android性能优化/" class="leancloud_visitors" data-flag-title="第15章-Android性能优化">
+             <span id="/2016-06-27-第15章-Android性能优化/" class="leancloud_visitors" data-flag-title="第15章-Android性能优化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2307,7 +1809,402 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>后面还有MAT的基本使用,我没记,可以去搜,资料不少~  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/第15章-Android性能优化/#more" rel="contents">
+            <a class="btn" href="/2016-06-27-第15章-Android性能优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-27-一步一步教你150行代码实现简书滑动返回效果/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016-06-27-一步一步教你150行代码实现简书滑动返回效果/" itemprop="url">一步一步教你150行代码实现简书滑动返回效果</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-27T21:51:40+08:00">
+                2016-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016-06-27-一步一步教你150行代码实现简书滑动返回效果/" class="leancloud_visitors" data-flag-title="一步一步教你150行代码实现简书滑动返回效果">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天带大家实现简书的滑动返回效果.</p>
+<p>先看看效果图:</p>
+<p><img src="http://ww4.sinaimg.cn/large/98900c07gw1f5lp701v07g20ah0hatf4.gif" alt="最终效果图"></p>
+<p>因为没有具体内容,也没有简书的图片资源,所以稍微简陋了点.<br>但是依然不妨碍我们的效果展示~</p>
+<p>OK,接下来惯例,通过阅读本文你能学习到:</p>
+<ol>
+<li>ViewDragHelper的使用(如果你想学习自定义View,那么ViewDragHelper你绝对不能错过)</li>
+<li>好像也没有什么了….</li>
+</ol>
+<p>这个效果,难度不大,会ViewDragHelper的同学应该10分钟就能写出来了吧~<br>如果不会也没关系~</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016-06-27-一步一步教你150行代码实现简书滑动返回效果/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2016-06-27-Android获取本地视频文件的截图/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016-06-27-Android获取本地视频文件的截图/" itemprop="url">Android获取本地视频文件的截图</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-27T21:50:07+08:00">
+                2016-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016-06-27-Android获取本地视频文件的截图/" class="leancloud_visitors" data-flag-title="Android获取本地视频文件的截图">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上次在<a href="http://www.jianshu.com/p/5f8a535c2c2e" target="_blank" rel="noopener">异步之AsyncTask(一)</a>中我们讲了AsyncTask的基础,这次来再结合新的功能来巩固一下知识点.</p>
+<p>阅读本文你需要掌握AsyncTask的基本用法,如果不懂AsyncTask,推荐阅读<a href="http://www.jianshu.com/p/5f8a535c2c2e" target="_blank" rel="noopener">异步之AsyncTask(一)</a>.</p>
+<p>通过阅读本文你将能够学到:</p>
+<ol>
+<li>如何创建本地视频缩略图</li>
+<li>如何AsyncTask使用自带线程池</li>
+<li>如何使用回调</li>
+<li>如何防止ListView加载多张图片造成位置混乱</li>
+<li>如何使用内存/磁盘缓存</li>
+</ol>
+<p>由于功能需求要获取本地视频文件的截图,用于显示,而我们所用的图片加载工具为ImageLoader,很不巧,UIL不支持该需求,所以需要我们自己写了.<br>So,动手开始写吧:</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016-06-27-Android获取本地视频文件的截图/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2397,7 +2294,7 @@ A Behavior implements one or more interactions that a user can take on a child v
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">133</span>
+                  <span class="site-state-item-count">131</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

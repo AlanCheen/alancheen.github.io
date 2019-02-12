@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="google7b0a9fcb246835ea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Twitter,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言app 未来可能有要往国外推的需求,需要做Facebook,Twitter登录,FB用umeng搞定了部分,剩下Twitter需要自己做. Create-App前提是你有账号,去注册TwitterTwitter开发者平台创建开发者账号     这里有个很难搞的坑,就是创建应用需要添加手机号,否则你会得到以下错误:    ErrorYou must add your mobile phone t">
+<meta name="keywords" content="Twitter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Twitter相关功能集成">
+<meta property="og:url" content="http://yifeiyuan.me/2015-10-12-Twitter相关功能集成/index.html">
+<meta property="og:site_name" content="程序亦非猿">
+<meta property="og:description" content="前言app 未来可能有要往国外推的需求,需要做Facebook,Twitter登录,FB用umeng搞定了部分,剩下Twitter需要自己做. Create-App前提是你有账号,去注册TwitterTwitter开发者平台创建开发者账号     这里有个很难搞的坑,就是创建应用需要添加手机号,否则你会得到以下错误:    ErrorYou must add your mobile phone t">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/98900c07gw1ex1w34v2tjj208701lwed.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/98900c07gw1ex1w5a4h04j20be09z0tc.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/98900c07gw1ex1xprbyb7j207r0dp3zj.jpg">
+<meta property="og:updated_time" content="2015-12-24T02:27:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Twitter相关功能集成">
+<meta name="twitter:description" content="前言app 未来可能有要往国外推的需求,需要做Facebook,Twitter登录,FB用umeng搞定了部分,剩下Twitter需要自己做. Create-App前提是你有账号,去注册TwitterTwitter开发者平台创建开发者账号     这里有个很难搞的坑,就是创建应用需要添加手机号,否则你会得到以下错误:    ErrorYou must add your mobile phone t">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/98900c07gw1ex1w34v2tjj208701lwed.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yifeiyuan.me/2015-10-12-Twitter相关功能集成/">
+
+
+
+
+
+  <title>Twitter相关功能集成 | 程序亦非猿</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76763188-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdc587745eeea6144f7851024cf7649f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程序亦非猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求卓越与极致。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friends">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8PxzhGzDyp6PhUfzXxXs','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/2015-10-12-Twitter相关功能集成/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Twitter相关功能集成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-12T11:15:50+08:00">
+                2015-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015-10-12-Twitter相关功能集成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2015-10-12-Twitter相关功能集成/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2015-10-12-Twitter相关功能集成/" class="leancloud_visitors" data-flag-title="Twitter相关功能集成">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>app 未来可能有要往国外推的需求,需要做<a href="https://developers.facebook.com/" target="_blank" rel="noopener">Facebook</a>,Twitter登录,FB用umeng搞定了部分,剩下Twitter需要自己做.</p>
+<h2 id="Create-App"><a href="#Create-App" class="headerlink" title="Create-App"></a><a href="https://apps.twitter.com/app/new" target="_blank" rel="noopener">Create-App</a></h2><p>前提是你有账号,去注册<a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a><br>Twitter<a href="https://dev.twitter.com" target="_blank" rel="noopener">开发者平台</a>创建开发者账号    </p>
+<p>这里有个很难搞的坑,就是创建应用需要添加手机号,否则你会得到以下错误:  </p>
+<blockquote>
+<p>Error<br>You must add your mobile phone to your Twitter profile before creating an application. Please read <a href="https://support.twitter.com/articles/110250-adding-your-mobile-number-to-your-account-via-web" target="_blank" rel="noopener">https://support.twitter.com/articles/110250-adding-your-mobile-number-to-your-account-via-web</a> for more information.</p>
+</blockquote>
+<p>但是令人发指的是,Twitter又不支持中国大陆+86的手机,遇到这个问题后瞬间整个人就不好了…<br>但是还是得完成啊,于是百般搜索,寻找解决方案,无果.<br>最后给twitter support(<a href="mailto:support@twitter.com" target="_blank" rel="noopener">support@twitter.com</a>)发了邮件,最终,人家给我开通了时间有限的权限.<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Thank you <span class="keyword">for</span> reaching out. We’re aware that you are <span class="keyword">not</span> able <span class="keyword">to</span> register a mobile phone number <span class="keyword">to</span> your account. We have enabled access <span class="keyword">for</span> you <span class="keyword">to</span> create an app without doing so. Please<span class="built_in"> note </span>that this access will expire 7 days <span class="keyword">from</span> the date of this email, so you must create your app within this time frame.</span><br><span class="line"></span><br><span class="line"><span class="keyword">While</span> developing your application, please review our Developer Agreement <span class="keyword">and</span><span class="built_in"> Policy </span><span class="keyword">to</span> ensure that your application is compliant with our Rules.</span><br><span class="line"></span><br><span class="line">Regards,</span><br><span class="line">ElliotSamuelson</span><br><span class="line">Twitter Platform Operations</span><br></pre></td></tr></table></figure></p>
+<p>finally,我可以创建应用了.</p>
+<a id="more"></a>
+<h2 id="Fabric"><a href="#Fabric" class="headerlink" title="Fabric"></a><a href="https://get.fabric.io/twitter-login?locale=zh-cn" target="_blank" rel="noopener">Fabric</a></h2><p>Twitter弄了个叫Fabric的插件,AS可用.<br>它会帮忙设置项目,帮忙生成很多必要的代码文件,挺繁琐的,这里省略了,因为已经弄完了,不想再搞了.</p>
+<p>大致记录一些,不全,具体看我Github.<br>build.gradle文件:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span>(<span class="string">'com.twitter.sdk.android:twitter:1.8.0@aar'</span>) &#123;</span><br><span class="line">    transitive = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">compile</span>(<span class="string">'com.twitter.sdk.android:tweet-composer:0.9.0@aar'</span>) &#123;</span><br><span class="line">    transitive = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        maven &#123; url <span class="string">'https://maven.fabric.io/public'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'io.fabric.tools:gradle:1.+'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line">apply plugin: <span class="string">'io.fabric'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    maven &#123; url <span class="string">'https://maven.fabric.io/public'</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>APP:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Note: Your consumer key and secret should be obfuscated in your source code before shipping.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TWITTER_KEY = <span class="string">"RJjbqTVS5kIseg9q4jsRecf7u"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TWITTER_SECRET = <span class="string">"dbBgVZYA4oBkmSr5jKaInMzijO2mt3uB82SHviTJ1tgK2Z5P8E"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        TwitterAuthConfig authConfig = <span class="keyword">new</span> TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);</span><br><span class="line"><span class="comment">//        Fabric.with(this, new TwitterCore(authConfig), new Digits());</span></span><br><span class="line">        Fabric.with(<span class="keyword">this</span>, <span class="keyword">new</span> TwitterCore(authConfig),<span class="keyword">new</span> TweetComposer());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>集成完后,开始写代码.<br>    PS:个人非常讨厌Twitter这种方式,而且搞的AS编译时间非常非常久,夸张的时候1个小时都没成功,不知道什么坑.</p>
+<h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><h3 id="最简单的方式"><a href="#最简单的方式" class="headerlink" title="最简单的方式"></a>最简单的方式</h3><p>使用推特提供的<code>TwitterLoginButton</code>,自带UI效果</p>
+<ol>
+<li>配置xml<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.twitter.sdk.android.core.identity.TwitterLoginButton</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/btn_twitter"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://ww2.sinaimg.cn/large/98900c07gw1ex1w34v2tjj208701lwed.jpg" alt="效果"></p>
+<ol start="2">
+<li><p>代码里设置监听回调<br>调用<code>TwitterLoginButton.setCallback</code>即可监听,不需要设置点击事件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setUpTwitterButton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mBtnTwitter.setCallback(<span class="keyword">new</span> Callback&lt;TwitterSession&gt;() &#123;<span class="comment">//userName alancheen06   secret  4H6cMSpc59EbLSlcQ5QI0SzAUXAAZnxDZ40KUqQkJkl7s  token 3313987080-L3UPicTGjEZrNjpjsobeDQRCbWGFyczUCV2O408</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">success</span><span class="params">(Result&lt;TwitterSession&gt; result)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"Twitter"</span>, <span class="string">"success() called with: "</span> + <span class="string">"result = ["</span> + result + <span class="string">"]++++data"</span> + result.data);</span><br><span class="line"></span><br><span class="line">            String name = result.data.getUserName();</span><br><span class="line">            <span class="keyword">long</span> userId = result.data.getUserId();<span class="comment">//3313987080</span></span><br><span class="line">            <span class="keyword">long</span> id = result.data.getId();</span><br><span class="line">            TwitterAuthToken token = result.data.getAuthToken();</span><br><span class="line">            String secret = token.secret;</span><br><span class="line">            String strToken = token.token;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">failure</span><span class="params">(TwitterException exception)</span> </span>&#123;</span><br><span class="line">            Log.d(<span class="string">"Twitter"</span>, <span class="string">"failure() called with: "</span> + <span class="string">"exception = ["</span> + exception.getMessage() + <span class="string">"]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理<code>onActivityResult</code></p>
+</li>
+</ol>
+<p>如果有fragment则需要用fragment来处理,否则Activity处理<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">mBtnTwitter</span>.onActivityResult(requestCode, resultCode, <span class="class"><span class="keyword">data</span>);//140 requestCode</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ww4.sinaimg.cn/large/98900c07gw1ex1w5a4h04j20be09z0tc.jpg" alt="点击后效果"></p>
+<h4 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h4><p>当手机安装了推特客户端,那么以上代码都没有问题,但是如果没有安装,那么就不能授权!<br>解决办法是去推特开发者后台,把app的setting下的callback url设置一下,不论什么,可以访问即可!</p>
+<p>相关资料–&gt;<a href="https://twittercommunity.com/t/failed-to-connect-to-twitter-api-using-twitterkit-on-android/29182/5" target="_blank" rel="noopener">戳这里</a></p>
+<h3 id="自定义UI"><a href="#自定义UI" class="headerlink" title="自定义UI"></a>自定义UI</h3><p>但是我的需求不能使用推特提供的UI,不过貌似没看到哪里文档有提,不过幸好自己摸索出了如下方法.</p>
+<p>其实说白了就是掰了一些<code>TwitterLoginButton</code>里的源码<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mTvCustom.setOnClickListener(v -&gt; &#123;</span><br><span class="line">    <span class="keyword">new</span> TwitterAuthClient().authorize(TwitterActivity.<span class="keyword">this</span>, <span class="keyword">new</span> Callback&lt;TwitterSession&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">success</span><span class="params">(Result&lt;TwitterSession&gt; result)</span> </span>&#123;</span><br><span class="line">            String name = result.data.getUserName();</span><br><span class="line">            <span class="keyword">long</span> userId = result.data.getUserId();<span class="comment">//3313987080</span></span><br><span class="line">            <span class="keyword">long</span> id = result.data.getId();</span><br><span class="line">            TwitterAuthToken token = result.data.getAuthToken();</span><br><span class="line">            String secret = token.secret;</span><br><span class="line">            String strToken = token.token;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">failure</span><span class="params">(TwitterException e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="获取更多信息"><a href="#获取更多信息" class="headerlink" title="获取更多信息"></a>获取更多信息</h2><p>从上文也能看出来,我们只能获取一个<code>name</code>严格来说是<code>screen_name</code>,另外一个是<code>userId</code>,而我还需要头像等信息.<br>于是,还得接下去搞.<br>其实过程异常痛苦,因为推特并没有给出详细的例子,自己也没有弄清楚<code>oauth</code>,找了老半天也没有详细的文档,不过最后还是被我弄出来了.  </p>
+<p>这里直接给代码了,无非就是拿<code>token</code>去获取数据:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment">  * &#123;"id":3313987080,"id_str":"3313987080","name":"\u7a0b\u5e8f\u4ea6\u975e\u733fAlan","screen_name":"alancheen06","location":"","profile_location":null,"description":"An android developer from China.","url":null,"entities":&#123;"description":&#123;"urls":[]&#125;&#125;,"protected":false,"followers_count":1,"friends_count":34,"listed_count":0,"created_at":"Thu Aug 13 05:29:54 +0000 2015","favourites_count":2,"utc_offset":-25200,"time_zone":"Pacific Time (US &amp; Canada)","geo_enabled":false,"verified":false,"statuses_count":13,"lang":"en","status":&#123;"created_at":"Mon Oct 12 04:23:09 +0000 2015","id":653425648577286144,"id_str":"653425648577286144","text":"<span class="doctag">@Support</span> How to add phone num?Thanks a lot!","source":"\u003ca href=\"http:\/\/twitter.com\" rel=\"nofollow\"\u003eTwitter Web Client\u003c\/a\u003e","truncated":false,"in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":17874544,"in_reply_to_user_id_str":"17874544","in_reply_to_screen_name":"Support","geo":null,"coordinates":null,"place":null,"contributors":null,"retweet_count":0,"favorite_count":1,"entities":&#123;"hashtags":[],"symbols":[],"user_mentions":[&#123;"screen_name":"Support","name":"Twitter Support","id":17874544,"id_str":"17874544","indices":[0,8]&#125;],"urls":[]&#125;,"favorited":false,"retweeted":false,"lang":"en"&#125;,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"C0DEED","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png","profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/631699830872498176\/yThxaLUe_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/631699830872498176\/yThxaLUe_normal.jpg","profile_link_color":"0084B4","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false&#125;</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> token</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getInfo</span><span class="params">(<span class="keyword">final</span> TwitterAuthToken token)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">             TwitterAuthConfig authConfig = TwitterCore.getInstance().getAuthConfig();</span><br><span class="line">             OAuthSigning oauthSigning = <span class="keyword">new</span> OAuthSigning(authConfig, token);</span><br><span class="line">             Map&lt;String, String&gt; authHeaders = oauthSigning.getOAuthEchoHeadersForVerifyCredentials();</span><br><span class="line">             URL url = <span class="keyword">null</span>;</span><br><span class="line">             <span class="keyword">try</span> &#123;</span><br><span class="line"><span class="comment">//                    url = new URL("https://api.twitter.com/1.1/users/show.json?");</span></span><br><span class="line">                 url = <span class="keyword">new</span> URL(<span class="string">"https://api.twitter.com/1.1/users/show.json?screen_name=alancheen06&amp;user_id=3313987080"</span>);</span><br><span class="line"><span class="comment">//                    url = new URL("http://api.yourbackend.com/check_credentials.json");</span></span><br><span class="line">                 HttpURLConnection conn = (HttpsURLConnection) url.openConnection();</span><br><span class="line">                 conn.setRequestMethod(<span class="string">"GET"</span>);</span><br><span class="line"><span class="comment">//                    for (Map.Entry&lt;String, String&gt; entry : authHeaders.entrySet()) &#123;</span></span><br><span class="line"><span class="comment">//                        connection.setRequestProperty(entry.getKey(), entry.getValue());</span></span><br><span class="line"><span class="comment">//                    &#125;</span></span><br><span class="line"><span class="comment">//                    connection.addRequestProperty("Authorization","OAuth oauth_consumer_key=\"7Ud4sn002Jquc6hR6XFREEqds\", oauth_nonce=\"456e1966e1db379f36f1ea9551ce0ad8\", oauth_signature=\"QWGBWcurKrLd5RvtDwjzmqtasBc%3D\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"1444727699\", oauth_token=\"3313987080-h6f0ecdEc100MCQjpKyTuiNVakj6nZ0bdV2HvUw\", oauth_version=\"1.0\"");</span></span><br><span class="line"></span><br><span class="line">                 Map&lt;String, String&gt; par = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">                 par.put(<span class="string">"screen_name"</span>, <span class="string">"alancheen06"</span>);</span><br><span class="line">                 par.put(<span class="string">"user_id"</span>, <span class="string">"3313987080"</span>);</span><br><span class="line">                 OAuth1aService.signRequest(authConfig, token, conn, par);</span><br><span class="line"></span><br><span class="line">                 conn.connect();</span><br><span class="line">                 <span class="keyword">int</span> status = conn.getResponseCode();</span><br><span class="line">                 <span class="comment">//得到读取的内容(流)</span></span><br><span class="line">                 InputStreamReader in = <span class="keyword">new</span> InputStreamReader(conn.getInputStream());</span><br><span class="line">                 <span class="comment">// 为输出创建BufferedReader</span></span><br><span class="line">                 BufferedReader buffer = <span class="keyword">new</span> BufferedReader(in);</span><br><span class="line">                 String inputLine = <span class="keyword">null</span>;</span><br><span class="line">                 String resultData = <span class="string">""</span>;</span><br><span class="line">                 <span class="comment">//使用循环来读取获得的数据</span></span><br><span class="line">                 <span class="keyword">while</span> (((inputLine = buffer.readLine()) != <span class="keyword">null</span>)) &#123;</span><br><span class="line">                     <span class="comment">//我们在每一行后面加上一个"\n"来换行</span></span><br><span class="line">                     resultData += inputLine + <span class="string">"\n"</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">                 JSONObject jo = <span class="keyword">new</span> JSONObject(resultData);</span><br><span class="line">                 String imgUrl = jo.getString(<span class="string">"profile_image_url"</span>);</span><br><span class="line">                 Log.d(<span class="string">"Twitter"</span>, <span class="string">"run: resultData"</span> + resultData);</span><br><span class="line"></span><br><span class="line">                 <span class="keyword">final</span> String aa = resultData;</span><br><span class="line">                 runOnUiThread(()-&gt;mTvInfo.setText(aa));</span><br><span class="line">             &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">             &#125; <span class="keyword">catch</span> (ProtocolException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">             &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">             &#125; <span class="keyword">catch</span> (JSONException e) &#123;</span><br><span class="line">                 e.printStackTrace();</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;).start();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Twitter分享"><a href="#Twitter分享" class="headerlink" title="Twitter分享"></a>Twitter分享</h2><p>既然登录做了,那么分享也是需要的~  </p>
+<p>分享相对来说简单多了,只是需要注意<strong>推特分享图片只能是本地文件</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TweetComposer.Builder builder = <span class="keyword">new</span> TweetComposer.Builder(context)</span><br><span class="line">        .text(content)</span><br><span class="line">        .image(fileUri)</span><br><span class="line">        .url(url);</span><br><span class="line">builder.show();</span><br></pre></td></tr></table></figure>
+<p>稍微解释一下参数:</p>
+<ol>
+<li>.text(String) 是发推的文本</li>
+<li>.image(Uri imageUri) 上面提过是因为只支持本地文件一般<code>Uri.fromFile(file)</code>即可</li>
+<li>.url(URL url)) 这个是网页链接,就是别人点击后跳转的地方,会出现在推文里.</li>
+</ol>
+<p><img src="http://ww2.sinaimg.cn/large/98900c07gw1ex1xprbyb7j207r0dp3zj.jpg" alt="分享效果"></p>
+<h2 id="分享结果处理"><a href="#分享结果处理" class="headerlink" title="分享结果处理"></a>分享结果处理</h2><p>上面提供的方法接收不到推特分享的结果,看了一下TweetComposer.Builder的源码后想出来了:<br><code>builder.createIntent()</code>可以创建一个intent,然后自己调用<code>startActivityForResult</code>,重写<code>onActivityResult</code>来接受结果即可.<br>需要注意的是这样context的类型必须是activity了.  </p>
+<p>机智如我,搞定~  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>做推特的功能大概花费了2天的时间,第一步添加手机号码的确实让我崩溃,后面也不顺利,但是幸好还是完成了功能~<br>另外也感慨一下自己的英文实在是烂,全英文的文档实在吃不消.<br>感谢Umeng集成了那么多第三方登录,分享功能,自己做真的累.    </p>
+<p>希望能给现在有需要or未来需要的人一些参考吧,就这样.    </p>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://dev.twitter.com/rest/tools/console" target="_blank" rel="noopener">API Console Tool</a><br><a href="https://docs.fabric.io/android/twitter/authentication.html" target="_blank" rel="noopener">Log in with Twitter</a><br><a href="https://docs.fabric.io/android/examples/cannonball/index.html#sign-in-with-twitter" target="_blank" rel="noopener">SignIn-with-Twitter</a><br><a href="https://docs.fabric.io/android/twitter/configure-twitter-app.html" target="_blank" rel="noopener">文档</a><br><a href="https://dev.twitter.com/rest/reference/get/statuses/lookup" target="_blank" rel="noopener">API</a><br><a href="https://github.com/twitterdev/cannonball-android" target="_blank" rel="noopener">cannonball-android</a><br><a href="https://play.google.com/store/apps/details?id=io.fabric.samples.cannonball" target="_blank" rel="noopener">示例-app</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/public_wechat.jpg" alt="程序亦非猿 wechat" style="width: 200px; max-width: 100%;">
+    <div>都看到这里了，不关注下我的公众号吗？</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Twitter/" rel="tag"># Twitter</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-10-12-自定义View的onMeasure、onLayout/" rel="next" title="自定义View的onMeasure、onLayout">
+                <i class="fa fa-chevron-left"></i> 自定义View的onMeasure、onLayout
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-10-16-RxJava操作符续/" rel="prev" title="RxJava操作符续">
+                RxJava操作符续 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg" alt="程序亦非猿">
+            
+              <p class="site-author-name" itemprop="name">程序亦非猿</p>
+              <p class="site-description motion-element" itemprop="description">阿里巴巴资深无线开发工程师。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlanCheen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-App"><span class="nav-number">2.</span> <span class="nav-text">Create-App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fabric"><span class="nav-number">3.</span> <span class="nav-text">Fabric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#登录"><span class="nav-number">4.</span> <span class="nav-text">登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最简单的方式"><span class="nav-number">4.1.</span> <span class="nav-text">最简单的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#坑"><span class="nav-number">4.1.1.</span> <span class="nav-text">坑</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义UI"><span class="nav-number">4.2.</span> <span class="nav-text">自定义UI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取更多信息"><span class="nav-number">5.</span> <span class="nav-text">获取更多信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Twitter分享"><span class="nav-number">6.</span> <span class="nav-text">Twitter分享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享结果处理"><span class="nav-number">7.</span> <span class="nav-text">分享结果处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资料"><span class="nav-number">9.</span> <span class="nav-text">资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">98.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=55500366";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3ziAreWiNzlov5HG92ezfzWJ-gzGzoHsz", "LjNQNMtKIvrTWjz52K1WpPl4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
