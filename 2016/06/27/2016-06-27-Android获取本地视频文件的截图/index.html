@@ -395,7 +395,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2016/06/27/2016-06-27-Android获取本地视频文件的截图/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/27/2016-06-27-Android获取本地视频文件的截图/" itemprop="commentCount"></span>
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/06/27/2016-06-27-Android获取本地视频文件的截图/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -655,8 +655,9 @@ public interface ThumbnailListener{
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2016/06/27/2016-06-27-Android获取本地视频文件的截图/" data-title="Android获取本地视频文件的截图" data-url="http://yifeiyuan.me/2016/06/27/2016-06-27-Android获取本地视频文件的截图/">
-      </div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -965,40 +966,67 @@ public interface ThumbnailListener{
 
   
 
+
   
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yifeiyuan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
     
+<!-- END LOCAL -->
+
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
 
-
-
-
-
-
-
-
-
-
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

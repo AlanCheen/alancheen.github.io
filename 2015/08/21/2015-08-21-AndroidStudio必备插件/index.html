@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="AndroidStudio,Tools,">
+  <meta name="keywords" content="Tools,AndroidStudio,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="记录一下好用的AndroidStudio插件,欢迎推荐!~  ButterKnife Zelezny  Drawable Importer  File Grouping  Eventbus Intellij Plugin  Layout ID Converter  Selector Generate  Gson Format  Lifecycle SorterSorts the lifecycle">
-<meta name="keywords" content="AndroidStudio,Tools">
+<meta name="keywords" content="Tools,AndroidStudio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AndroidStudio必备插件">
 <meta property="og:url" content="http://yifeiyuan.me/2015/08/21/2015-08-21-AndroidStudio必备插件/index.html">
@@ -395,7 +395,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2015/08/21/2015-08-21-AndroidStudio必备插件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/21/2015-08-21-AndroidStudio必备插件/" itemprop="commentCount"></span>
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2015/08/21/2015-08-21-AndroidStudio必备插件/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -489,9 +489,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AndroidStudio/" rel="tag"># AndroidStudio</a>
-          
             <a href="/tags/Tools/" rel="tag"># Tools</a>
+          
+            <a href="/tags/AndroidStudio/" rel="tag"># AndroidStudio</a>
           
         </div>
       
@@ -550,8 +550,9 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2015/08/21/2015-08-21-AndroidStudio必备插件/" data-title="AndroidStudio必备插件" data-url="http://yifeiyuan.me/2015/08/21/2015-08-21-AndroidStudio必备插件/">
-      </div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -835,40 +836,67 @@
 
   
 
+
   
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yifeiyuan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
     
+<!-- END LOCAL -->
+
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
 
-
-
-
-
-
-
-
-
-
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

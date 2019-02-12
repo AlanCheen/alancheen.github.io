@@ -399,7 +399,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2015/11/25/2015-11-25-Mou/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/25/2015-11-25-Mou/" itemprop="commentCount"></span>
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2015/11/25/2015-11-25-Mou/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -453,7 +453,7 @@
 <h4 id="Blockquotes"><a href="#Blockquotes" class="headerlink" title="Blockquotes"></a>Blockquotes</h4><blockquote>
 <p>Right angle brackets &gt; are used for block quotes.</p>
 </blockquote>
-<h4 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h4><p>An email <a href="mailto:&#101;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x40;&#x65;&#120;&#97;&#109;&#112;&#108;&#x65;&#46;&#99;&#111;&#109;" target="_blank" rel="noopener">&#101;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x40;&#x65;&#120;&#97;&#109;&#112;&#108;&#x65;&#46;&#99;&#111;&#109;</a> link.</p>
+<h4 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h4><p>An email <a href="mailto:&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#x65;&#64;&#x65;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#x65;&#64;&#x65;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#x6d;</a> link.</p>
 <p>Simple inline link <a href="http://chenluois.com" target="_blank" rel="noopener">http://chenluois.com</a>, another inline link <a href="http://25.io/smaller/" target="_blank" rel="noopener">Smaller</a>, one more inline link with title <a href="http://resizesafari.com" title="a Safari extension" target="_blank" rel="noopener">Resize</a>.</p>
 <p>A <a href="http://25.io/mou/" title="Markdown editor on Mac OS X" target="_blank" rel="noopener">reference style</a> link. Input id, then anywhere in the doc, define the link with corresponding id:</p>
 <p>Titles ( or called tool tips ) in the links are optional.</p>
@@ -712,8 +712,9 @@ var Mou = exactlyTheAppIwant;
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2015/11/25/2015-11-25-Mou/" data-title="Mou备忘" data-url="http://yifeiyuan.me/2015/11/25/2015-11-25-Mou/">
-      </div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -1022,40 +1023,67 @@ var Mou = exactlyTheAppIwant;
 
   
 
+
   
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yifeiyuan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
     
+<!-- END LOCAL -->
+
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
 
-
-
-
-
-
-
-
-
-
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 
