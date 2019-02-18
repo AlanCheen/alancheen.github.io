@@ -326,6 +326,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/7c1aa82f.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/7c1aa82f.html" itemprop="url">UML类图知识整理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-20T22:16:43+08:00">
+                2016-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/7c1aa82f.html" class="leancloud_visitors" data-flag-title="UML类图知识整理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  711
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h1><p>UML，进阶必备专业技能，看不懂UML就会看不懂那些优秀的资料。   </p>
+<p>这里简单整理  </p>
+<h2 id="类之间的关系"><a href="#类之间的关系" class="headerlink" title="类之间的关系"></a>类之间的关系</h2><h3 id="泛化关系-generalization"><a href="#泛化关系-generalization" class="headerlink" title="泛化关系(generalization)"></a>泛化关系(generalization)</h3><ol>
+<li>泛化（generalize）: 一条<strong>带空心箭头</strong>的线表示  </li>
+<li>实现（realize） : 一条<strong>带空心箭头的虚线</strong>表示</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/7c1aa82f.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/aec60f5b.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -724,7 +917,7 @@ A Behavior implements one or more interactions that a user can take on a child v
 <p>想要做交互，似乎还缺点什么，我想在dependency发生变化的时候改变一下child，我该如何知道这个改变的时机呢？  </p>
 <p>其实不需要我们去主动获取去判断，Col跟Behavior已经帮我们做好了这一切，<code>onDependentViewChanged</code>登场。  </p>
 <p><code>onDependentViewChanged</code>方法的定义：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Respond <span class="keyword">to</span> a change <span class="keyword">in</span> a child's dependent view</span><br><span class="line"> * This method <span class="keyword">is</span> called whenever a dependent view changes <span class="keyword">in</span> size <span class="keyword">or</span> position outside</span><br><span class="line"> * <span class="keyword">of</span> <span class="keyword">the</span> standard layout flow. A Behavior may use this method <span class="keyword">to</span> appropriately update</span><br><span class="line"> * <span class="keyword">the</span> child view <span class="keyword">in</span> response.</span><br><span class="line"> */</span><br><span class="line">public <span class="built_in">boolean</span> onDependentViewChanged(CoordinatorLayout parent, V child, View dependency) &#123;</span><br><span class="line"><span class="built_in">    return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Respond to a change in a child's dependent view</span></span><br><span class="line"><span class="comment"> * This method is called whenever a dependent view changes in size or position outside</span></span><br><span class="line"><span class="comment"> * of the standard layout flow. A Behavior may use this method to appropriately update</span></span><br><span class="line"><span class="comment"> * the child view in response.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> onDependentViewChanged(CoordinatorLayout <span class="keyword">parent</span>, V child, View dependency) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单来说就是，当我们的<code>dependency</code>发生改变的时候，这个方法会调用，而我们在<code>onDependentViewChanged</code>方法里做出相应的改变，就能做出我们想要的交互效果了！  </p>
 <p>可能你也注意到了<code>onDependentViewChanged</code>方法是有返回值的  </p>
 <p>当我们改变了child的<code>size</code>或者<code>position</code>的时候我们需要返回true，差不多可以理解为 当我们的<code>dependency</code>发生了改变，同样的，child也需要发生改变，这个时候我们需要返回<code>true</code></p>
@@ -2144,207 +2337,6 @@ A Behavior implements one or more interactions that a user can take on a child v
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/45aeb1e2.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/45aeb1e2.html" itemprop="url">第1章-Activity的生命周期和启动模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-27T22:48:28+08:00">
-                2016-06-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/45aeb1e2.html" class="leancloud_visitors" data-flag-title="第1章-Activity的生命周期和启动模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a><a href="http://developer.android.com/intl/zh-cn/reference/android/app/Activity.html" target="_blank" rel="noopener">Activity</a>的生命周期</h2><ol>
-<li>正常状态</li>
-<li>异常状态(系统杀死/Configuration变化如屏幕旋转)</li>
-</ol>
-<h3 id="正常状态"><a href="#正常状态" class="headerlink" title="正常状态"></a>正常状态</h3><ol>
-<li>onCreate   表示Activity正在创建,可以做一些初始化操作</li>
-<li>onRestart  正在重新启动,onstop后回来会调用</li>
-<li>onStart    正在被启动,后台,不可交互</li>
-<li>onResume   <strong>可见可交互前台</strong>,非常重要,许许多多的重要的类在这里初始化</li>
-<li>onPause    正在停止 <strong>后台(不一定不可见)</strong> 不可做太耗时的操作,<strong>因为onPause之后新启动Activity的onResume才能被调用</strong></li>
-<li>onStop    即将停止,<strong>不可见</strong> 可以做一些稍微重量级  的回收</li>
-<li>onDestroy 即将销毁,可以做一些回收资源,关闭线程,移除Handler消息等操作</li>
-</ol>
-<p>生命周期配对去记忆效果更佳:<br>create – destroy<br>start – stop<br>resume – pause  </p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/45aeb1e2.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2397,7 +2389,7 @@ A Behavior implements one or more interactions that a user can take on a child v
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">134</span>
+                  <span class="site-state-item-count">135</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2487,7 +2479,7 @@ A Behavior implements one or more interactions that a user can take on a child v
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">102.2k</span>
+    <span title="Site words total count">105.7k</span>
   
 </div>
 

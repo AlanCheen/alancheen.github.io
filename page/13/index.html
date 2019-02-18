@@ -326,6 +326,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/3a04ba73.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/3a04ba73.html" itemprop="url">设计模式开篇之设计原则</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-06T10:09:04+08:00">
+                2015-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/3a04ba73.html" class="leancloud_visitors" data-flag-title="设计模式开篇之设计原则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>PS:本人边学边记录,所以可能有欠缺有错误有不足之处,还望指导!</p>
+</blockquote>
+<p>在学习设计模式之前我们有必要先了解一下一些设计原则.<br>其实设计原则也是从设计模式里来的,所以暂时不需要太理解,毕竟光看原则可能有时候理解不了.</p>
+<h2 id="SOLID设计原则"><a href="#SOLID设计原则" class="headerlink" title="SOLID设计原则)"></a><a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design" target="_blank" rel="noopener">SOLID设计原则</a>)</h2><p>讲设计原则,则不得不先提一下SOLID设计原则.<br>它的每个字母分别代表一个原则,接下来分别介绍一下.</p>
+<h3 id="单一职责原则-SRP"><a href="#单一职责原则-SRP" class="headerlink" title="单一职责原则(SRP)"></a><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank" rel="noopener">单一职责原则(SRP)</a></h3><p><strong>单一职责原则（Single Responsibility Principle,SRP）</strong>  </p>
+<blockquote>
+<p>a class should have only a single responsibility (i.e. only one potential change in the software’s specification should be able to affect the specification of the class)</p>
+</blockquote>
+<p>简单来说就是:<strong><em>一个类应该只有一个职责</em></strong>(只有<strong>一个</strong>潜在的改变能影响这个类);  </p>
+<p>每一个引起类变化的原因就是一个职责,当类具有多职责时,应该把多余职责分离出去,分别创建类来完成,<br>否则这个类的耦合度会不断提升,不利于维护等.  </p>
+<p>比如某些所谓的多功能道具,集多少多少功能于一体,吹得很牛逼,结果呢?其中一个坏了,整个都坏了,全完蛋.</p>
+<p>如果说我们的代码也这样,一个类又有Http请求又有IO操作的方法又封装了各种Util方法,背负各种职责,耦合度高得能吓死你,还怎么快乐地敲代码?</p>
+<p>SRP的优点很明显:<strong>高内聚,低耦合,类结构逻辑清晰明了,提高了可读性,同时也易于维护</strong></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/3a04ba73.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/a36d0fc4.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2076,200 +2277,6 @@ echo string &gt;&gt; filename 追加内容
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/3f45b869.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/3f45b869.html" itemprop="url">Mac必备神器之Go2Shell</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-19T15:53:46+08:00">
-                2015-08-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index">
-                    <span itemprop="name">Tools</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/3f45b869.html" class="leancloud_visitors" data-flag-title="Mac必备神器之Go2Shell">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  272
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Go2Shell"><a href="#Go2Shell" class="headerlink" title="Go2Shell"></a><a href="http://zipzapmac.com/Go2Shell" target="_blank" rel="noopener">Go2Shell</a></h2><p>一个可以快速在当前目录打开Shell的工具,小巧,非常好用!</p>
-<p>但是它默认打开是<em>系统的iterm</em>,而我希望它打开<strong>iTerm2</strong>!~</p>
-<h2 id="设置默认iterm"><a href="#设置默认iterm" class="headerlink" title="设置默认iterm"></a>设置默认iterm</h2><p>而Go2Shell默认没有设置界面,需要用命令行打开(隐藏得真深啊!)<br>在Shell中输入:  </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open -a Go2Shell --args config</span><br></pre></td></tr></table></figure>
-<p>会打开设置界面</p>
-<p><img src="http://7xjgcv.com1.z0.glb.clouddn.com/go2shell.png" alt="设置界面"></p>
-<p>选择iTerm2 ,保存并退出即可!~</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/3f45b869.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2322,7 +2329,7 @@ echo string &gt;&gt; filename 追加内容
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">134</span>
+                  <span class="site-state-item-count">135</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2412,7 +2419,7 @@ echo string &gt;&gt; filename 追加内容
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">102.2k</span>
+    <span title="Site words total count">105.7k</span>
   
 </div>
 
