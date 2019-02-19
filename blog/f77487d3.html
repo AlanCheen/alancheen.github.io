@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="程序亦非猿, Android, 阿里, 阿里巴巴, 淘宝, Java, JavaScript, React, 大前端, 资深">
+  <meta name="keywords" content="RTFSC,Handler,ActivityThread,Looper,MessageQueue,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="0. 前言做 Android 开发肯定离不开跟 Handler 打交道，它通常被我们用来做主线程与子线程之间的通信工具，而 Handler 作为 Android 中消息机制的重要一员也确实给我们的开发带来了极大的便利。 可以说只要有异步线程与主线程通信的地方就一定会有 Handler。 那么，Handler 的通信机制的背后的原理是什么？ 本文带你揭晓。">
-<meta name="keywords" content="程序亦非猿 Android JavaScript Java 阿里 阿里巴巴 资深 大前端">
+<meta name="keywords" content="RTFSC,Handler,ActivityThread,Looper,MessageQueue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一文看穿Handler">
 <meta property="og:url" content="http://yifeiyuan.me/blog/f77487d3.html">
@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/98900c07ly1g0ayzd2nzsj20zk0mjjxc.jpg">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1550387635477-6e23e33e-e74d-48f0-82b0-61eb6b40cb61.jpeg#align=left&display=inline&height=484&linkTarget=_blank&name=handler-looper-mq.jpg&originHeight=484&originWidth=500&size=53021&width=500">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1550410927812-f71e9b16-9d2f-45e0-bfc2-2665ae5e2b44.jpeg#align=left&display=inline&height=275&linkTarget=_blank&name=handler_java.jpg&originHeight=550&originWidth=902&size=75596&width=451">
-<meta property="og:updated_time" content="2019-02-18T15:22:28.481Z">
+<meta property="og:updated_time" content="2019-02-19T06:08:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一文看穿Handler">
 <meta name="twitter:description" content="0. 前言做 Android 开发肯定离不开跟 Handler 打交道，它通常被我们用来做主线程与子线程之间的通信工具，而 Handler 作为 Android 中消息机制的重要一员也确实给我们的开发带来了极大的便利。 可以说只要有异步线程与主线程通信的地方就一定会有 Handler。 那么，Handler 的通信机制的背后的原理是什么？ 本文带你揭晓。">
@@ -482,7 +482,7 @@
 <p>那么，Handler 的通信机制的背后的原理是什么？</p>
 <p>本文带你揭晓。</p>
 <a id="more"></a>
-<p><strong>注意：本文所展示的系统源码基于 Android P，并有所删减。</strong></p>
+<p><strong>注意：本文所展示的系统源码基于 Android-27 ，并有所删减。</strong></p>
 <h2 id="1-重识-Handler"><a href="#1-重识-Handler" class="headerlink" title="1. 重识 Handler"></a>1. 重识 Handler</h2><p>我们可以使用 Handler <strong>发送并处理</strong>与一个线程关联的 Message 和 Runnable 。（注意：<strong>Runnable 会被封装进一个 Message，所以它本质上还是一个 Message</strong> ）</p>
 <p>每个 Handler 都会跟一个线程绑定，并与该线程的 MessageQueue 关联在一起，从而实现消息的管理以及线程间通信。</p>
 <h3 id="1-1-Handler-的基本用法"><a href="#1-1-Handler-的基本用法" class="headerlink" title="1.1 Handler 的基本用法"></a>1.1 Handler 的基本用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">android.os.Handler handler = <span class="keyword">new</span> Handler()&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(<span class="keyword">final</span> Message msg)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//这里接受并处理消息</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//发送消息</span></span><br><span class="line">handler.sendMessage(message);</span><br><span class="line">handler.post(runnable);</span><br></pre></td></tr></table></figure>
@@ -522,7 +522,7 @@
 <p>那么<strong>线程的切换又是怎么回事</strong>呢？<br>很多人搞不懂这个原理，但是其实非常简单，我们将所涉及的方法调用栈画出来，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Thread.foo()&#123;</span><br><span class="line">	Looper.loop()</span><br><span class="line">	 -&gt; MessageQueue.next()</span><br><span class="line"> 	  -&gt; Message.target.dispatchMessage()</span><br><span class="line"> 	   -&gt; Handler.handleMessage()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>显而易见，Handler.handleMessage() 所在的线程最终由调用 Looper.loop() 的线程所决定。</strong></p>
-<p>平时我们用的时候从异步线程发送消息到 Handler，这个 Handler 的 loop() 方法是在主线程调用的，所以消息就从异步线程切换到了主线程。</p>
+<p>平时我们用的时候从异步线程发送消息到 Handler，这个 Handler 的 <code>handleMessage()</code> 方法是在主线程调用的，所以消息就从异步线程切换到了主线程。</p>
 <h3 id="2-3-图解原理"><a href="#2-3-图解原理" class="headerlink" title="2.3 图解原理"></a>2.3 图解原理</h3><p>文字版的原理解析到这里就结束了，如果你看到这里还是没有懂，没关系，我特意给你们准备了些图，配合着前面几个章节，再多看几遍，一定可以吃透。</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1550387635477-6e23e33e-e74d-48f0-82b0-61eb6b40cb61.jpeg#align=left&amp;display=inline&amp;height=484&amp;linkTarget=_blank&amp;name=handler-looper-mq.jpg&amp;originHeight=484&amp;originWidth=500&amp;size=53021&amp;width=500" alt="handler-looper-mq.jpg"></p>
 <p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1550410927812-f71e9b16-9d2f-45e0-bfc2-2665ae5e2b44.jpeg#align=left&amp;display=inline&amp;height=275&amp;linkTarget=_blank&amp;name=handler_java.jpg&amp;originHeight=550&amp;originWidth=902&amp;size=75596&amp;width=451" alt="handler_java.jpg"><br>图片来源见【6】</p>
@@ -635,6 +635,20 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RTFSC/" rel="tag"># RTFSC</a>
+          
+            <a href="/tags/Handler/" rel="tag"># Handler</a>
+          
+            <a href="/tags/ActivityThread/" rel="tag"># ActivityThread</a>
+          
+            <a href="/tags/Looper/" rel="tag"># Looper</a>
+          
+            <a href="/tags/MessageQueue/" rel="tag"># MessageQueue</a>
+          
+        </div>
       
 
       
@@ -764,7 +778,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-count">94</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
