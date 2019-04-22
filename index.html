@@ -326,6 +326,413 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/d15b9274.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/d15b9274.html" itemprop="url">Lottie 源码分析--揭秘炫酷动画的背后原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T21:05:22+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-04-22T21:07:20+08:00">
+                2019-04-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/blog/d15b9274.html" class="leancloud_visitors" data-flag-title="Lottie 源码分析--揭秘炫酷动画的背后原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1555938410737-fe6c0155-e2c9-4a5a-93bf-7b260d05e800.jpeg#align=left&amp;display=inline&amp;height=1119&amp;name=mat-reding-1525395-unsplash.jpg&amp;originHeight=4890&amp;originWidth=3260&amp;size=559591&amp;status=done&amp;width=746" alt="mat-reding-1525395-unsplash.jpg"></p>
+<p><a name="2a1d9fae"></a></p>
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>自我在内网发布了一篇关于 Lottie 的原理分析的文章之后，就不断有同事来找我询问关于 Lottie 的各种东西，最近又有同事来问，就想着可能对大家也会有所帮助，就稍作处理后分享出来。</p>
+<p>需要注意的是，这文章写于两年前，基本版本 2.0.0-beta3，虽然我看过最新版本，主要的类没有什么差别，不过可能还是会存在一些差异。</p>
+<p>可以感受一下我两年前的实力。:-D</p>
+<p><a name="87409575"></a></p>
+<h2 id="1-Lottie-是什么？"><a href="#1-Lottie-是什么？" class="headerlink" title="1. Lottie 是什么？"></a>1. Lottie 是什么？</h2><blockquote>
+<p>Render After Effects animations natively on Android and iOS</p>
+</blockquote>
+<p>Lottie 是 airbnb 发布的库，它可以将 AE 制作的动画 在 Android&amp;iOS上以 native 代码渲染出来，目前还支持了 RN 平台。</p>
+<p>来看几个官方给出的动画效果案例：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/138547/1553765030763-eea6acb9-c1e8-44cb-8709-fb3e30010caf.gif#align=left&amp;display=inline&amp;height=373&amp;originHeight=400&amp;originWidth=800&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/138547/1553765031719-0f6fe612-c467-4fe0-9b36-61a6077817a3.gif#align=left&amp;display=inline&amp;height=373&amp;originHeight=400&amp;originWidth=800&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p>有没有很炫酷？</p>
+<p>就拿第一个动画 Jump-through 举例，如果让你来实现它，你能在多少时间内完成？三天？一个礼拜？ google 的 Nick Butcher 刚好有一篇文章写 Jump-through 的动画实现，讲述了整个实现过程，从文章里可以看出实现这个动画并不容易，有兴趣的可以看看 <a href="https://medium.com/google-developers/animation-jump-through-861f4f5b3de4" target="_blank" rel="noopener">Animation: Jump-through</a>。</p>
+<p>但是现在有了 Lottie，只要设计师用 AE 设计动画，利用 <a href="https://github.com/bodymovin/bodymovin" target="_blank" rel="noopener">bodymovin</a> 导出 ，导入到 assets, 再写下面那么点代码就可以实现了！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LottieAnimationView animationView = (LottieAnimationView) findViewById(R.id.animation_view);</span><br><span class="line">animationView.setAnimation(<span class="string">"PinJump.json"</span>);</span><br><span class="line">animationView.loop(<span class="keyword">true</span>);</span><br><span class="line">animationView.playAnimation();</span><br></pre></td></tr></table></figure>
+<p>不用写自定义 View！不用画 Path！不用去计算这个点那个点！</p>
+<p>是不是超级方便？！！！</p>
+<p>这么方便的背后，原理是什么呢？</p>
+<p><a name="489878a0"></a></p>
+<h2 id="2-TL-DR"><a href="#2-TL-DR" class="headerlink" title="2. TL;DR"></a>2. TL;DR</h2><p>bodymovin 将 AE 动画导出为 ,该  描述了该动画，而 lottie-android 的原理就是将  描述的动画用 native code 翻译出来， 其核心原理是  <strong>canvas 绘制</strong>。对，lottie 的动画是靠纯 canvas 画出来的！！！动起来则是靠的属性动画。(<code>ValueAnimator.ofFloat(0f, 1f);</code> )</p>
+<p>说具体点就是 lottie 随属性动画修改 progress，每一个 Layer 根据当前的 progress 绘制所对应的帧内容，progress 值变为1，动画结束。（有点类似于帧动画）</p>
+<p>当然说说简单，lottie其实做了非常多的工作，后续将详细解析 <a href="https://github.com/airbnb/lottie-android" target="_blank" rel="noopener">lottie-android</a> 的实现原理。</p>
+<p><a name="efc22b8e"></a></p>
+<h2 id="3-Lottie-关键类介绍"><a href="#3-Lottie-关键类介绍" class="headerlink" title="3. Lottie 关键类介绍"></a>3. Lottie 关键类介绍</h2><p>Lottie 提供了一个 LottieAnimationView 给用户使用，而实际 Lottie 的核心是 LottieDrawable，它承载了所有的绘制工作，LottieAnimationView则是对LottieDrawable 的封装，再附加了一些例如 解析  的功能。</p>
+<ul>
+<li><strong>LottieComposition</strong> 是  对应的 Model，承载  的所有信息。</li>
+<li><strong>CompositionLayer</strong> 是 layer 的集合。</li>
+<li><strong>ImageAssetBitmapManager</strong> 负责管理动画所需的图片资源。</li>
+</ul>
+<p>它们的关系：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/jpg/138547/1553765029902-cc2d01de-1175-4fc9-b36a-d5b9cff0b6a1.jpg#align=left&amp;display=inline&amp;height=722&amp;originHeight=852&amp;originWidth=880&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p><a name="4879d65c"></a></p>
+<h2 id="4-文件的属性含义"><a href="#4-文件的属性含义" class="headerlink" title="4. 文件的属性含义"></a>4. 文件的属性含义</h2><p><a href="https://github.com/bodymovin/bodymovin" target="_blank" rel="noopener">bodymovin</a>  导出的  包含了动画的一切信息, 动画的关键帧信息，动画该怎么做，做什么都包含在 里，Lottie 里所有的 Model 的数据都来自于这个 ( 该 对应的 Model 是LottieComposition)，所以要理解 Lottie 的原理，理解  的属性是第一步。</p>
+<p>属性非常多，而且不同的动画的  也有很大的差别，所以这里只讲解部分重要的属性。</p>
+<p><a name="424b1c61"></a></p>
+<h3 id="4-1-文件最外部的结构"><a href="#4-1-文件最外部的结构" class="headerlink" title="4.1 文件最外部的结构"></a>4.1 文件最外部的结构</h3><p>的最外层长这样：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"v"</span>: <span class="string">"4.5.9"</span>,</span><br><span class="line">  <span class="attr">"fr"</span>: <span class="number">15</span>,</span><br><span class="line">  <span class="attr">"ip"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"op"</span>: <span class="number">75</span>,</span><br><span class="line">  <span class="attr">"w"</span>: <span class="number">500</span>,</span><br><span class="line">  <span class="attr">"h"</span>: <span class="number">500</span>,</span><br><span class="line">  <span class="attr">"ddd"</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">"assets"</span>:[]</span><br><span class="line">  <span class="string">"layers"</span>:[]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>属性的含义：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v</td>
+<td>bodymovin的版本</td>
+</tr>
+<tr>
+<td>fr</td>
+<td>帧率</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>起始关键帧</td>
+</tr>
+<tr>
+<td>op</td>
+<td>结束关键帧</td>
+</tr>
+<tr>
+<td>w</td>
+<td>动画宽度</td>
+</tr>
+<tr>
+<td>h</td>
+<td>动画高度</td>
+</tr>
+<tr>
+<td>assets</td>
+<td>动画图片资源信息</td>
+</tr>
+<tr>
+<td>layers</td>
+<td>动画图层信息</td>
+</tr>
+</tbody>
+</table>
+<p>从这里可以获取 设计的动画的宽高，帧相关的信息，动画所需要的图片资源的信息以及图层信息。</p>
+<p><a name="854203e2"></a></p>
+<h4 id="a-assets"><a href="#a-assets" class="headerlink" title="a) assets"></a>a) assets</h4><p>图片资源信息, 相关类 LottieImageAsset、 ImageAssetBitmapManager。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"assets"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"id"</span>: <span class="string">"image_0"</span>,</span><br><span class="line">      <span class="string">"w"</span>: <span class="number">500</span>,</span><br><span class="line">      <span class="string">"h"</span>: <span class="number">500</span>,</span><br><span class="line">      <span class="string">"u"</span>: <span class="string">"images/"</span>,</span><br><span class="line">      <span class="string">"p"</span>: <span class="string">"voice_thinking_image_0.png"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+<p>属性的含义：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>图片 id</td>
+</tr>
+<tr>
+<td>w</td>
+<td>图片宽度</td>
+</tr>
+<tr>
+<td>h</td>
+<td>图片高度</td>
+</tr>
+<tr>
+<td>p</td>
+<td>图片名称</td>
+</tr>
+</tbody>
+</table>
+<p><a name="beb42690"></a></p>
+<h4 id="b-layers"><a href="#b-layers" class="headerlink" title="b) layers"></a>b) layers</h4><p>图层信息，相关类：Layer、BaseLayer以及 BaseLayer 的实现类。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"ddd"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"ind"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"ty"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="string">"nm"</span>: <span class="string">"btnSlice.png"</span>,</span><br><span class="line">    <span class="string">"cl"</span>: <span class="string">"png"</span>,</span><br><span class="line">    <span class="string">"refId"</span>: <span class="string">"image_0"</span>,</span><br><span class="line">    <span class="string">"ks"</span>: <span class="meta">&#123;....&#125;</span>,</span><br><span class="line">    <span class="string">"ao"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"ip"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"op"</span>: <span class="number">90</span>.<span class="number">0000036657751</span>,</span><br><span class="line">    <span class="string">"st"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"bm"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"sr"</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>属性的含义：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nm</td>
+<td>layerName 图层信息</td>
+</tr>
+<tr>
+<td>refId</td>
+<td>引用的资源 id,如果是 ImageLayer 那么就是图片的id</td>
+</tr>
+<tr>
+<td>ty</td>
+<td>layertype 图层类型</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>inFrame 该图层起始关键帧</td>
+</tr>
+<tr>
+<td>op</td>
+<td>outFrame 该图层结束关键帧</td>
+</tr>
+<tr>
+<td>st</td>
+<td>startFrame 开始</td>
+</tr>
+<tr>
+<td>ind</td>
+<td>layer id  图层 id</td>
+</tr>
+</tbody>
+</table>
+<p>Layer 可以理解为图层，跟 PS 等工具的概念相同，每个 Layer 负责绘制自己的内容。</p>
+<p>在 Lottie 里拥有不同的 Layer，目前有 PreComp,Solid,Image,Null,Shape,Text ，各个 Layer 拥有的属性各不相同，这里只指出共有的属性。</p>
+<p>下图为 Layer 相关类图：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/jpg/138547/1553765029894-1ec26008-6859-4f9f-b7f8-fa00d790a39c.jpg#align=left&amp;display=inline&amp;height=790&amp;originHeight=890&amp;originWidth=840&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p><a name="4afd9264"></a></p>
+<h2 id="5-Lottie-的适配原理"><a href="#5-Lottie-的适配原理" class="headerlink" title="5. Lottie 的适配原理"></a>5. Lottie 的适配原理</h2><p>在开始使用 Lottie 的时候，我们团队设计动画走的跟设计图片一样的路子，想设计2x,3x 多份资源进行适配。但是，通过阅读源码发现其实 Lottie本身在 Android 平台已经做了适配工作，而且适配原理很简单，解析  时，从  读取宽高之后 会再乘以手机的密度。再在使用的时候判断适配后的宽高是否超过屏幕的宽高，如果超过则再进行缩放。以此保障 Lottie 在 Android 平台的显示效果。</p>
+<p>核心代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LottieComposition.fromSync</span></span><br><span class="line">  <span class="keyword">float</span> scale = res.getDisplayMetrics().density;</span><br><span class="line">  <span class="keyword">int</span> width = .optInt(<span class="string">"w"</span>, -<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">int</span> height = .optInt(<span class="string">"h"</span>, -<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (width != -<span class="number">1</span> &amp;&amp; height != -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> scaledWidth = (<span class="keyword">int</span>) (width * scale);</span><br><span class="line">    <span class="keyword">int</span> scaledHeight = (<span class="keyword">int</span>) (height * scale);</span><br><span class="line">    bounds = <span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, scaledWidth, scaledHeight);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//LottieAnimationView.setComposition </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> screenWidth = Utils.getScreenWidth(getContext());</span><br><span class="line">    <span class="keyword">int</span> screenHeight = Utils.getScreenHeight(getContext());</span><br><span class="line">    <span class="keyword">int</span> compWidth = composition.getBounds().width();</span><br><span class="line">    <span class="keyword">int</span> compHeight = composition.getBounds().height();</span><br><span class="line">    <span class="keyword">if</span> (compWidth &gt; screenWidth ||</span><br><span class="line">        compHeight &gt; screenHeight) &#123;</span><br><span class="line">      <span class="keyword">float</span> xScale = screenWidth / (<span class="keyword">float</span>) compWidth;</span><br><span class="line">      <span class="keyword">float</span> yScale = screenHeight / (<span class="keyword">float</span>) compHeight;</span><br><span class="line">      setScale(Math.min(xScale, yScale));</span><br><span class="line">      Log.w(L.TAG, String.format(</span><br><span class="line">          <span class="string">"Composition larger than the screen %dx%d vs %dx%d. Scaling down."</span>,</span><br><span class="line">          compWidth, compHeight, screenWidth, screenHeight));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里值得一提的是，设计师在设计动画时要注意，<strong>需要设计的是1X 的动画</strong>，而不是2X or 3X or 4X。</p>
+<p>目前手淘用的方案是 按4X 来设计(1X看不清元素)，然后<strong>再缩小为1X</strong>，<strong>图片资源是4X</strong>。</p>
+<p><a name="2dc96526"></a></p>
+<h2 id="6-Lottie的绘制原理"><a href="#6-Lottie的绘制原理" class="headerlink" title="6. Lottie的绘制原理"></a>6. Lottie的绘制原理</h2><p>LottieAnimationView 本身是个 ImageView，所以它的绘制流程跟 ImageView 一样，所有的绘制其实在 LottieDrawable 控制的。</p>
+<p>接下去看看它的源码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LottieDrawable</span></span><br><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(@NonNull Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (compositionLayer == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">float</span> scale = <span class="keyword">this</span>.scale;</span><br><span class="line">    <span class="keyword">if</span> (compositionLayer.hasMatte()) &#123;</span><br><span class="line">      scale = Math.min(<span class="keyword">this</span>.scale, getMaxScale(canvas));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    matrix.reset();</span><br><span class="line">    matrix.preScale(scale, scale);</span><br><span class="line">    compositionLayer.draw(canvas, matrix, alpha);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到在 <code>draw</code>方法里调用了 <code>compositionLayer.draw</code>方法，由于 CompositionLayer 继承了 BaseLayer，所以需要跟进 BaseLayer ，继续跟踪：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BaseLayer.draw</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas, Matrix parentMatrix, <span class="keyword">int</span> parentAlpha)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!visible) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    buildParentLayerListIfNeeded();</span><br><span class="line">    <span class="comment">//矩阵变换处理</span></span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">    <span class="keyword">if</span> (!hasMatteOnThisLayer() &amp;&amp; !hasMasksOnThisLayer()) &#123;</span><br><span class="line">      matrix.preConcat(transform.getMatrix());</span><br><span class="line">      <span class="comment">//绘制 layer</span></span><br><span class="line">      drawLayer(canvas, matrix, alpha);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//draw matteLayer&amp; maskLayer</span></span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">    canvas.restore();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>删除了多余代码，只保留核心代码，可以看到 draw 方法里调用了抽象方法 <code>drawLayer</code>，在这里的实现在 CompositionLayer ，一起来看看：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">void</span> <span class="title">drawLayer</span><span class="params">(Canvas canvas, Matrix parentMatrix, <span class="keyword">int</span> parentAlpha)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = layers.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">      <span class="keyword">boolean</span> nonEmptyClip = <span class="keyword">true</span>;</span><br><span class="line">      <span class="keyword">if</span> (!newClipRect.isEmpty()) &#123;</span><br><span class="line">        nonEmptyClip = canvas.clipRect(newClipRect);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (nonEmptyClip) &#123;</span><br><span class="line">        layers.get(i).draw(canvas, parentMatrix, parentAlpha);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中的 layers 是该动画所包含的层，在 CompositionLayer 的 drawLayer 方法里遍历了动画所有的层，并调用layers 的 draw 方法，这样就完成了所有的绘制。</p>
+<p><a name="df5cc73c"></a></p>
+<h2 id="7-Lottie的动画原理"><a href="#7-Lottie的动画原理" class="headerlink" title="7. Lottie的动画原理"></a>7. Lottie的动画原理</h2><p>上一小节讲了 Lottie 的绘制原理，但是 Lottie 是用来做动画的，光理解它的绘制原理是不够的，对于动画，更重要的是它怎么动起来的。</p>
+<p>接下来就分析一下 Lottie 的动画原理。</p>
+<p>Lottie 动画起始于 <code>LottieAnimationView.playAnimation</code>，接着调用 LottieDrawable 的同名方法，与绘制相同，动画也是 LottieDrawable 控制的，来看看代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//     animator 的申明</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ValueAnimator animator = ValueAnimator.ofFloat(<span class="number">0f</span>, <span class="number">1f</span>);</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playAnimation</span><span class="params">(<span class="keyword">boolean</span> setStartTime)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (compositionLayer == <span class="keyword">null</span>) &#123;</span><br><span class="line">      playAnimationWhenCompositionAdded = <span class="keyword">true</span>;</span><br><span class="line">      reverseAnimationWhenCompositionAdded = <span class="keyword">false</span>;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (setStartTime) &#123;</span><br><span class="line">      animator.setCurrentPlayTime((<span class="keyword">long</span>) (progress * animator.getDuration()));</span><br><span class="line">    &#125;</span><br><span class="line">    animator.start();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>playAnimation 方法其实只是开启了一个属性动画，那么后续动画是怎么动起来的呢？这就必须要看动画的监听了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (systemAnimationsAreDisabled) &#123;</span><br><span class="line">          animator.cancel();</span><br><span class="line">          setProgress(<span class="number">1f</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          setProgress((<span class="keyword">float</span>) animation.getAnimatedValue());</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>在 animator 进行的过程中回去调用 <code>setProgress</code>方法,下面跟踪一下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LottieDrawable</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProgress</span><span class="params">(@FloatRange(from = <span class="number">0</span>f, to = <span class="number">1</span>f)</span> <span class="keyword">float</span> progress) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.progress = progress;</span><br><span class="line">    <span class="keyword">if</span> (compositionLayer != <span class="keyword">null</span>) &#123;</span><br><span class="line">      compositionLayer.setProgress(progress);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//CompositionLayer</span></span><br><span class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProgress</span><span class="params">(@FloatRange(from = <span class="number">0</span>f, to = <span class="number">1</span>f)</span> <span class="keyword">float</span> progress) </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.setProgress(progress);</span><br><span class="line">    progress -= layerModel.getStartProgress();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = layers.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">      layers.get(i).setProgress(progress);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//BaseLayer</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setProgress</span><span class="params">(@FloatRange(from = <span class="number">0</span>f, to = <span class="number">1</span>f)</span> <span class="keyword">float</span> progress) </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; animations.size(); i++) &#123;</span><br><span class="line">      animations.get(i).setProgress(progress);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//BaseKeyframeAnimation</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setProgress</span><span class="params">(@FloatRange(from = <span class="number">0</span>f, to = <span class="number">1</span>f)</span> <span class="keyword">float</span> progress) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (progress &lt; getStartDelayProgress()) &#123;</span><br><span class="line">      progress = <span class="number">0f</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (progress &gt; getEndProgress()) &#123;</span><br><span class="line">      progress = <span class="number">1f</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (progress == <span class="keyword">this</span>.progress) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.progress = progress;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; listeners.size(); i++) &#123;</span><br><span class="line">      listeners.get(i).onValueChanged();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//BaseLayer</span></span><br><span class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onValueChanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    invalidateSelf();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//BaseLayer</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">invalidateSelf</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    lottieDrawable.invalidateSelf();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>上面列出了后续流程的主要代码，可以看到，setProgress 的最后触发了每个 layer 的 invalidateSelf，这都会让 lottieDrawable 重新绘制，然后重走一遍绘制流程，这样随着 animator 动画的进行，lottieDrawable 不断的绘制，就展现出了一个完整的动画。</p>
+<p>PS: 动画过程中的一些变量比如 scale，都是由BaseKeyframeAnimation控制，但这个偏于细节，这里就不讲了。</p>
+<p>动画原理流程稍微有点长，也稍微有些复杂，我绘制了一张图梳理了一下整体的流程，方便理解：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/jpg/138547/1553765029868-f5efbbd3-052c-4c15-af6f-0da8979252c4.jpg#align=left&amp;display=inline&amp;height=428&amp;originHeight=904&amp;originWidth=1576&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p>BaseKeyframeAnimation 类图：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/jpg/138547/1553765029875-19353495-fded-4c29-aefb-1e454418e924.jpg#align=left&amp;display=inline&amp;height=694&amp;originHeight=884&amp;originWidth=950&amp;size=0&amp;status=done&amp;width=746" alt=""></p>
+<p><a name="f92f39cb"></a></p>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><p>个人觉得 Lottie 是个非常非常棒的项目，甚至可以说是个伟大的项目。</p>
+<p>Lottie 极大的缩减了动画的开发成本，给 APP 增加非常强力的动画能力，不需要各个端再自己去实现，而且目前 Lottie 已经支持了非常多的 AE 动画效果，通过 Lottie 可以轻松实现很多酷炫的效果，所以现在做动效考验的是设计同学的设计能力了，哈哈。</p>
+<p>本文只针对重点原理进行分析，欢迎留言讨论交流。</p>
+<p><a name="01413423"></a></p>
+<h2 id="9-资料"><a href="#9-资料" class="headerlink" title="9. 资料"></a>9. 资料</h2><ol>
+<li>lottie-android : <a href="https://github.com/airbnb/lottie-android" target="_blank" rel="noopener">https://github.com/airbnb/lottie-android</a></li>
+<li>Introducing Lottie: <a href="https://medium.com/airbnb-engineering/introducing-lottie-4ff4a0afac0e" target="_blank" rel="noopener">https://medium.com/airbnb-engineering/introducing-lottie-4ff4a0afac0e</a></li>
+<li>design-lottie: <a href="https://airbnb.design/lottie/" target="_blank" rel="noopener">https://airbnb.design/lottie/</a></li>
+<li>bodymovin: <a href="https://github.com/bodymovin/bodymovin" target="_blank" rel="noopener">https://github.com/bodymovin/bodymovin</a></li>
+<li>Animation: Jump-through: <a href="https://medium.com/google-developers/animation-jump-through-861f4f5b3de4" target="_blank" rel="noopener">https://medium.com/google-developers/animation-jump-through-861f4f5b3de4</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/989b2900.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2147,211 +2554,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/4b58bbac.html">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程序亦非猿">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程序亦非猿">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/4b58bbac.html" itemprop="url">LayoutInflater源码分析（三）fragment 标签的处理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-04T22:26:17+08:00">
-                2017-01-04
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2019-02-12T16:11:26+08:00">
-                2019-02-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/blog/4b58bbac.html" class="leancloud_visitors" data-flag-title="LayoutInflater源码分析（三）fragment 标签的处理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上一篇<a href="http://yifeiyuan.me/2017/01/03/analyze-layoutinflater2-include-and-merge/">LayoutInflater 源码分析（二）</a>中分析了<code>LayoutInflater</code>对<code>include</code>以及<code>merge</code>标签的处理，但是并没有找到对<code>fragment</code>的处理痕迹。</p>
-<p>本文将继续探索以求揭晓答案。</p>
-<p>可能有同学不知道，在这里提一下<code>fragment</code>标签的使用方式： </p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;fragment</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    <span class="attribute">class</span>=<span class="string">"me.yifeiyuan.MainFragment"</span></span><br><span class="line">    android:<span class="attribute">tag</span>=<span class="string">"Main"</span></span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/main"</span></span><br><span class="line">    /&gt;</span><br></pre></td></tr></table></figure>
-<p>这属于加载 Fragment 中的<strong>静态加载</strong>，在 XML 中写死了 class，缺乏灵活性，实际开发中并不常用，甚至已经淘汰了，所以不推荐使用。</p>
-<p>不过这并不妨碍对它的原理探究。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/4b58bbac.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2404,7 +2606,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">137</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2415,7 +2617,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2426,7 +2628,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2494,7 +2696,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">107.3k</span>
+    <span title="Site words total count">109.9k</span>
   
 </div>
 
