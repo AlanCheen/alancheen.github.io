@@ -8,7 +8,9 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Jetpack</tag>
+        <tag>RTFSC</tag>
+        <tag>Jetpac</tag>
+        <tag>ViewModel</tag>
       </tags>
   </entry>
   <entry>
@@ -19,7 +21,9 @@
         <category>Android</category>
       </categories>
       <tags>
+        <tag>RTFSC</tag>
         <tag>Jetpack</tag>
+        <tag>LiveData</tag>
       </tags>
   </entry>
   <entry>
@@ -30,7 +34,9 @@
         <category>Android</category>
       </categories>
       <tags>
+        <tag>RTFSC</tag>
         <tag>Jetpack</tag>
+        <tag>Lifecycle</tag>
       </tags>
   </entry>
   <entry>
