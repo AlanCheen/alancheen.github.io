@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="google7b0a9fcb246835ea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Jetpack,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] 0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 And">
+<meta name="keywords" content="Jetpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解 Jetpack 之 LiveData">
+<meta property="og:url" content="http://yifeiyuan.me/blog/9d326805.html">
+<meta property="og:site_name" content="程序亦非猿">
+<meta property="og:description" content="[TOC] 0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 And">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1557131045935-3b37e4fb-658b-4d27-956b-eff115f51352.jpeg#align=left&display=inline&height=853&name=mj-tangonan-1540675-unsplash.jpg&originHeight=853&originWidth=1280&size=397107&status=done&width=1280">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053650504-ffd5ea7a-4f49-4be4-89ad-760f065fe1cc.png#align=left&display=inline&height=317&name=livedata-lifecycle-changes.png&originHeight=486&originWidth=1143&size=62726&status=done&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053700049-ad572729-ed17-4fb0-990e-382e543e5485.png#align=left&display=inline&height=317&name=livedata-postvalue.png&originHeight=486&originWidth=1143&size=56008&status=done&width=746">
+<meta property="og:updated_time" content="2019-06-12T12:35:42.749Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解 Jetpack 之 LiveData">
+<meta name="twitter:description" content="[TOC] 0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 And">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1557131045935-3b37e4fb-658b-4d27-956b-eff115f51352.jpeg#align=left&display=inline&height=853&name=mj-tangonan-1540675-unsplash.jpg&originHeight=853&originWidth=1280&size=397107&status=done&width=1280">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yifeiyuan.me/blog/9d326805.html">
+
+
+
+
+
+  <title>深入理解 Jetpack 之 LiveData | 程序亦非猿</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76763188-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bdc587745eeea6144f7851024cf7649f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程序亦非猿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求卓越与极致。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friends">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yifeiyuan.me/blog/9d326805.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程序亦非猿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程序亦非猿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入理解 Jetpack 之 LiveData</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-12T20:33:00+08:00">
+                2019-06-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-12T20:35:42+08:00">
+                2019-06-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/9d326805.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/blog/9d326805.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/blog/9d326805.html" class="leancloud_visitors" data-flag-title="深入理解 Jetpack 之 LiveData">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1557131045935-3b37e4fb-658b-4d27-956b-eff115f51352.jpeg#align=left&amp;display=inline&amp;height=853&amp;name=mj-tangonan-1540675-unsplash.jpg&amp;originHeight=853&amp;originWidth=1280&amp;size=397107&amp;status=done&amp;width=1280" alt="mj-tangonan-1540675-unsplash.jpg"></p>
+<p><a name="9cf27a82"></a></p>
+<p>[TOC]</p>
+<h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
+<p>本文是深入理解「Android Architecture Components」系列文章第三篇</p>
+<p>源码基于 android.arch.lifecycle:livedata-core:1.1.1 </p>
+</blockquote>
+<p>在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。</p>
+<p>LiveData 是 Android Architecture Components 中的一员，先看下官方是如何介绍的：</p>
+<blockquote>
+<p><a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank" rel="noopener">LiveData</a> is an observable data holder class. Unlike a regular observable, LiveData is lifecycle-aware, meaning it respects the lifecycle of other app components, such as activities, fragments, or services. This awareness ensures LiveData only updates app component observers that are in an active lifecycle state. [见 9.1]</p>
+<p>This class is designed to hold individual data fields of <a href="https://developer.android.com/reference/android/arch/lifecycle/ViewModel.html" target="_blank" rel="noopener">ViewModel</a>, but can also be used for sharing data between different modules in your application in a decoupled fashion. [见 9.2]</p>
+</blockquote>
+<a id="more"></a>
+<p>简单讲 <code>LiveData 是一个能够感知生命周期、可观察的数据持有类</code> ，它被设计成 ViewModel 的一个成员变量；可以以一个 <code>更解耦</code> 的方式来<strong>共享数据</strong>。</p>
+<p>实际使用下来发现 LiveData 有几个<strong>特性</strong>：</p>
+<ol>
+<li>LiveData 的实现基于<strong>观察者</strong>模式；</li>
+<li>LiveData 跟 LifecycleOwner 绑定，能<strong>感知生命周期变化</strong>，并且只会在 LifecycleOwner 处于 <code>Active</code> 状态（STARTED/RESUMED）下通知数据改变；</li>
+<li>LiveData 会自动在 DESTROYED 的状态下移除 Observer ，取消订阅，所以<strong>不用担心内存泄露</strong>；</li>
+</ol>
+<p>那么 LiveData 上述特性的<strong>原理</strong>是怎么样的呢？<br>使用 LiveData 又需要注意些什么呢？</p>
+<p>本文将围绕此展开。</p>
+<p><a name="d7f29183"></a></p>
+<h3 id="1-LiveData-的基本使用"><a href="#1-LiveData-的基本使用" class="headerlink" title="1. LiveData 的基本使用"></a>1. LiveData 的基本使用</h3><p>虽然 LiveData 通常跟 ViewModel 配合使用，不过也可以单独使用，为了简单起见，这里不配合 ViewModel。</p>
+<p>以下是一个简单的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MutableLiveData&lt;String&gt; liveString = <span class="keyword">new</span> MutableLiveData&lt;&gt;();</span><br><span class="line">liveString.observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;String&gt;() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(@Nullable <span class="keyword">final</span> String s)</span> </span>&#123;</span><br><span class="line">    Log.d(TAG, <span class="string">"onChanged() called with: s = ["</span> + s + <span class="string">"]"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">liveString.postValue(<span class="string">"程序亦非猿"</span>);</span><br></pre></td></tr></table></figure>
+<p>运行后可以看到日志输出：<code>onChanged() called with: s = [程序亦非猿]</code> 。</p>
+<p>释义：<br>定义一个 MutableLiveData （LiveData 的一个常用子类），通过 observe 方法可以订阅修改数据的通知，通过 <code>postValue()</code>  或者 <code>setValue()</code>  方法可以更新数据，已经订阅的 Observer 能够得到数据更改的通知，也即回调 <code>onChanged()</code> 方法。</p>
+<p>这样就算是用上 LiveData 了。</p>
+<p>接下来，上干货！</p>
+<p><a name="5f1eee0e"></a></p>
+<h3 id="2-LiveData-的原理分析"><a href="#2-LiveData-的原理分析" class="headerlink" title="2. LiveData 的原理分析"></a>2. LiveData 的原理分析</h3><p>在分析原理前，再明确一下我们的疑问：</p>
+<ol>
+<li>LiveData 是如何跟 LifecycleOwner 进行绑定，做到<strong>感知生命周期</strong>的？</li>
+<li>LiveData <strong>只在 LifecycleOwner active 状态发送通知</strong>，是怎么处理的？</li>
+<li>LiveData 会<strong>自动在 DESTROY 的状态下取消订阅</strong>，是怎么处理的？</li>
+<li>通过 setValue()/postValue() <strong>更新数据的处理流程</strong>是如何？</li>
+<li><strong>生命周期变化后</strong>数据处理流程是怎么样的？</li>
+</ol>
+<p>同时提前看下我整理的 LiveData UML 图，对 LiveData 有个整体的了解，后续的涉及到的类都在这里了，有助于理解。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&amp;display=inline&amp;height=359&amp;name=image.png&amp;originHeight=718&amp;originWidth=817&amp;size=285251&amp;status=done&amp;width=409" alt="image.png"><br>(图1.LiveData 类图)</p>
+<p>OK， here we go!</p>
+<p><a name="fd594c2d"></a></p>
+<h4 id="2-1-LiveData-observe"><a href="#2-1-LiveData-observe" class="headerlink" title="2.1 LiveData.observe()"></a>2.1 LiveData.observe()</h4><p>LiveData 的使用流程从 <code>observe()</code> 开始，咱们尝试从 <code>observe()</code> 方法 开始分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">observe</span><span class="params">(@NonNull LifecycleOwner owner, @NonNull Observer&lt;T&gt; observer)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果是 DESTROYED 的状态则忽略</span></span><br><span class="line">    <span class="keyword">if</span> (owner.getLifecycle().getCurrentState() == DESTROYED) &#123;</span><br><span class="line">        <span class="comment">// ignore</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//把 Observer 用 LifecycleBoundObserver 包装起来</span></span><br><span class="line">    LifecycleBoundObserver wrapper = <span class="keyword">new</span> LifecycleBoundObserver(owner, observer);</span><br><span class="line">    <span class="comment">//缓存起来</span></span><br><span class="line">    ObserverWrapper existing = mObservers.putIfAbsent(observer, wrapper);</span><br><span class="line">    <span class="comment">//如果已经 observe 过 并且两次的 owner 不同则报错</span></span><br><span class="line">    <span class="keyword">if</span> (existing != <span class="keyword">null</span> &amp;&amp; !existing.isAttachedTo(owner)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Cannot add the same observer"</span></span><br><span class="line">                + <span class="string">" with different lifecycles"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (existing != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//绑定 owner</span></span><br><span class="line">    owner.getLifecycle().addObserver(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到 observe 方法里把我们传递的 observer 用 <code>LifecycleBoundObserver</code>  包装了起来，并且存入了 <code>mObservers</code>  ，并且跟 owner 进行了关联。</p>
+<p>并且做了两个特殊处理：</p>
+<ol>
+<li><strong>忽视处于 DESTROYED 的 owner 的注册行为</strong>；</li>
+<li><strong>将一个 Observer 同时绑定两个 owner 的行为视为非法操作，也即一个 Observer 只能绑定一个 owner，而 owner 可以有多个 Observe</strong>r；</li>
+</ol>
+<p>这里出现了几个新的类 <strong>LifecycleBoundObserver</strong> 、<strong>ObserverWrapper</strong> 来看看。</p>
+<p><a name="8fee89a9"></a></p>
+<h4 id="2-2-LifecycleBoundObserver"><a href="#2-2-LifecycleBoundObserver" class="headerlink" title="2.2 LifecycleBoundObserver"></a>2.2 LifecycleBoundObserver</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LifecycleBoundObserver</span> <span class="keyword">extends</span> <span class="title">ObserverWrapper</span> <span class="keyword">implements</span> <span class="title">GenericLifecycleObserver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span> <span class="keyword">final</span> LifecycleOwner mOwner;</span><br><span class="line"></span><br><span class="line">    LifecycleBoundObserver(<span class="meta">@NonNull</span> LifecycleOwner owner, Observer&lt;T&gt; observer) &#123;</span><br><span class="line">        <span class="keyword">super</span>(observer);</span><br><span class="line">        mOwner = owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">shouldBeActive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断 owner 当前的状态是否是至少 STARTED</span></span><br><span class="line">        <span class="keyword">return</span> mOwner.getLifecycle().getCurrentState().isAtLeast(STARTED);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStateChanged</span><span class="params">(LifecycleOwner source, Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//生命周期改变，如果是 DESTROYED 就自动解除</span></span><br><span class="line">        <span class="keyword">if</span> (mOwner.getLifecycle().getCurrentState() == DESTROYED) &#123;</span><br><span class="line">            removeObserver(mObserver);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//ObserverWrapper.activeStateChanged</span></span><br><span class="line">        activeStateChanged(shouldBeActive());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAttachedTo</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mOwner == owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">detachObserver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mOwner.getLifecycle().removeObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>ObserverWrapper </strong>:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserverWrapper</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Observer&lt;T&gt; mObserver;</span><br><span class="line">    <span class="keyword">boolean</span> mActive;</span><br><span class="line">    <span class="keyword">int</span> mLastVersion = START_VERSION;</span><br><span class="line"></span><br><span class="line">    ObserverWrapper(Observer&lt;T&gt; observer) &#123;</span><br><span class="line">        mObserver = observer;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//是否是 active 状态</span></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">shouldBeActive</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAttachedTo</span><span class="params">(LifecycleOwner owner)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">detachObserver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">activeStateChanged</span><span class="params">(<span class="keyword">boolean</span> newActive)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (newActive == mActive) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// immediately set active state, so we'd never dispatch anything to inactive</span></span><br><span class="line">        <span class="comment">// owner</span></span><br><span class="line">        mActive = newActive;</span><br><span class="line">        <span class="keyword">boolean</span> wasInactive = LiveData.<span class="keyword">this</span>.mActiveCount == <span class="number">0</span>;</span><br><span class="line">        LiveData.<span class="keyword">this</span>.mActiveCount += mActive ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (wasInactive &amp;&amp; mActive) &#123;</span><br><span class="line">            onActive();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (LiveData.<span class="keyword">this</span>.mActiveCount == <span class="number">0</span> &amp;&amp; !mActive) &#123;</span><br><span class="line">            onInactive();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果 active 状态下，则发送数据更新通知</span></span><br><span class="line">        <span class="keyword">if</span> (mActive) &#123;</span><br><span class="line">            dispatchingValue(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仔细看下这两个类其实就能解答疑问了。</p>
+<p><strong>LifecycleBoundObserver 是 抽象类 ObserverWrapper 的子类，重写了 shouldBeActive() 方法，在 owner 处于至少是 STARTED 的状态下认为是 active 状态；并且它也实现了 GenericLifecycleObserver 接口，可以监听 lifecycle 回调，并且在 onStateChanged() 方法里处理了生命周期改变的事件，当接收到 DESTROYED 的事件会自动解除跟 owner 的绑定，并且将下个流程交给了 activeStateChanged() 。</strong></p>
+<p>到这里 【2.1】、【2.3】的问题已经有了答案：</p>
+<p><strong>【2.1】答</strong>：LifeData 在 observe 方法中用 LifecycleBoundObserver 包装了 observer ，并且通过它绑定了owner。<br><strong>【2.3】答</strong>：LifecycleBoundObserver 在 onStateChanged() 方法里处理了生命周期改变的事件，当接收到 DESTROYED 的事件会自动解除跟 owner 的绑定。</p>
+<p><strong>这里需要注意的是，当我们调用 observe() 注册后，由于绑定了 owner，所以在 active 的情况下，LiveData 如果有数据，则 Observer 会立马接受到该数据修改的通知。</strong></p>
+<p>此时的流程是:</p>
+<p>observe–&gt;<br>  onStateChanged–&gt;<br>    activeStateChanged–&gt;<br>     dispatchingValue–&gt;<br>       considerNotify–&gt;<br>          onChanged</p>
+<p>可以称之为<strong>生命周期改变触发的流程，另外还有一种流程是 postValue&amp;setValue 触发的流程，共两种。</strong></p>
+<p><a name="73851cc0"></a></p>
+<h4 id="2-3-activeStateChanged-boolean"><a href="#2-3-activeStateChanged-boolean" class="headerlink" title="2.3 activeStateChanged(boolean)"></a>2.3 activeStateChanged(boolean)</h4><p>在 activeStateChanged() 方法里，处理了 onActive() 跟 onInactive() 回调的相关逻辑处理，并且调用了dispatchingValue(this) 。（MediatorLiveData 用到了 onActive() 跟 onInactive() 有兴趣自行了解，这里不展开）</p>
+<p>接下去探索 <code>dispatchingValue</code> 。<br></p>
+<p><a name="bc1af81b"></a></p>
+<h4 id="2-4-dispatchingValue-ObserverWrapper-分析"><a href="#2-4-dispatchingValue-ObserverWrapper-分析" class="headerlink" title="2.4 dispatchingValue(ObserverWrapper) 分析"></a>2.4 dispatchingValue(ObserverWrapper) 分析</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dispatchingValue</span><span class="params">(@Nullable ObserverWrapper initiator)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//如果正在分发则直接返回</span></span><br><span class="line">    <span class="keyword">if</span> (mDispatchingValue) &#123;</span><br><span class="line">        <span class="comment">//标记分发失效</span></span><br><span class="line">        mDispatchInvalidated = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//标记分发开始</span></span><br><span class="line">    mDispatchingValue = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        mDispatchInvalidated = <span class="keyword">false</span>;</span><br><span class="line">        <span class="comment">//生命周期改变调用的方法 initiator 不为 null</span></span><br><span class="line">        <span class="keyword">if</span> (initiator != <span class="keyword">null</span>) &#123;</span><br><span class="line">            considerNotify(initiator);</span><br><span class="line">            initiator = <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//postValue/setValue 方法调用 传递的 initiator 为 null</span></span><br><span class="line">            <span class="keyword">for</span> (Iterator&lt;Map.Entry&lt;Observer&lt;T&gt;, ObserverWrapper&gt;&gt; iterator =</span><br><span class="line">                    mObservers.iteratorWithAdditions(); iterator.hasNext(); ) &#123;</span><br><span class="line">                considerNotify(iterator.next().getValue());</span><br><span class="line">                <span class="keyword">if</span> (mDispatchInvalidated) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (mDispatchInvalidated);</span><br><span class="line">    <span class="comment">//标记分发结束</span></span><br><span class="line">    mDispatchingValue = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>considerNotify(ObserverWrapper)</code>  方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">considerNotify</span><span class="params">(ObserverWrapper observer)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//检查状态 确保不会分发给 inactive 的 observer</span></span><br><span class="line">    <span class="keyword">if</span> (!observer.mActive) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Check latest state b4 dispatch. Maybe it changed state but we didn't get the event yet.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// we still first check observer.active to keep it as the entrance for events. So even if</span></span><br><span class="line">    <span class="comment">// the observer moved to an active state, if we've not received that event, we better not</span></span><br><span class="line">    <span class="comment">// notify for a more predictable notification order.</span></span><br><span class="line">    <span class="keyword">if</span> (!observer.shouldBeActive()) &#123;</span><br><span class="line">        observer.activeStateChanged(<span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//setValue 会增加 version ,初始 version 为-1</span></span><br><span class="line">    <span class="keyword">if</span> (observer.mLastVersion &gt;= mVersion) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    observer.mLastVersion = mVersion;</span><br><span class="line">    <span class="comment">//noinspection unchecked</span></span><br><span class="line">    observer.mObserver.onChanged((T) mData);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到 dispatchingValue 正是分发事件逻辑的处理方法，而 considerNotify 方法则确保了<strong>只将最新的数据分发给 active 状态下的 Observer</strong> 。</p>
+<p>另外也可以看到 LiveData 引入了<strong>版本管理</strong>来管理数据 （mData）以<strong>确保发送的数据总是最新的</strong>。（具体不多讲）</p>
+<p>dispatchingValue 这里分两种情况：</p>
+<ol>
+<li><strong>ObserverWrapper 不为 null</strong></li>
+<li><strong>ObserverWrapper 为 null</strong></li>
+</ol>
+<p>需要着重讲一下。</p>
+<p><a name="7e259814"></a></p>
+<h5 id="2-4-1-ObserverWrapper-不为-null-的情况"><a href="#2-4-1-ObserverWrapper-不为-null-的情况" class="headerlink" title="2.4.1 ObserverWrapper 不为 null 的情况"></a>2.4.1 ObserverWrapper 不为 null 的情况</h5><p>上面提到过，LifecycleBoundObserver.onStateChanged 方法里调用了 activeStateChanged ，而该方法调用dispatchingValue(this);传入了 this ，也就是 LifecycleBoundObserver ，这时候不为 null 。</p>
+<p><strong>也就是说生命周期改变触发的流程就是这种情况，这种情况下，只会通知跟该 Owner 绑定的 Observer。</strong></p>
+<p><a name="7a435db2"></a></p>
+<h5 id="2-4-2-ObserverWrapper-为-null-的情况"><a href="#2-4-2-ObserverWrapper-为-null-的情况" class="headerlink" title="2.4.2 ObserverWrapper 为 null 的情况"></a>2.4.2 ObserverWrapper 为 null 的情况</h5><p>上面我也提前说了，除了生命周期改变触发的流程外，还有 postValue&amp;setValue 流程，来看下这俩方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Runnable mPostValueRunnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object newValue;</span><br><span class="line">        <span class="keyword">synchronized</span> (mDataLock) &#123;</span><br><span class="line">            newValue = mPendingData;</span><br><span class="line">            mPendingData = NOT_SET;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//noinspection unchecked</span></span><br><span class="line">        <span class="comment">//调用 setValue</span></span><br><span class="line">        setValue((T) newValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">postValue</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> postTask;</span><br><span class="line">    <span class="keyword">synchronized</span> (mDataLock) &#123;</span><br><span class="line">        postTask = mPendingData == NOT_SET;</span><br><span class="line">        mPendingData = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!postTask) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ArchTaskExecutor.getInstance().postToMainThread(mPostValueRunnable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//必须在主线程调用 否则会 crash</span></span><br><span class="line">    assertMainThread(<span class="string">"setValue"</span>);</span><br><span class="line">    mVersion++;<span class="comment">//增加版本号</span></span><br><span class="line">    mData = value;</span><br><span class="line">    <span class="comment">//传入了 null</span></span><br><span class="line">    dispatchingValue(<span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>LiveData 的 postValue 方法其实就是把操作 post 到主线程，<strong>最后调用的还是 setValue 方法</strong>，注意 setValue 必须是在主线程调用。</p>
+<p>并且可以看到<strong> setValue 方法调用了 dispatchingValue 方法，并传入了 null ，这个时候的流程则会通知 active 的mObservers</strong>。</p>
+<p>到这里之前的剩下的所有疑问也都可以解答了。</p>
+<p>LiveData 的两个流程都会走到 <strong>dispatchingValue 处理分发通知逻辑，</strong>并且在分发通知前会判断 owner 的状态，再加上 LiveData 本身内部的版本管理，确保了<strong>只会发送最新的数据给 active 状态下的 Observer</strong>。</p>
+<p><strong>注意：</strong>LiveData 对同时多次修改数据做了处理，如果同时多次修改，只会修改为最新的数据。</p>
+<p><a name="a43d4d52"></a></p>
+<h3 id="3-图解-LiveData"><a href="#3-图解-LiveData" class="headerlink" title="3. 图解 LiveData"></a>3. 图解 LiveData</h3><p><a name="b932eca5"></a></p>
+<h4 id="3-1-LiveData-类图"><a href="#3-1-LiveData-类图" class="headerlink" title="3.1 LiveData 类图"></a>3.1 LiveData 类图</h4><p>再看一遍类图，回顾一下：<br><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&amp;display=inline&amp;height=359&amp;name=image.png&amp;originHeight=718&amp;originWidth=817&amp;size=285251&amp;status=done&amp;width=409" alt="image.png"><br>(图2.LiveData 类图)<br><a name="c979bac4"></a></p>
+<h4 id="3-2-LiveData-流程图"><a href="#3-2-LiveData-流程图" class="headerlink" title="3.2 LiveData 流程图"></a>3.2 LiveData 流程图</h4><p>Lifecycle 改变触发流程：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053650504-ffd5ea7a-4f49-4be4-89ad-760f065fe1cc.png#align=left&amp;display=inline&amp;height=317&amp;name=livedata-lifecycle-changes.png&amp;originHeight=486&amp;originWidth=1143&amp;size=62726&amp;status=done&amp;width=746" alt="livedata-lifecycle-changes.png"><br>(图3.Lifecycle 改变触发流程图)</p>
+<p>Lifecycle postValue/setValue 触发流程：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053700049-ad572729-ed17-4fb0-990e-382e543e5485.png#align=left&amp;display=inline&amp;height=317&amp;name=livedata-postvalue.png&amp;originHeight=486&amp;originWidth=1143&amp;size=56008&amp;status=done&amp;width=746" alt="livedata-postvalue.png"><br>(图4.setValue 改变触发流程图)</p>
+<p><a name="6becaec8"></a></p>
+<h3 id="4-LiveData-tips-and-recipes"><a href="#4-LiveData-tips-and-recipes" class="headerlink" title="4. LiveData tips and recipes"></a>4. LiveData tips and recipes</h3><p><br>LiveData 还有很多其他相关知识，这里列举一些，更多实践可以看一下【7.6】。</p>
+<p><a name="2c5a5752"></a></p>
+<h4 id="4-1-Sticky-Event"><a href="#4-1-Sticky-Event" class="headerlink" title="4.1 Sticky Event"></a>4.1 Sticky Event</h4><p>LiveData 被订阅时，如果之前已经更改过数据，并且当前 owner 为 active 的状态，activeStateChanged() 会被调用，也即会立马通知到 Observer ，这样其实就类似 EventBus 的 sticky event 的功能，需要注意的是，很多时候我们并不需要该功能。具体可以看一下【7.6】的处理。</p>
+<p><a name="873f2dd4"></a></p>
+<h4 id="4-2-AlwaysActiveObserver"><a href="#4-2-AlwaysActiveObserver" class="headerlink" title="4.2 AlwaysActiveObserver"></a>4.2 AlwaysActiveObserver</h4><p>默认情况下，LiveData 会跟 LicycleOwner 绑定，只在 active 状态下更新，如若想要<strong>不管在什么状态下都能接收到数据的更改通知</strong>的话，怎么办？这时候需要使用 <strong>AlwaysActiveObserver</strong> ，改调用 observe 方法为调用 LiveData.observeForever(Observer) 方法即可。</p>
+<p><a name="4cea7239"></a></p>
+<h4 id="4-3-MediatorLiveData"><a href="#4-3-MediatorLiveData" class="headerlink" title="4.3 MediatorLiveData"></a>4.3 MediatorLiveData</h4><p>LiveData 还有一个子类是 MediatorLiveData，它允许我们合并多个 LiveData，任何一个 LiveData 有更新就会发送通知。比如我们的数据来源有两个，一个数据库一个网络，这时候我们会有两个 DataSource，也就是两个 LiveData，这个时候我们可以使用 MediatorLiveData 来 merge 这两个 LiveData。</p>
+<p><a name="769af84f"></a></p>
+<h4 id="4-4-Transformations"><a href="#4-4-Transformations" class="headerlink" title="4.4 Transformations"></a>4.4 Transformations</h4><p>Transformations 允许我们把一个 LiveData 进行处理，变化成另外一个 LiveData，目前支持 map 跟 switchMap 两个方法，跟 RxJava 的操作类似。</p>
+<p>比如，用 map 把一个 String 类型的 LiveData 转换成 Integer 类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Transformations.map(liveString, <span class="keyword">new</span> Function&lt;String, Integer&gt;() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Integer <span class="title">apply</span><span class="params">(<span class="keyword">final</span> String input)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Integer.valueOf(input);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).observe(<span class="keyword">this</span>, <span class="keyword">new</span> Observer&lt;Integer&gt;() &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(@Nullable <span class="keyword">final</span> Integer integer)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a name="661cfeb8"></a></p>
+<h4 id="4-4-LiveDataBus"><a href="#4-4-LiveDataBus" class="headerlink" title="4.4 LiveDataBus"></a>4.4 LiveDataBus</h4><p>EventBus 基于观察者模式，LiveData 也是，所以 LiveData 可以被用来做成 LiveDataBus，有兴趣可以搜索。</p>
+<p><a name="719fecf9"></a></p>
+<h3 id="5-知识点梳理和汇总"><a href="#5-知识点梳理和汇总" class="headerlink" title="5. 知识点梳理和汇总"></a>5. 知识点梳理和汇总</h3><ol>
+<li>LiveData 的实现基于观察者模式（reactive patterns）；</li>
+<li>LiveData 跟 LifecycleOwner 绑定，能感知生命周期变化，并且只会在 LifecycleOwner 处于 Active 状态（STARTED/RESUMED）下通知数据改变；如果数据改变发生在非 active 状态，数据会变化，但是不发送通知，等 owner 回到 active 的状态下，再发送通知；</li>
+<li>如果想要一直收到通知，则需要用 <code>observeForever()</code> 方法；</li>
+<li>LiveData 会自动在 DESTROYED 的状态下移除 Observer ，取消订阅，所以不用担心内存泄露；</li>
+<li>在 LifecycleOwner 处于 DESTROYED 的状态下，不能订阅；</li>
+<li>postValue 方法其实最后调用了 setValue 只不过把操作放到主线程，适合在异步线程里调用，setValue 必须在主线程里调用；</li>
+<li>如果同时多次调用 postValue 或 setValue 修改数据，只会修改成最新的那个数据，也即只会收到一次通知（set post混合调用则不一定）；</li>
+<li>如果 LiveData 有数据，并且 owner 在 active 状态下，那么在订阅的时候，<strong>会立马收到一次通知</strong>；</li>
+<li>一个 Observer 实例，只能绑定一个 LifecycleOwner，而一个 owner 可以绑定多个 Observer 实例；</li>
+<li>LiveData 利用版本管理、绑定 Lifecycle 确保了<strong>只会发送最新的数据给 active 状态下的 Observer</strong>；</li>
+</ol>
+<p><a name="aa5fbf5b"></a></p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p><strong>LiveData 基于观察者模式，并且可以感知生命周期，这使得我们使用 LiveData 既可以享受观察者模式带来的隔离数据与 UI 等强大的解耦能力，还可以享受感知生命周期带来的巨大便利。并且还无需担心内存泄露这个令人头疼的问题。</strong></p>
+<p>我们可以使用 LiveData 非常轻松地做到一些非常高效的操作，如仅在 active 的状态下刷新 UI，可以避免不必要的数据刷新。</p>
+<p>显而易见 LiveData 本身的优秀特性有着巨大的价值，利用好绝对是架构设计中的一大利器，另外 LiveData 配合 ViewModel 可以发挥更大的价值，机智的你一定已经知道下一篇文章讲什么了。</p>
+<p><a name="b5b4ac7f"></a></p>
+<h3 id="7-参考与推荐"><a href="#7-参考与推荐" class="headerlink" title="7. 参考与推荐"></a>7. 参考与推荐</h3><ol>
+<li>LiveData Overview : <a href="https://developer.android.com/topic/libraries/architecture/livedata" target="_blank" rel="noopener">https://developer.android.com/topic/libraries/architecture/livedata</a></li>
+<li>LiveData doc : <a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData" target="_blank" rel="noopener">https://developer.android.com/reference/android/arch/lifecycle/LiveData</a></li>
+<li><a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank" rel="noopener">https://developer.android.com/reference/android/arch/lifecycle/LiveData.html</a></li>
+<li><a href="https://developer.android.com/reference/android/arch/lifecycle/Transformations.html" target="_blank" rel="noopener">https://developer.android.com/reference/android/arch/lifecycle/Transformations.html</a></li>
+<li><a href="https://github.com/googlesamples/android-architecture-components" target="_blank" rel="noopener">https://github.com/googlesamples/android-architecture-components</a></li>
+<li><a href="https://github.com/googlesamples/android-sunflower" target="_blank" rel="noopener">https://github.com/googlesamples/android-sunflower</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/public_wechat.jpg" alt="程序亦非猿 wechat" style="width: 200px; max-width: 100%;">
+    <div>都看到这里了，不关注下我的公众号吗？</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    程序亦非猿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yifeiyuan.me/blog/9d326805.html" title="深入理解 Jetpack 之 LiveData">http://yifeiyuan.me/blog/9d326805.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Jetpack/" rel="tag"># Jetpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/b27867af.html" rel="next" title="深入理解 Jetpack 之 Lifecycle">
+                <i class="fa fa-chevron-left"></i> 深入理解 Jetpack 之 Lifecycle
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/52b29a03.html" rel="prev" title="深入理解 Jetpack 之 ViewModel">
+                深入理解 Jetpack 之 ViewModel <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://ww1.sinaimg.cn/large/98900c07gw1ewh3w6oxvej20qo0qo41y.jpg" alt="程序亦非猿">
+            
+              <p class="site-author-name" itemprop="name">程序亦非猿</p>
+              <p class="site-description motion-element" itemprop="description">阿里巴巴资深无线开发工程师。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">144</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AlanCheen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-LiveData-的基本使用"><span class="nav-number">2.</span> <span class="nav-text">1. LiveData 的基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-LiveData-的原理分析"><span class="nav-number">3.</span> <span class="nav-text">2. LiveData 的原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-LiveData-observe"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 LiveData.observe()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-LifecycleBoundObserver"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 LifecycleBoundObserver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-activeStateChanged-boolean"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 activeStateChanged(boolean)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-dispatchingValue-ObserverWrapper-分析"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 dispatchingValue(ObserverWrapper) 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-1-ObserverWrapper-不为-null-的情况"><span class="nav-number">3.4.1.</span> <span class="nav-text">2.4.1 ObserverWrapper 不为 null 的情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-2-ObserverWrapper-为-null-的情况"><span class="nav-number">3.4.2.</span> <span class="nav-text">2.4.2 ObserverWrapper 为 null 的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-图解-LiveData"><span class="nav-number">4.</span> <span class="nav-text">3. 图解 LiveData</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-LiveData-类图"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 LiveData 类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-LiveData-流程图"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 LiveData 流程图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-LiveData-tips-and-recipes"><span class="nav-number">5.</span> <span class="nav-text">4. LiveData tips and recipes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Sticky-Event"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 Sticky Event</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-AlwaysActiveObserver"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 AlwaysActiveObserver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-MediatorLiveData"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 MediatorLiveData</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-Transformations"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 Transformations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-LiveDataBus"><span class="nav-number">5.5.</span> <span class="nav-text">4.4 LiveDataBus</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-知识点梳理和汇总"><span class="nav-number">6.</span> <span class="nav-text">5. 知识点梳理和汇总</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-总结"><span class="nav-number">7.</span> <span class="nav-text">6. 总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-参考与推荐"><span class="nav-number">8.</span> <span class="nav-text">7. 参考与推荐</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程序亦非猿</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">122.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=55500366";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'AlanCheen',
+            repo: 'alancheen.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '1e39cee91a62d1f9e9ce789c02ddab2edef9fbd6',
+            
+                client_id: '4490039e5cc5229af889'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("j6jEPDXzJpJWKRH6x2BlDiMN-gzGzoHsz", "BvUyhmR2ApFUo1MvHGBfinAH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
