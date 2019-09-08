@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yifeiyuan.me/friends/index.html</loc>
+    
+    <lastmod>2019-09-08T08:31:14.595Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yifeiyuan.me/blog/b27867af.html</loc>
     
     <lastmod>2019-06-12T12:40:37.848Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>http://yifeiyuan.me/blog/ac0ded91.html</loc>
     
     <lastmod>2019-03-28T09:21:24.268Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yifeiyuan.me/friends/index.html</loc>
-    
-    <lastmod>2019-03-25T06:25:24.256Z</lastmod>
     
   </url>
   
