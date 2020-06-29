@@ -89,14 +89,14 @@
 <meta property="og:site_name" content="程序亦非猿">
 <meta property="og:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553846610367-effa7d60-5934-4152-9940-888da1262773.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610522523-d6d13063-c7a2-4b00-a3bd-de50765ed8f6.jpeg">
+<meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/png/138547/1593399746842-resources/1153943/png/b5ea7ad5-6684-48f9-b28d-a1bb9799858a.png?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401637&Signature=xCOvgp3szLOrliW0fGyeXKP33Do%3D">
+<meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399231198-resources/1153943/jpg/b8e38e63-1ec5-4b68-a7a1-740c2b2e1e32.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401604&Signature=caBv7pu0wJhFkI6dKMfIyjKXHhE%3D">
 <meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399237149-resources/1153943/jpg/38f029b1-e534-49c1-8ff4-3de42d933d93.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401081&Signature=JKqs5e02J8Gu2O%2B6Oj5u4KeVyR4%3D">
-<meta property="og:updated_time" content="2020-06-29T02:55:05.060Z">
+<meta property="og:updated_time" content="2020-06-29T03:04:06.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 ViewModel">
 <meta name="twitter:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553846610367-effa7d60-5934-4152-9940-888da1262773.png">
+<meta name="twitter:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/png/138547/1593399746842-resources/1153943/png/b5ea7ad5-6684-48f9-b28d-a1bb9799858a.png?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401637&Signature=xCOvgp3szLOrliW0fGyeXKP33Do%3D">
 
 
 
@@ -375,7 +375,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-29T10:55:05+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-29T11:04:06+08:00">
                 2020-06-29
               </time>
             
@@ -514,7 +514,7 @@
 <p>它背后蕴藏什么原理呢？咱们接下来看看。</p>
 <h3 id="3-ViewModel-的生命周期"><a href="#3-ViewModel-的生命周期" class="headerlink" title="3. ViewModel 的生命周期"></a>3. ViewModel 的生命周期</h3><p>我们在前面提到过，ViewModel 并不会因为 Activity 的配置改变销毁而一起销毁，那么 ViewModel 的生命周期到底是怎么样的呢？</p>
 <p>看一张官网给的图：</p>
-<p><img width="522" height="543" src="https://cdn.nlark.com/yuque/0/2019/png/138547/1553846610367-effa7d60-5934-4152-9940-888da1262773.png"></p>
+<p><img width="522" height="543" src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/png/138547/1593399746842-resources/1153943/png/b5ea7ad5-6684-48f9-b28d-a1bb9799858a.png?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401637&Signature=xCOvgp3szLOrliW0fGyeXKP33Do%3D"></p>
 <p>可以看到 ViewModel 在 Activity 的重建时依然存活。</p>
 <p><code>Why</code>？</p>
 <h3 id="4-ViewModel-的实现原理"><a href="#4-ViewModel-的实现原理" class="headerlink" title="4. ViewModel 的实现原理"></a>4. ViewModel 的实现原理</h3><p>回顾下我们之前使用 ViewModel 的代码：</p>
@@ -556,7 +556,7 @@
 <p><code>Fragment.setRetainInstance(true)</code>  方法可以实现的效果为，在 Activity 配置改变后依然保存。</p>
 <p>到这里 ViewModel 实现的原理就清晰了：<strong>通过注入一个retainInstance 为 true 的 HolderFragment ，利用 Fragment 的特性来保证在 Activity 配置改变后依然能够存活一下，并且保证了 HolderFragment 内部的 ViewModelStore 的存活，最终保证了 ViewModelStore 内部储存的 ViewModel 缓存存活，从而实现了 ViewModel 的生命周期这个特点功能</strong>。(又是 Fragment！)</p>
 <h3 id="5-图解-ViewModel"><a href="#5-图解-ViewModel" class="headerlink" title="5. 图解 ViewModel"></a>5. 图解 ViewModel</h3><p>ViewModel 重点类类图：</p>
-<p><img width="899" height="598" src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610522523-d6d13063-c7a2-4b00-a3bd-de50765ed8f6.jpeg"></p>
+<p><img width="899" height="598" src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399231198-resources/1153943/jpg/b8e38e63-1ec5-4b68-a7a1-740c2b2e1e32.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401604&Signature=caBv7pu0wJhFkI6dKMfIyjKXHhE%3D"></p>
 <p>ViewModel原理实现序列图：</p>
 <p><img width="2996" height="1642" src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399237149-resources/1153943/jpg/38f029b1-e534-49c1-8ff4-3de42d933d93.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401081&Signature=JKqs5e02J8Gu2O%2B6Oj5u4KeVyR4%3D"></p>
 <h3 id="6-知识点梳理和汇总"><a href="#6-知识点梳理和汇总" class="headerlink" title="6. 知识点梳理和汇总"></a>6. 知识点梳理和汇总</h3><p><strong>重点类讲解</strong>：</p>
