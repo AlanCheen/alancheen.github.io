@@ -91,8 +91,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553846610367-effa7d60-5934-4152-9940-888da1262773.png">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610522523-d6d13063-c7a2-4b00-a3bd-de50765ed8f6.jpeg">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610501807-ff84cb4a-a848-447d-8704-d2a3109564a2.jpeg">
-<meta property="og:updated_time" content="2020-04-23T14:00:34.828Z">
+<meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399237149-resources/1153943/jpg/38f029b1-e534-49c1-8ff4-3de42d933d93.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401081&Signature=JKqs5e02J8Gu2O%2B6Oj5u4KeVyR4%3D">
+<meta property="og:updated_time" content="2020-06-29T02:55:05.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 ViewModel">
 <meta name="twitter:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
@@ -375,8 +375,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-04-23T22:00:34+08:00">
-                2020-04-23
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-29T10:55:05+08:00">
+                2020-06-29
               </time>
             
           </span>
@@ -558,7 +558,7 @@
 <h3 id="5-图解-ViewModel"><a href="#5-图解-ViewModel" class="headerlink" title="5. 图解 ViewModel"></a>5. 图解 ViewModel</h3><p>ViewModel 重点类类图：</p>
 <p><img width="899" height="598" src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610522523-d6d13063-c7a2-4b00-a3bd-de50765ed8f6.jpeg"></p>
 <p>ViewModel原理实现序列图：</p>
-<p><img width="2996" height="1642" src="https://cdn.nlark.com/yuque/0/2019/jpeg/138547/1559610501807-ff84cb4a-a848-447d-8704-d2a3109564a2.jpeg"></p>
+<p><img width="2996" height="1642" src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399237149-resources/1153943/jpg/38f029b1-e534-49c1-8ff4-3de42d933d93.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401081&Signature=JKqs5e02J8Gu2O%2B6Oj5u4KeVyR4%3D"></p>
 <h3 id="6-知识点梳理和汇总"><a href="#6-知识点梳理和汇总" class="headerlink" title="6. 知识点梳理和汇总"></a>6. 知识点梳理和汇总</h3><p><strong>重点类讲解</strong>：</p>
 <ul>
 <li><code>ViewModel</code> ，抽象类，用来负责准备和管理 Activity/Fragment 的数据，并且还能处理 Activity/Fragment 跟外界的通信，通常还存放业务逻辑，类似 Presenter；ViewModel 通常会暴露 LiveData 给 Activity/Fragment；并且 Activity 配置改变并不会导致 ViewModel 回收；</li>
