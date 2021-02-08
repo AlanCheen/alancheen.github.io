@@ -90,10 +90,10 @@
 <meta property="og:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/mne0gh公众号：https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg  0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:l">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053650504-ffd5ea7a-4f49-4be4-89ad-760f065fe1cc.png#align=left&display=inline&height=317&name=livedata-lifecycle-changes.png&originHeight=486&originWidth=1143&size=62726&status=done&width=746">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053700049-ad572729-ed17-4fb0-990e-382e543e5485.png#align=left&display=inline&height=317&name=livedata-postvalue.png&originHeight=486&originWidth=1143&size=56008&status=done&width=746">
-<meta property="og:updated_time" content="2021-02-08T03:08:15.668Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/98900c07ly1gnfza60mdsj21n013wgud.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/98900c07ly1gnfz9ojmoyj20vr0di75p.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/98900c07ly1gnfz7mpd2xj20vr0dimye.jpg">
+<meta property="og:updated_time" content="2021-02-08T03:46:03.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 LiveData">
 <meta name="twitter:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/mne0gh公众号：https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg  0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:l">
@@ -376,7 +376,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-02-08T11:08:15+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-02-08T11:46:03+08:00">
                 2021-02-08
               </time>
             
@@ -582,11 +582,13 @@
 <p><strong>注意：</strong>LiveData 对同时多次修改数据做了处理，如果同时多次修改，只会修改为最新的数据。</p>
 <p><a name="a43d4d52"></a></p>
 <h3 id="3-图解-LiveData"><a href="#3-图解-LiveData" class="headerlink" title="3. 图解 LiveData"></a>3. 图解 LiveData</h3><p><a name="b932eca5"></a></p>
-<h4 id="3-1-LiveData-类图"><a href="#3-1-LiveData-类图" class="headerlink" title="3.1 LiveData 类图"></a>3.1 LiveData 类图</h4><p>再看一遍类图，回顾一下：<br><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&amp;display=inline&amp;height=359&amp;name=image.png&amp;originHeight=718&amp;originWidth=817&amp;size=285251&amp;status=done&amp;width=409" alt="image.png"><br>(图2.LiveData 类图)<br><a name="c979bac4"></a></p>
+<h4 id="3-1-LiveData-类图"><a href="#3-1-LiveData-类图" class="headerlink" title="3.1 LiveData 类图"></a>3.1 LiveData 类图</h4><p>再看一遍类图，回顾一下： </p>
+<p><img src="http://ww1.sinaimg.cn/large/98900c07ly1gnfza60mdsj21n013wgud.jpg" alt="Lifecycle-UML.jpg"><br>(图2.LiveData 类图)</p>
+<p><a name="c979bac4"></a></p>
 <h4 id="3-2-LiveData-流程图"><a href="#3-2-LiveData-流程图" class="headerlink" title="3.2 LiveData 流程图"></a>3.2 LiveData 流程图</h4><p>Lifecycle 改变触发流程：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053650504-ffd5ea7a-4f49-4be4-89ad-760f065fe1cc.png#align=left&amp;display=inline&amp;height=317&amp;name=livedata-lifecycle-changes.png&amp;originHeight=486&amp;originWidth=1143&amp;size=62726&amp;status=done&amp;width=746" alt="livedata-lifecycle-changes.png"><br>(图3.Lifecycle 改变触发流程图)</p>
+<p><img src="http://ww1.sinaimg.cn/large/98900c07ly1gnfz9ojmoyj20vr0di75p.jpg" alt="livedata-lifecycle-changes.png"><br>(图3.Lifecycle 改变触发流程图) </p>
 <p>Lifecycle postValue/setValue 触发流程：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053700049-ad572729-ed17-4fb0-990e-382e543e5485.png#align=left&amp;display=inline&amp;height=317&amp;name=livedata-postvalue.png&amp;originHeight=486&amp;originWidth=1143&amp;size=56008&amp;status=done&amp;width=746" alt="livedata-postvalue.png"><br>(图4.setValue 改变触发流程图)</p>
+<p><img src="http://ww1.sinaimg.cn/large/98900c07ly1gnfz7mpd2xj20vr0dimye.jpg" alt="livedata-postvalue.png"><br><br>(图4.setValue 改变触发流程图) </p>
 <p><a name="6becaec8"></a></p>
 <h3 id="4-LiveData-tips-and-recipes"><a href="#4-LiveData-tips-and-recipes" class="headerlink" title="4. LiveData tips and recipes"></a>4. LiveData tips and recipes</h3><p><br>LiveData 还有很多其他相关知识，这里列举一些，更多实践可以看一下【7.6】。</p>
 <p><a name="2c5a5752"></a></p>
