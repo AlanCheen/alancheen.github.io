@@ -81,21 +81,21 @@
 
 
 
-<meta name="description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
+<meta name="description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/bt1sy9公众号：https://mp.weixin.qq.com/s/X_UPjaBRnFbSIVPMS-N7Rw  0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveDa">
 <meta name="keywords" content="RTFSC,Jetpac,ViewModel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解 Jetpack 之 ViewModel">
 <meta property="og:url" content="http://yifeiyuan.me/blog/52b29a03.html">
 <meta property="og:site_name" content="程序亦非猿">
-<meta property="og:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
+<meta property="og:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/bt1sy9公众号：https://mp.weixin.qq.com/s/X_UPjaBRnFbSIVPMS-N7Rw  0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveDa">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/png/138547/1593399746842-resources/1153943/png/b5ea7ad5-6684-48f9-b28d-a1bb9799858a.png?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401637&Signature=xCOvgp3szLOrliW0fGyeXKP33Do%3D">
 <meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399231198-resources/1153943/jpg/b8e38e63-1ec5-4b68-a7a1-740c2b2e1e32.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401604&Signature=caBv7pu0wJhFkI6dKMfIyjKXHhE%3D">
 <meta property="og:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/jpeg/138547/1593399237149-resources/1153943/jpg/38f029b1-e534-49c1-8ff4-3de42d933d93.jpeg?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401081&Signature=JKqs5e02J8Gu2O%2B6Oj5u4KeVyR4%3D">
-<meta property="og:updated_time" content="2020-06-29T03:04:06.659Z">
+<meta property="og:updated_time" content="2021-02-08T03:08:33.747Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 ViewModel">
-<meta name="twitter:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveData  原理分析一文中，我们提到了 ViewModel ，它跟 LiveData 配合能够把价值发挥到最大。 这一篇，我们就来深入浅出一下 ViewModel ，来讲讲 ViewModel 的使用方式、生命周期、以及它的实现原理。">
+<meta name="twitter:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/bt1sy9公众号：https://mp.weixin.qq.com/s/X_UPjaBRnFbSIVPMS-N7Rw  0. 前言 本文是深入理解「Android Architecture Components」系列文章第四篇源码基于 AAC 1.1.1 版本  在上一篇 LiveDa">
 <meta name="twitter:image" content="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2020/png/138547/1593399746842-resources/1153943/png/b5ea7ad5-6684-48f9-b28d-a1bb9799858a.png?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1593401637&Signature=xCOvgp3szLOrliW0fGyeXKP33Do%3D">
 
 
@@ -375,8 +375,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-06-29T11:04:06+08:00">
-                2020-06-29
+              <time title="更新于" itemprop="dateModified" datetime="2021-02-08T11:08:33+08:00">
+                2021-02-08
               </time>
             
           </span>
@@ -451,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.8k
+                  2.9k
                 </span>
               
 
@@ -488,7 +488,10 @@
       
 
       
-        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
+        <blockquote>
+<p>如果博客图片裂了，请访问下面备份地址：<br>语雀：<a href="https://www.yuque.com/cxyfy/blog/bt1sy9" target="_blank" rel="noopener">https://www.yuque.com/cxyfy/blog/bt1sy9</a><br>公众号：<a href="https://mp.weixin.qq.com/s/X_UPjaBRnFbSIVPMS-N7Rw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/X_UPjaBRnFbSIVPMS-N7Rw</a></p>
+</blockquote>
+<h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
 <p>本文是深入理解「Android Architecture Components」系列文章第四篇<br>源码基于 AAC 1.1.1 版本</p>
 </blockquote>
 <p>在上一篇 <code>LiveData</code>  原理分析一文中，我们提到了 <code>ViewModel</code> ，它跟 LiveData 配合能够把价值发挥到最大。</p>
@@ -848,7 +851,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">122.6k</span>
+    <span title="Site words total count">122.7k</span>
   
 </div>
 

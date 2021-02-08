@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 Android Arc">
+<meta name="description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/mne0gh公众号：https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg  0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:l">
 <meta name="keywords" content="RTFSC,Jetpack,LiveData">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解 Jetpack 之 LiveData">
 <meta property="og:url" content="http://yifeiyuan.me/blog/9d326805.html">
 <meta property="og:site_name" content="程序亦非猿">
-<meta property="og:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 Android Arc">
+<meta property="og:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/mne0gh公众号：https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg  0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:l">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053650504-ffd5ea7a-4f49-4be4-89ad-760f065fe1cc.png#align=left&display=inline&height=317&name=livedata-lifecycle-changes.png&originHeight=486&originWidth=1143&size=62726&status=done&width=746">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1555053700049-ad572729-ed17-4fb0-990e-382e543e5485.png#align=left&display=inline&height=317&name=livedata-postvalue.png&originHeight=486&originWidth=1143&size=56008&status=done&width=746">
-<meta property="og:updated_time" content="2020-04-23T14:00:40.186Z">
+<meta property="og:updated_time" content="2021-02-08T03:08:15.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 LiveData">
-<meta name="twitter:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:livedata-core:1.1.1   在之前我们深入研究了 Lifecycle 的实现原理，并在文末提到了LiveData 以及 ViewModel，这次我们来讲讲 LiveData。 LiveData 是 Android Arc">
+<meta name="twitter:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/mne0gh公众号：https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg  0. 前言 本文是深入理解「Android Architecture Components」系列文章第三篇 源码基于 android.arch.lifecycle:l">
 <meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1554969110238-9a1135e2-8298-4e08-85f9-c6e7153772c8.png#align=left&display=inline&height=359&name=image.png&originHeight=718&originWidth=817&size=285251&status=done&width=409">
 
 
@@ -376,8 +376,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-04-23T22:00:40+08:00">
-                2020-04-23
+              <time title="更新于" itemprop="dateModified" datetime="2021-02-08T11:08:15+08:00">
+                2021-02-08
               </time>
             
           </span>
@@ -489,7 +489,10 @@
       
 
       
-        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
+        <blockquote>
+<p>如果博客图片裂了，请访问下面备份地址：<br>语雀：<a href="https://www.yuque.com/cxyfy/blog/mne0gh" target="_blank" rel="noopener">https://www.yuque.com/cxyfy/blog/mne0gh</a><br>公众号：<a href="https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/glbd3mzU_cUPGAlJMlQ5Hg</a></p>
+</blockquote>
+<h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
 <p>本文是深入理解「Android Architecture Components」系列文章第三篇</p>
 <p>源码基于 android.arch.lifecycle:livedata-core:1.1.1 </p>
 </blockquote>
@@ -891,7 +894,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">122.6k</span>
+    <span title="Site words total count">122.7k</span>
   
 </div>
 

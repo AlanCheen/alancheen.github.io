@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Android Architecture Components （后简称为 AAC），是一个帮助开发者设计 健壮 、 可测试 且 可维护 的一系列库的集合。 Lifecycle  就是 AAC 中的一员，它能够帮助我们方便的管理 Activity">
+<meta name="description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/tg16bd公众号：https://mp.weixin.qq.com/s/8vuOj8JnGk-hwl5AU2itkQ  0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Androi">
 <meta name="keywords" content="RTFSC,Jetpack,Lifecycle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解 Jetpack 之 Lifecycle">
 <meta property="og:url" content="http://yifeiyuan.me/blog/b27867af.html">
 <meta property="og:site_name" content="程序亦非猿">
-<meta property="og:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Android Architecture Components （后简称为 AAC），是一个帮助开发者设计 健壮 、 可测试 且 可维护 的一系列库的集合。 Lifecycle  就是 AAC 中的一员，它能够帮助我们方便的管理 Activity">
+<meta property="og:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/tg16bd公众号：https://mp.weixin.qq.com/s/8vuOj8JnGk-hwl5AU2itkQ  0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Androi">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1552989306600-927ab748-d0fe-469a-8cb8-fadf877f3585.png#align=left&display=inline&height=195&name=image.png&originHeight=390&originWidth=934&size=245051&status=done&width=467">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1552990370952-664b74ca-86f5-47de-9706-ab40180b7e60.png#align=left&display=inline&height=217&name=image.png&originHeight=866&originWidth=1222&size=185655&status=done&width=306">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553052014991-b111eb1c-8991-4b30-aa34-55e55ece4154.png#align=left&display=inline&height=427&name=image.png&originHeight=1476&originWidth=2580&size=389626&status=done&width=746">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553828956237-8f7848ad-aafc-4412-95b1-d0968b11f71a.png#align=left&display=inline&height=336&name=Lifecycle-Seq2.png&originHeight=647&originWidth=1437&size=100376&status=done&width=746">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1553048759936-36f29a45-c683-4d1d-979e-019a492e18d2.png#align=left&display=inline&height=889&name=image.png&originHeight=1778&originWidth=2048&size=390848&status=done&width=1024">
-<meta property="og:updated_time" content="2020-04-23T14:00:45.514Z">
+<meta property="og:updated_time" content="2021-02-08T03:08:03.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解 Jetpack 之 Lifecycle">
-<meta name="twitter:description" content="0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Android Architecture Components （后简称为 AAC），是一个帮助开发者设计 健壮 、 可测试 且 可维护 的一系列库的集合。 Lifecycle  就是 AAC 中的一员，它能够帮助我们方便的管理 Activity">
+<meta name="twitter:description" content="如果博客图片裂了，请访问下面备份地址：语雀：https://www.yuque.com/cxyfy/blog/tg16bd公众号：https://mp.weixin.qq.com/s/8vuOj8JnGk-hwl5AU2itkQ  0. 前言 本文是深入理解「Android Architecture Components」系列文章第二篇源码基于 1.1.1 版本  在前文，我就提到 Androi">
 <meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/138547/1552989306600-927ab748-d0fe-469a-8cb8-fadf877f3585.png#align=left&display=inline&height=195&name=image.png&originHeight=390&originWidth=934&size=245051&status=done&width=467">
 
 
@@ -379,8 +379,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2020-04-23T22:00:45+08:00">
-                2020-04-23
+              <time title="更新于" itemprop="dateModified" datetime="2021-02-08T11:08:03+08:00">
+                2021-02-08
               </time>
             
           </span>
@@ -471,7 +471,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  16 分钟
+                  17 分钟
                 </span>
               
             </div>
@@ -492,7 +492,10 @@
       
 
       
-        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
+        <blockquote>
+<p>如果博客图片裂了，请访问下面备份地址：<br>语雀：<a href="https://www.yuque.com/cxyfy/blog/tg16bd" target="_blank" rel="noopener">https://www.yuque.com/cxyfy/blog/tg16bd</a><br>公众号：<a href="https://mp.weixin.qq.com/s/8vuOj8JnGk-hwl5AU2itkQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/8vuOj8JnGk-hwl5AU2itkQ</a></p>
+</blockquote>
+<h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><blockquote>
 <p>本文是深入理解「Android Architecture Components」系列文章第二篇<br>源码基于 1.1.1 版本</p>
 </blockquote>
 <p>在前文，我就提到 Android Architecture Components （后简称为 AAC），是一个帮助开发者设计 <code>健壮</code> 、 <code>可测试</code> 且 <code>可维护</code> 的一系列库的集合。</p>
@@ -878,7 +881,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">122.6k</span>
+    <span title="Site words total count">122.7k</span>
   
 </div>
 
